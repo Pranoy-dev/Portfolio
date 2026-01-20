@@ -72,6 +72,99 @@ function ScrollReveal({ children, delay = 0, className = "" }: { children: React
   )
 }
 
+// Highlight Keywords Component - Subtle badge styling for important terms
+function HighlightedText({ text }: { text: string }) {
+  const keywords = [
+    "monolith systems",
+    "highly technical platform",
+    "user studies",
+    "redesign",
+    "confident software update decisions",
+    "searching for context",
+    "lack of guidance",
+    "context and guidance",
+    "decision time dropped by half"
+  ]
+
+  // Sort keywords by length (longest first) to prioritize longer matches
+  const sortedKeywords = [...keywords].sort((a, b) => b.length - a.length)
+  
+  // Find all matches with their positions
+  const matches: Array<{ start: number; end: number; text: string }> = []
+  
+  sortedKeywords.forEach(keyword => {
+    const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(escapedKeyword, 'gi')
+    const textLower = text.toLowerCase()
+    const keywordLower = keyword.toLowerCase()
+    let searchIndex = 0
+    
+    while (searchIndex < text.length) {
+      const index = textLower.indexOf(keywordLower, searchIndex)
+      if (index === -1) break
+      
+      const end = index + keyword.length
+      // Check if this range overlaps with existing matches
+      const overlaps = matches.some(m => 
+        (index >= m.start && index < m.end) ||
+        (end > m.start && end <= m.end) ||
+        (index <= m.start && end >= m.end)
+      )
+      
+      if (!overlaps) {
+        matches.push({
+          start: index,
+          end: end,
+          text: text.substring(index, end)
+        })
+      }
+      searchIndex = index + 1
+    }
+  })
+  
+  // Sort matches by start position
+  matches.sort((a, b) => a.start - b.start)
+  
+  // Build parts array
+  const parts: Array<{ text: string; isKeyword: boolean }> = []
+  let lastIndex = 0
+  
+  matches.forEach(match => {
+    if (match.start > lastIndex) {
+      parts.push({ text: text.substring(lastIndex, match.start), isKeyword: false })
+    }
+    parts.push({ text: match.text, isKeyword: true })
+    lastIndex = match.end
+  })
+  
+  if (lastIndex < text.length) {
+    parts.push({ text: text.substring(lastIndex), isKeyword: false })
+  }
+  
+  // If no matches, return original text
+  if (parts.length === 0) {
+    parts.push({ text, isKeyword: false })
+  }
+
+  return (
+    <>
+      {parts.map((part, index) => {
+        if (part.isKeyword) {
+          return (
+            <span
+              key={index}
+              className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md bg-primary/10 text-primary font-medium text-xs leading-tight border border-primary/20 hover:bg-primary/15 transition-colors duration-200"
+            >
+              {part.text}
+            </span>
+          )
+        }
+        return <span key={index}>{part.text}</span>
+      })}
+    </>
+  )
+}
+
 // Scroll Indicator Component - Shows only initially before sections are visible
 function ScrollIndicator({ sectionsRef }: { sectionsRef?: React.RefObject<HTMLDivElement> }) {
   const [showIndicator, setShowIndicator] = useState(true)
@@ -413,6 +506,7 @@ interface EsperantoCaseStudyProps {
     description: string
     heroImage: string
     role: string[]
+    team?: string[]
     client: string
     date: string
     websiteUrl?: string
@@ -666,10 +760,12 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
                         </div>
                       </CollapsibleTrigger>
                       <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
-                        <div className="pt-3 space-y-3">
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {project.sections.about.description}
-                          </p>
+                        <div className="pt-3 space-y-4">
+                          {project.sections.about.description.split('\n\n').map((paragraph, i) => (
+                            <p key={i} className="text-sm text-muted-foreground leading-relaxed">
+                              <HighlightedText text={paragraph} />
+                            </p>
+                          ))}
                           {project.websiteUrl && (
                             <Button asChild className="gap-2" size="sm">
                               <a href={project.websiteUrl} target="_blank" rel="noopener noreferrer">
@@ -689,12 +785,24 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
                       <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Role:</span>
                       <div className="flex flex-wrap gap-1.5">
                         {project.role.map((r, i) => (
-                          <Badge key={i} variant="outline" className="px-2 py-1 text-xs font-medium bg-background/80 backdrop-blur-sm border-border/30 hover:bg-background hover:border-border/50 transition-all duration-200">
+                          <Badge key={i} className="px-2 py-1 text-xs font-medium bg-foreground text-background hover:bg-foreground/90 transition-all duration-200">
                             {r}
                           </Badge>
                         ))}
                       </div>
                     </div>
+                    {project.team && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Team:</span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.team.map((t, i) => (
+                            <Badge key={i} className="px-2 py-1 text-xs font-medium bg-foreground text-background hover:bg-foreground/90 transition-all duration-200">
+                              {t}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

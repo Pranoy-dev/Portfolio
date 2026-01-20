@@ -7,14 +7,15 @@ export const esperantoCaseStudies = [
     subtitle: "Research and development of Internal software",
     description: "A comprehensive case study about solving decision paralysis in global software update processes.",
     heroImage: "/Images/Conversion.jpg",
-    role: ["Lead Designer", "UX Strategy", "Research", "Design System"],
+    role: ["Lead designer", "Research", "User testing"],
+    team: ["2 designers", "20 developers", "Agile methodology", "Sprints"],
     client: "Scania",
     date: "2024 - 6 Months",
     websiteUrl: undefined,
     sections: {
       about: {
-        title: "Solving decision paralysis in global software governance",
-        description: "Engineering teams across 12 regions couldn't decide which software updates to approve, causing delays and inconsistent rollouts. My goal was to enable confident, fast decisions on software updates with full traceability. Through research, I discovered that users spent 60% of their time searching for context, not making decisions. Decision paralysis came from missing information, not too much information. The solution reduced decision time by 40% (from 2.5 days to 1.5 days average) while maintaining zero compliance violations and achieving 92% user satisfaction."
+        title: "Research and redesign of Scania internal Software system",
+        description: "Conversion is one of Scania's oldest and biggest monolith systems. It has been around for almost 20 years, and the team finally decided it was time to modernize it, because the impact on Scania IT worldwide is huge. I was brought in to understand this highly technical platform, run user studies across roles, and redesign it into a clearer, more modern system. My goal was simple: enable fast, confident software update decisions with full traceability.\n\nResearch showed the real problem was not too much information. Users spent around 60% of their time searching for context, and decision paralysis came from missing information and lack of guidance at key moments. The solution focused on bringing context and guidance into the right places. As a result, decision time dropped by half, and understanding the \"why\" behind each update became twice as easy."
       },
       challenge: {
         title: "The challenge",
