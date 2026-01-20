@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -15,7 +16,9 @@ import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -91,26 +94,43 @@ const artifacts = [
   { label: "Prototype walkthrough", icon: Play }
 ]
 
+function DynamicHeader() {
+  const { state } = useSidebar()
+  const isCollapsed = state === "collapsed"
+
+  return (
+    <header 
+      className={cn(
+        "fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-[left] duration-200 ease-linear",
+        isCollapsed 
+          ? "md:left-[var(--sidebar-width-icon)]" 
+          : "md:left-[var(--sidebar-width)]"
+      )}
+    >
+      <div className="flex items-center gap-2 px-4 w-full">
+        <SidebarTrigger />
+        <Separator orientation="vertical" className="mr-2 h-4" />
+        <Breadcrumb className="flex-1">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbPage>Overview</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+    </header>
+  )
+}
+
 export default function Home() {
   const [hasInteracted, setHasInteracted] = useState(false)
+  const router = useRouter()
 
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset className="overflow-x-hidden">
-        <header className="fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:left-[var(--sidebar-width)] group-data-[collapsible=icon]:md:left-[var(--sidebar-width-icon)] group-data-[collapsible=offcanvas]:md:left-0">
-          <div className="flex items-center gap-2 px-4 w-full">
-            <SidebarTrigger />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Overview</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </header>
+        <DynamicHeader />
         
         <div className="flex flex-1 flex-col gap-12 p-6 md:p-12 max-w-5xl mx-auto mt-20 w-full min-w-0">
           {/* 1. Headline */}
@@ -148,7 +168,7 @@ export default function Home() {
             defaultOpen={false} 
             className="group/collapsible w-full"
             onOpenChange={(open) => {
-              if (open && !hasInteracted) {
+              if (!hasInteracted) {
                 setHasInteracted(true)
               }
             }}
@@ -156,7 +176,7 @@ export default function Home() {
             <CollapsibleTrigger className="w-full">
               <div className="flex items-center justify-between w-full py-4 border-b border-border/50 hover:border-border transition-colors group/trigger">
                 <h2 className="text-2xl font-semibold">Case studies</h2>
-                <ChevronDown className={`h-5 w-5 text-muted-foreground shrink-0 ${!hasInteracted ? 'animate-pulse-strong' : 'transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground'}`} />
+                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0 ${!hasInteracted ? 'animate-pulse-strong' : 'animate-pulse-subtle'}`} />
               </div>
             </CollapsibleTrigger>
             <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up will-change-[height] w-full">
@@ -168,7 +188,8 @@ export default function Home() {
               {caseStudies.map((study) => (
                 <div
                   key={study.id}
-                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${study.gradient} border ${study.borderColor} hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-1 flex flex-col`}
+                  onClick={() => router.push(`/case-study/${study.id}`)}
+                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${study.gradient} border ${study.borderColor} hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-1 flex flex-col cursor-pointer`}
                 >
                   {/* Image Section */}
                   <div 
@@ -235,7 +256,7 @@ export default function Home() {
             <CollapsibleTrigger className="w-full">
               <div className="flex items-center justify-between w-full py-4 border-b border-border/50 hover:border-border transition-colors group/trigger">
                 <h2 className="text-2xl font-semibold">How I Work</h2>
-                <ChevronDown className="h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0" />
+                <ChevronDown className="h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0 animate-pulse-subtle" />
               </div>
             </CollapsibleTrigger>
             <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up will-change-[height]">
@@ -264,7 +285,7 @@ export default function Home() {
             <CollapsibleTrigger className="w-full">
               <div className="flex items-center justify-between w-full py-4 border-b border-border/50 hover:border-border transition-colors group/trigger">
                 <h2 className="text-2xl font-semibold">Artifacts</h2>
-                <ChevronDown className="h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0" />
+                <ChevronDown className="h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0 animate-pulse-subtle" />
               </div>
             </CollapsibleTrigger>
             <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up will-change-[height]">
