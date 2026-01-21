@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter, usePathname } from "next/navigation"
+import Link from "next/link"
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
@@ -73,7 +74,7 @@ function ScrollReveal({ children, delay = 0, className = "" }: { children: React
 }
 
 // Highlight Keywords Component - Subtle badge styling for important terms
-function HighlightedText({ text }: { text: string }) {
+function HighlightedText({ text, isDark = false }: { text: string; isDark?: boolean }) {
   const keywords = [
     "monolith systems",
     "highly technical platform",
@@ -83,7 +84,51 @@ function HighlightedText({ text }: { text: string }) {
     "searching for context",
     "lack of guidance",
     "context and guidance",
-    "decision time dropped by half"
+    "decision time dropped by half",
+    "old giant",
+    "heavily outdated",
+    "difficult to change",
+    "documentation is thin",
+    "infrastructure improvements",
+    "user experience",
+    "internal legacy system",
+    "interconnected truck systems",
+    "new complexity",
+    "quick wins",
+    "moonshot improvements",
+    "changing priorities",
+    "large systems",
+    "priorities move fast",
+    "plans change",
+    "market needs shift",
+    "technical constraints",
+    "imperfect information",
+    "low UX maturity",
+    "engineering-led",
+    "infrastructure work",
+    "flow and experience improvements",
+    "shared understanding",
+    "strategy and empathy",
+    "shifting the mindset",
+    "stakeholder interviews",
+    "feedback surveys",
+    "screen recordings",
+    "patterns were hard to ignore",
+    "context gap",
+    "no traceability",
+    "broken flows",
+    "jumping between systems",
+    "60%+ of their time",
+    "hunting for context",
+    "approving updates",
+    "who did what",
+    "when, and why",
+    "lack of traceability",
+    "20% of downtime",
+    "two decades",
+    "half-finished flows",
+    "technical workarounds",
+    "50% for common tasks"
   ]
 
   // Sort keywords by length (longest first) to prioritize longer matches
@@ -153,7 +198,11 @@ function HighlightedText({ text }: { text: string }) {
           return (
             <span
               key={index}
-              className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md bg-primary/10 text-primary font-medium text-xs leading-tight border border-primary/20 hover:bg-primary/15 transition-colors duration-200"
+              className={`inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-colors duration-200 ${
+                isDark
+                  ? 'bg-white/15 text-white border-white/30 hover:bg-white/20'
+                  : 'bg-primary/10 text-primary border-primary/20 hover:bg-primary/15'
+              }`}
             >
               {part.text}
             </span>
@@ -256,11 +305,6 @@ function CollapsibleSection({
   
   return (
     <div className="relative">
-      {/* Minimal timeline connector */}
-      {!isLast && (
-        <div className={`absolute left-[18px] top-20 bottom-0 w-px ${isDark ? 'bg-white/20' : 'bg-black/20'}`} />
-      )}
-      
       <Collapsible defaultOpen={defaultOpen} className="group/collapsible">
         <div 
           ref={elementRef}
@@ -270,11 +314,11 @@ function CollapsibleSection({
               : "opacity-0 translate-y-8"
           }`}
         >
-          {/* Minimal timeline dot */}
-          <div className={`absolute left-4 top-6 w-2 h-2 rounded-full ${isDark ? 'bg-white/90' : 'bg-black/70'} border-2 ${isDark ? 'border-zinc-900' : 'border-zinc-50'} z-10`} />
+          {/* Timeline dot - aligned with continuous timeline line */}
+          <div className={`absolute -left-8 md:-left-12 top-6 w-3 h-3 rounded-full ${isDark ? 'bg-white' : 'bg-black'} border-2 ${isDark ? 'border-zinc-900' : 'border-zinc-50'} z-10`} style={{ transform: 'translateX(-50%)' }} />
           
           <CollapsibleTrigger className="w-full text-left">
-            <div className={`relative overflow-hidden rounded-2xl p-6 md:p-8 transition-all duration-300 ml-8 ${
+            <div className={`relative overflow-hidden rounded-2xl p-4 md:p-6 transition-all duration-300 w-full min-w-0 max-w-full ${
               isDark 
                 ? 'bg-zinc-900 text-white border border-zinc-800/50 hover:border-zinc-700 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30' 
                 : 'bg-zinc-50 text-zinc-900 border border-zinc-200/50 hover:border-zinc-300 shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10'
@@ -301,32 +345,37 @@ function CollapsibleSection({
               {/* Minimal hover effect */}
               <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? 'from-white/[0.03]' : 'from-black/[0.02]'} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
               
-              <div className="relative z-10 space-y-4">
-                <div className="flex items-start justify-between gap-6">
-                  <div className="flex-1 space-y-4">
-                    <div className="flex items-baseline gap-4">
-                      <span className={`text-lg md:text-xl font-mono tracking-wider tabular-nums font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>{number}</span>
-                      <h2 className={`text-xl md:text-2xl font-bold tracking-tight leading-tight ${isDark ? 'text-white' : 'text-zinc-900'}`}>{title}</h2>
+              <div className="relative z-10 space-y-3 min-w-0">
+                <div className="flex items-start justify-between gap-4 min-w-0">
+                  <div className="flex-1 space-y-2 min-w-0">
+                    <div className="flex items-baseline gap-3 min-w-0">
+                      <span className={`text-base md:text-lg font-mono tracking-wider tabular-nums font-bold shrink-0 ${isDark ? 'text-white' : 'text-zinc-900'}`}>{number}</span>
+                      <h2 className={`text-lg md:text-xl font-bold tracking-tight leading-tight min-w-0 ${isDark ? 'text-white' : 'text-zinc-900'}`}>{title}</h2>
                     </div>
                     {subtitle && (
-                      <p className={`text-sm leading-relaxed max-w-3xl pl-10 ${isDark ? 'text-white/90' : 'text-zinc-800'}`}>{subtitle}</p>
+                      <p className={`text-sm leading-relaxed max-w-full pl-8 min-w-0 ${isDark ? 'text-white/90' : 'text-zinc-800'}`}>
+                        <HighlightedText text={subtitle} isDark={isDark} />
+                      </p>
                     )}
                     {keywords && keywords.length > 0 && (
-                      <div className="flex flex-wrap items-center gap-1.5 pt-1.5 pl-10">
-                        <span className={`text-xs font-semibold ${isDark ? 'text-white/70' : 'text-zinc-600'}`}>What to expect:</span>
-                        {keywords.map((keyword, i) => (
-                          <Badge 
-                            key={i} 
-                            variant="outline" 
-                            className={`px-2 py-0.5 text-xs font-medium transition-colors ${
-                              isDark 
-                                ? 'bg-white/15 border-white/30 text-white/90 hover:bg-white/20' 
-                                : 'bg-black/8 border-zinc-400/60 text-zinc-800 hover:bg-black/12'
-                            }`}
-                          >
-                            {keyword}
-                          </Badge>
-                        ))}
+                      <div className="flex flex-col gap-3 pt-4 pl-8">
+                        <div className={`h-px w-full ${isDark ? 'bg-white/10' : 'bg-black/10'}`} />
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className={`text-xs font-semibold ${isDark ? 'text-white/70' : 'text-zinc-600'}`}>Subsections:</span>
+                          {keywords.map((keyword, i) => (
+                            <Badge 
+                              key={i} 
+                              variant="outline" 
+                              className={`px-2 py-0.5 text-xs font-medium transition-colors ${
+                                isDark 
+                                  ? 'bg-white/15 border-white/30 text-white/90 hover:bg-white/20' 
+                                  : 'bg-black/8 border-zinc-400/60 text-zinc-800 hover:bg-black/12'
+                              }`}
+                            >
+                              {keyword}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -346,7 +395,7 @@ function CollapsibleSection({
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
-            <div className={`ml-8 mt-4 pl-5 border-l ${isDark ? 'border-white/15' : 'border-zinc-300/50'}`}>
+            <div className={`mt-4 pl-5 max-w-full rounded-3xl bg-gradient-to-br from-background via-muted/30 to-background border-l-4 border border-border/40 p-6 md:p-8 backdrop-blur-xl shadow-sm ${isDark ? 'border-l-white/15' : 'border-l-zinc-300/50'}`}>
               {children}
             </div>
           </CollapsibleContent>
@@ -379,43 +428,46 @@ function ProcessStep({
   return (
     <div 
       ref={elementRef}
-      className={`space-y-6 transition-all duration-1000 ease-out ${
+      className={`transition-all duration-1000 ease-out ${
         isVisible
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-8"
       }`}
       style={{ transitionDelay: `${index * 150}ms` }}
     >
-      <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
-          <span className="text-lg font-bold text-primary">{number}</span>
-        </div>
-        <div className="flex-1">
-          <h3 className="text-xl font-semibold mb-3">{title}</h3>
-          <p className="text-base text-muted-foreground leading-relaxed">{description}</p>
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-background via-muted/30 to-background border border-border/40 p-6 md:p-8 backdrop-blur-xl shadow-sm">
+        <div className="flex flex-col md:flex-row gap-6 items-start">
+          {image && (
+            <div className={`flex-shrink-0 w-full md:w-2/5 transition-all duration-1000 ease-out ${
+              isVisible
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-95"
+            }`} style={{ transitionDelay: `${index * 150 + 200}ms` }}>
+              <div className="relative rounded-2xl overflow-hidden border border-border/50 bg-muted/20 aspect-square max-w-sm">
+                <Image
+                  src={image}
+                  alt={imageAlt || title}
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 400px"
+                />
+                {imageCaption && (
+                  <p className="text-sm text-muted-foreground p-3 bg-muted/30 border-t border-border/50">{imageCaption}</p>
+                )}
+              </div>
+            </div>
+          )}
+          <div className="flex-1 space-y-4 min-w-0">
+            <div>
+              <h3 className="text-xl font-semibold mb-3">{title}</h3>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                <HighlightedText text={description} />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      {image && (
-        <div className={`relative rounded-2xl overflow-hidden border border-border/50 mt-6 transition-all duration-1000 ease-out ${
-          isVisible
-            ? "opacity-100 scale-100"
-            : "opacity-0 scale-95"
-        }`} style={{ transitionDelay: `${index * 150 + 200}ms` }}>
-          <div className="relative aspect-video w-full">
-            <Image
-              src={image}
-              alt={imageAlt || title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-          </div>
-          {imageCaption && (
-            <p className="text-sm text-muted-foreground p-4 bg-muted/30">{imageCaption}</p>
-          )}
-        </div>
-      )}
     </div>
   )
 }
@@ -638,10 +690,58 @@ interface EsperantoCaseStudyProps {
   }
 }
 
+// Page Transition Wrapper Component
+function PageTransitionWrapper({ children }: { children: React.ReactNode }) {
+  const [isVisible, setIsVisible] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    setIsVisible(false)
+    const timer = setTimeout(() => {
+      setIsVisible(true)
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [pathname])
+
+  return (
+    <div
+      className={cn(
+        "transition-opacity duration-300 ease-in-out transition-transform duration-300 ease-in-out",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
 // Header component that responds to sidebar state
 function HeaderWithSidebarState({ projectTitle }: { projectTitle: string }) {
   const { state } = useSidebar()
   const isCollapsed = state === "collapsed"
+  const router = useRouter()
+  const [isNavigating, setIsNavigating] = useState(false)
+
+  const handleOverviewClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    setIsNavigating(true)
+    
+    // Add fade-out animation to the main content
+    const mainContent = document.querySelector('main') as HTMLElement
+    const sidebarInset = document.querySelector('[class*="sidebar-inset"]') as HTMLElement
+    const targetElement = sidebarInset || mainContent
+    
+    if (targetElement) {
+      targetElement.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out'
+      targetElement.style.opacity = '0'
+      targetElement.style.transform = 'translateY(8px)'
+    }
+    
+    // Navigate after fade-out animation
+    setTimeout(() => {
+      router.push('/')
+    }, 300)
+  }
 
   return (
     <header 
@@ -658,7 +758,16 @@ function HeaderWithSidebarState({ projectTitle }: { projectTitle: string }) {
         <Breadcrumb className="flex-1">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">Overview</BreadcrumbLink>
+              <BreadcrumbLink 
+                href="/" 
+                onClick={handleOverviewClick}
+                className={cn(
+                  "hover:text-foreground transition-colors",
+                  isNavigating && "opacity-50 pointer-events-none"
+                )}
+              >
+                Overview
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -705,11 +814,12 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarCollapseHandler />
-      <SidebarInset className="overflow-x-hidden">
-        <ScrollIndicator sectionsRef={sectionsRef} />
-        <HeaderWithSidebarState projectTitle={project.title} />
+      <PageTransitionWrapper>
+        <SidebarInset className="overflow-x-hidden">
+          <ScrollIndicator sectionsRef={sectionsRef} />
+          <HeaderWithSidebarState projectTitle={project.title} />
 
-        <div className="flex flex-1 flex-col gap-12 p-6 md:p-8 lg:p-10 max-w-7xl mx-auto w-full min-w-0 pb-24">
+        <div className="flex flex-1 flex-col gap-12 pl-6 md:pl-8 lg:pl-10 pr-12 md:pr-16 lg:pr-20 pt-6 md:pt-8 lg:pt-10 pb-24 max-w-7xl mx-auto w-full min-w-0">
           {/* Hero Section - Compact */}
           <section className="space-y-6 mt-16 md:mt-20">
             {/* Project Title with Logo */}
@@ -809,7 +919,10 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
             </ScrollReveal>
           </section>
 
-          <div ref={sectionsRef} className="space-y-8">
+          <div ref={sectionsRef} className="space-y-8 relative pl-8 md:pl-12">
+            {/* Continuous timeline line - subtle, connects all sections from 01 to 06 */}
+            <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-border/60 z-0" />
+            
           {/* Section 01: The challenge */}
           {project.sections.challenge && (
             <CollapsibleSection
@@ -822,7 +935,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
             >
               <div className="space-y-6">
                 {project.sections.challenge.content && project.sections.challenge.content.length > 0 && (
-                  <div className="space-y-8">
+                  <div className="space-y-6">
                     {project.sections.challenge.content.map((item, index) => (
                       <ProcessStep 
                         key={index} 
@@ -856,9 +969,13 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
                   <ScrollReveal key={index} delay={index * 100}>
                     <div className="space-y-2 pb-4 border-b border-border/20 last:border-0">
                       <h3 className="text-lg font-semibold">{problem.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{problem.description}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        <HighlightedText text={problem.description} />
+                      </p>
                       {problem.evidence && (
-                        <p className="text-xs text-muted-foreground italic mt-1.5">Evidence: {problem.evidence}</p>
+                        <p className="text-sm text-muted-foreground mt-1.5">
+                          <span className="font-semibold">Data:</span> <span className="font-bold">{problem.evidence}</span>
+                        </p>
                       )}
                     </div>
                   </ScrollReveal>
@@ -877,7 +994,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
               isLast={false}
               theme="dark"
             >
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {project.sections.whatIDid.steps && project.sections.whatIDid.steps.map((step, index) => (
                   <ProcessStep key={index} {...step} index={index} />
                 ))}
@@ -1060,6 +1177,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
           </section>
         </div>
       </SidebarInset>
+      </PageTransitionWrapper>
     </SidebarProvider>
   )
 }

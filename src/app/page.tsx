@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
@@ -124,7 +124,16 @@ function DynamicHeader() {
 
 export default function Home() {
   const [hasInteracted, setHasInteracted] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    setIsVisible(false)
+    const timer = setTimeout(() => {
+      setIsVisible(true)
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <SidebarProvider>
@@ -132,7 +141,12 @@ export default function Home() {
       <SidebarInset className="overflow-x-hidden">
         <DynamicHeader />
         
-        <div className="flex flex-1 flex-col gap-12 p-6 md:p-12 max-w-5xl mx-auto mt-20 w-full min-w-0">
+        <div 
+          className={cn(
+            "flex flex-1 flex-col gap-12 p-6 md:p-12 max-w-5xl mx-auto mt-20 w-full min-w-0 transition-opacity duration-300 ease-in-out transition-transform duration-300 ease-in-out",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          )}
+        >
           {/* 1. Headline */}
           <section>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
@@ -188,7 +202,23 @@ export default function Home() {
               {caseStudies.map((study) => (
                 <div
                   key={study.id}
-                  onClick={() => router.push(`/case-study/${study.id}`)}
+                  onClick={() => {
+                    // Add fade-out animation to the main content
+                    const mainContent = document.querySelector('main') as HTMLElement
+                    const sidebarInset = document.querySelector('[class*="sidebar-inset"]') as HTMLElement
+                    const targetElement = sidebarInset || mainContent
+                    
+                    if (targetElement) {
+                      targetElement.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out'
+                      targetElement.style.opacity = '0'
+                      targetElement.style.transform = 'translateY(8px)'
+                    }
+                    
+                    // Navigate after fade-out animation
+                    setTimeout(() => {
+                      router.push(`/case-study/${study.id}`)
+                    }, 300)
+                  }}
                   className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${study.gradient} border ${study.borderColor} hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-1 flex flex-col cursor-pointer`}
                 >
                   {/* Image Section */}

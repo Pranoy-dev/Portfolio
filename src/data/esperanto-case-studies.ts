@@ -14,49 +14,56 @@ export const esperantoCaseStudies = [
     websiteUrl: undefined,
     sections: {
       about: {
-        title: "Research and redesign of Scania internal Software system",
+        title: "Research and redesign for Scania's internal software system",
         description: "Conversion is one of Scania's oldest and biggest monolith systems. It has been around for almost 20 years, and the team finally decided it was time to modernize it, because the impact on Scania IT worldwide is huge. I was brought in to understand this highly technical platform, run user studies across roles, and redesign it into a clearer, more modern system. My goal was simple: enable fast, confident software update decisions with full traceability.\n\nResearch showed the real problem was not too much information. Users spent around 60% of their time searching for context, and decision paralysis came from missing information and lack of guidance at key moments. The solution focused on bringing context and guidance into the right places. As a result, decision time dropped by half, and understanding the \"why\" behind each update became twice as easy."
       },
       challenge: {
         title: "The challenge",
-        description: "Engineering teams across 12 regions couldn't decide which software updates to approve, causing delays and inconsistent rollouts. The existing system lacked clarity and context, making it difficult for teams to make confident decisions quickly.",
-        keywords: ["Global Scale", "Decision Paralysis", "12 Regions", "Compliance"],
+        description: "They call Conversion the old giant. It is complex, heavily outdated, and difficult to change. Documentation is thin, and most engineering effort naturally goes into infrastructure improvements rather than user experience. That is the reality of working on an internal legacy system.",
+        keywords: ["Evolving context", "Changing priorities", "Low UX maturity"],
         content: [
           {
-            title: "Global scale complexity",
-            description: "Managing software updates across 12 regions with different compliance requirements and approval workflows created significant coordination challenges.",
-            image: "/Images/Conversion.jpg",
-            imageAlt: "Global scale",
-            imageCaption: "Teams across 12 regions needed a unified approach"
+            title: "Challenge 1: Evolving context",
+            description: "Scania's push for more interconnected truck systems kept adding new complexity. I was not asked to study Conversion in isolation. I had to interview users across countries and connected systems, then identify both quick wins and bigger \"moonshot\" improvements.",
+            image: "/Images/evolving context.png",
+            imageAlt: "Evolving context",
+            imageCaption: "Understanding interconnected systems across countries"
           },
           {
-            title: "Decision paralysis",
-            description: "Without clear context and visibility into all relevant information, teams hesitated to approve updates, causing delays that impacted product delivery timelines.",
-            image: "/Images/Conversion.jpg",
-            imageAlt: "Decision paralysis",
-            imageCaption: "Lack of context led to delayed decisions"
+            title: "Challenge 2: Changing priorities",
+            description: "With large systems, priorities move fast. Plans change, market needs shift, and technical constraints show up late. In this project, product design had to create clarity, make calls with imperfect information, and keep the team moving.",
+            image: "/Images/changing priorities.png",
+            imageAlt: "Changing priorities",
+            imageCaption: "Adapting to shifting priorities and constraints"
+          },
+          {
+            title: "Challenge 3: Low UX maturity",
+            description: "The team was strongly engineering-led and focused on hard infrastructure work more than flow and experience improvements. A big part of my role became building shared understanding, using strategy and empathy, and gradually shifting the mindset so we could land a better outcome together.",
+            image: "/Images/Uxmaturity.png",
+            imageAlt: "Low UX maturity",
+            imageCaption: "Building shared understanding and shifting mindset"
           }
         ]
       },
       realProblems: {
         title: "The real problems",
-        description: "Through research, I discovered the root causes behind the decision paralysis.",
-        keywords: ["User Research", "Root Cause Analysis", "60% Search Time", "Missing Context"],
+        description: "After a bunch of stakeholder interviews, feedback surveys, and screen recordings from users around the world, the patterns were hard to ignore.",
+        keywords: ["Context gap", "No traceability", "Broken flows"],
         problems: [
           {
-            title: "Missing context, not information overload",
-            description: "Users spent 60% of their time searching for context, not making decisions. Decision paralysis came from missing information, not too much information.",
-            evidence: "340 support tickets about 'missing context' in 6 months, Hotjar session recordings showing users clicking back/forth 8+ times per decision"
+            title: "Problem 1: Context gap",
+            description: "Most users did not struggle with the decision itself. They struggled with getting the information needed to make it. They kept jumping between systems just to understand what an update meant, what changed, and what to do next. A lot of people also did not know some of the existing tools even existed. The result was slow approvals and extra troubleshooting. In reality, users were spending 60%+ of their time hunting for context instead of approving updates.",
+            evidence: "Users spending 60%+ of their time hunting for context instead of approving updates"
           },
           {
-            title: "Inconsistent workflows",
-            description: "A workshop with 8 regional leads revealed 5 different approval workflows, showing the lack of standardization. Regional teams had different mental models of the approval process.",
-            evidence: "5 different approval workflows across regions"
+            title: "Problem 2: No traceability",
+            description: "The process worked on trust, until it did not. At Scania's scale, it became really hard to see who did what, when, and why. That lack of traceability created stress in the team and led to avoidable breakdowns. We estimated around 20% of downtime was tied to this kind of \"who changed what?\" problem.",
+            evidence: "Around 20% of downtime was tied to traceability issues"
           },
           {
-            title: "Fragmented information",
-            description: "Critical information was scattered across multiple screens and systems, requiring users to piece together context manually before making decisions.",
-            evidence: "Users needed to access 8+ different screens to gather all necessary context"
+            title: "Problem 3: Broken flows",
+            description: "Conversion was built over two decades, and it shows. Features were added as demands came in from different regions, which meant a lot of half-finished flows and technical workarounds. People lost time just completing basic tasks, fixing bugs, and planning new features. My takeaway was simple: if we clean up the core flows, we can remove a lot of wasted effort, likely cutting update work time by around 50% for common tasks.",
+            evidence: "Cleaning up core flows could cut update work time by around 50% for common tasks"
           }
         ]
       },
