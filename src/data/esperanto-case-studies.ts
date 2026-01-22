@@ -69,32 +69,40 @@ export const esperantoCaseStudies = [
       },
       whatIDid: {
         title: "What I did",
-        description: "I conducted comprehensive research and explored multiple solution approaches to address the core problems.",
-        keywords: ["User Interviews", "Workshops", "Solution Exploration", "Research"],
+        description: "To make this feel like a great Scania experience, I focused on four things: research, design, prototyping, and testing.",
+        keywords: ["UX research", "UI design", "User testing", "Methods"],
         steps: [
           {
             number: "1",
-            title: "Research & Discovery",
-            description: "I knew nothing about enterprise governance systems so I started by learning more about compliance workflows and audit requirements. I conducted 12 user interviews across 4 regions to understand the pain points. I also analyzed 340 support tickets about 'missing context' in 6 months and reviewed Hotjar session recordings showing users clicking back/forth 8+ times per decision.",
+            title: "UX research",
+            description: "I started by going through existing manuals and product documentation to understand the system. Then I interviewed key stakeholders: field engineers, business analysts, and product owners. We also added Hotjar to record sessions, and I ran additional interviews to capture needs across regions. From there, I set up a simple feedback loop so learning kept coming in.",
             image: "/Images/Conversion.jpg",
-            imageAlt: "User research session",
-            imageCaption: "Conducting user interviews with regional engineering leads across 4 regions"
+            imageAlt: "UX research",
+            imageCaption: "Interviewing stakeholders and analyzing user sessions"
           },
           {
             number: "2",
-            title: "Problem Analysis",
-            description: "Through research, I discovered that users spent 60% of their time searching for context, not making decisions. A workshop with 8 regional leads revealed 5 different approval workflows, showing the lack of standardization.",
-            image: "/Images/Conversion.jpg",
-            imageAlt: "Problem analysis",
-            imageCaption: "Workshop with 8 regional leads revealed 5 different approval workflows"
+            title: "UI design",
+            description: "I designed everything using Scania's design system, Tegel. Once wireframes were approved, I moved into UI, documented patterns, and delivered through Figma and Jira.",
+            image: "/Images/UI design.png",
+            imageAlt: "UI design",
+            imageCaption: "Designing with Scania's Tegel design system"
           },
           {
             number: "3",
-            title: "Solution Exploration",
-            description: "I explored three options: Option A - Enhanced search and filters (quick win, limited impact), Option B - Contextual decision cards with all info in one place (chosen), Option C - AI-powered recommendations (too risky, compliance concerns). Option B provided the best balance: all context visible at decision point, clear action paths, and maintained human control.",
+            title: "User testing",
+            description: "We tested continuously in a dedicated test environment before release. I checked builds against the design, and when something changed, I evaluated it with basic heuristics and usability checks. I also collected feedback from users and adjacent systems, documented it, and shared it with the product team.",
             image: "/Images/Conversion.jpg",
-            imageAlt: "Solution exploration",
-            imageCaption: "Exploring different solution approaches - contextual cards won"
+            imageAlt: "User testing",
+            imageCaption: "Continuous testing and user feedback collection"
+          },
+          {
+            number: "4",
+            title: "Methods",
+            description: "I used a combination of research methods including stakeholder interviews, user session recordings, feedback surveys, and usability testing. I documented findings, shared insights with the team, and logged everything in Jira with designs when needed.",
+            image: "/Images/Conversion.jpg",
+            imageAlt: "Methods",
+            imageCaption: "Applying various research and design methods"
           }
         ]
       },
