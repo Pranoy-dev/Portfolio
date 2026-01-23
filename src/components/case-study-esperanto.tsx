@@ -65,7 +65,7 @@ function ScrollReveal({ children, delay = 0, className = "" }: { children: React
 }
 
 // Highlight Keywords Component - Subtle badge styling for important terms
-function HighlightedText({ text, isDark = false }: { text: string; isDark?: boolean }) {
+export function HighlightedText({ text, isDark = false }: { text: string; isDark?: boolean }) {
   const keywords = [
     "monolith systems",
     "highly technical platform",
@@ -86,7 +86,19 @@ function HighlightedText({ text, isDark = false }: { text: string; isDark?: bool
     "interconnected truck systems",
     "new complexity",
     "quick wins",
+    "moonshot opportunities",
     "moonshot improvements",
+    "Conversion",
+    "technology and features",
+    "good design decisions",
+    "structured and unstructured interviews",
+    "product owner",
+    "real knowledge",
+    "Miro",
+    "FigJam",
+    "power users",
+    "research restrictions",
+    "prototypes",
     "changing priorities",
     "large systems",
     "priorities move fast",
@@ -146,7 +158,69 @@ function HighlightedText({ text, isDark = false }: { text: string; isDark?: bool
     "heuristics",
     "usability checks",
     "adjacent systems",
-    "product team"
+    "product team",
+    "design system",
+    "Tegel",
+    "core components",
+    "login screens",
+    "table variations",
+    "foundation",
+    "brand palette",
+    "color tones",
+    "component library",
+    "wireframes",
+    "UI",
+    "landing page",
+    "search entry point",
+    "simplicity",
+    "Order view",
+    "filtering",
+    "high-graphics",
+    "fancy UI",
+    "Figma",
+    "Jira",
+    "design system",
+    "evolving fast",
+    "patterns",
+    "table variations",
+    "foundation",
+    "get comfortable",
+    "brand palette",
+    "color tones",
+    "component library",
+    "translating wireframes",
+    "landing page",
+    "search entry point",
+    "decision-making",
+    "simplicity",
+    "Order view",
+    "complexity",
+    "filtering",
+    "actions",
+    "clean way",
+    "team confusion",
+    "User testing",
+    "user testing",
+    "Hotjar",
+    "user sessions",
+    "session recordings",
+    "heatmaps",
+    "rage clicks",
+    "U-turns",
+    "NPS",
+    "surveys",
+    "built-in surveys",
+    "feedback loop",
+    "wireframes",
+    "clickable prototypes",
+    "real builds",
+    "ongoing habit",
+    "sources of truth",
+    "quantitative direction",
+    "real behaviour",
+    "simplification and optimization",
+    "broken flows",
+    "prioritize fixes"
   ]
 
   // Sort keywords by length (longest first) to prioritize longer matches
@@ -469,22 +543,30 @@ function ProcessStep({
   )
 }
 
-// Modal Component for What I Did Steps - Apple Design
+// Modal Component for What I Did Steps - Scrollable Document Style
 function StepModal({ 
   step, 
   isOpen, 
   onClose 
 }: { 
-  step: { title: string; description: string; image?: string; imageAlt?: string; imageCaption?: string } | null
+  step: { 
+    title: string
+    description: string
+    image?: string
+    imageAlt?: string
+    imageCaption?: string
+    additionalImages?: Array<{
+      src: string
+      alt: string
+      layout?: 'left' | 'top'
+    }>
+  } | null
   isOpen: boolean
   onClose: () => void
 }) {
-  const [showFullDescription, setShowFullDescription] = useState(false)
-  
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
-      setShowFullDescription(false)
     } else {
       document.body.style.overflow = ''
     }
@@ -496,88 +578,455 @@ function StepModal({
   if (!isOpen || !step) return null
 
   const descriptionLines = step.description.split('\n\n')
-  const previewText = descriptionLines[0]
-  const fullText = step.description
+  
+  // For UX research, we'll insert images at strategic points matching the text
+  const isUXResearch = step.title.toLowerCase().includes('ux research')
+  const isUIDesign = step.title.toLowerCase().includes('ui design')
+  const isUserTesting = step.title.toLowerCase().includes('user testing')
+  const uxResearchImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter: number }> = isUXResearch ? [
+    { src: '/Images/UX research/Manual.png', alt: 'Reading manuals and product documentation', layout: 'left', insertAfter: 0 },
+    { src: '/Images/UX research/Previous designers.png', alt: 'Reviewing previous designer work', layout: 'top', insertAfter: 2 },
+    { src: '/Images/UX research/Figjam.png', alt: 'Capturing insights in Miro and FigJam', layout: 'top', insertAfter: 3 },
+    { src: '/Images/UX research/Survey.png', alt: 'Surveys sent after prototypes were ready', layout: 'left', insertAfter: 4 }
+  ] : []
+  
+  // For UI design, show all images from the UI design folder
+  const uiDesignImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUIDesign ? [
+    { src: '/Images/UI design/Login page.png', alt: 'Scania login page design', layout: 'top' },
+    { src: '/Images/UI design/Main colors.png', alt: 'Scania main colors', layout: 'top' },
+    { src: '/Images/UI design/UI components.png', alt: 'Scania component library', layout: 'top' },
+    { src: '/Images/UI design/Single search entry.png', alt: 'Simple landing page with single search entry point', layout: 'top' },
+    { src: '/Images/UI design/Order.png', alt: 'Order view with complex information and filtering', layout: 'top' },
+    { src: '/Images/UI design/Mobile UI.png', alt: 'Mobile UI design', layout: 'top' }
+  ] : []
+  
+  // For User testing, show all images from the User testing folder
+  const userTestingImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUserTesting ? [
+    { src: '/Images/User testing/User sessions.png', alt: 'User sessions overview', layout: 'top' },
+    { src: '/Images/User testing/recordings.png', alt: 'User session recordings', layout: 'top' },
+    { src: '/Images/User testing/headmap.png', alt: 'User testing heatmap', layout: 'top' },
+    { src: '/Images/User testing/Rage clicks.png', alt: 'Rage clicks analysis', layout: 'top' },
+    { src: '/Images/User testing/NPS.png', alt: 'Net Promoter Score', layout: 'top' }
+  ] : []
+  
+  // Use UX research images if it's UX research, UI design images if it's UI design, User testing images if it's User testing, otherwise use additionalImages
+  const allImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUXResearch 
+    ? uxResearchImages 
+    : (isUIDesign 
+      ? uiDesignImages 
+      : (isUserTesting
+        ? userTestingImages
+        : (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined }))
+      )
+    )
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-0"
       onClick={onClose}
     >
       {/* Backdrop with strong blur - Apple style */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-xl" />
       
-      {/* Modal Content - Apple Design */}
+      {/* Modal Content - Document Style, Scrollable */}
       <div 
-        className="relative z-10 w-full max-w-5xl max-h-[95vh] overflow-hidden rounded-3xl bg-gradient-to-br from-background via-background to-muted/20 border border-border/30 shadow-2xl shadow-black/50"
+        className="relative z-10 w-full h-full max-w-4xl max-h-[95vh] overflow-hidden rounded-none md:rounded-3xl bg-background border border-border/30 shadow-2xl shadow-black/50 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button - Apple style */}
-        <button
-          onClick={onClose}
-          className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full bg-background/90 backdrop-blur-md border border-border/40 flex items-center justify-center hover:bg-background transition-all duration-200 hover:scale-110"
-        >
-          <X className="h-5 w-5" />
-        </button>
-
-        {/* Hero Image Section */}
-        {step.image && (
-          <div className="relative w-full aspect-[21/9] overflow-hidden">
-            <Image
-              src={step.image}
-              alt={step.imageAlt || step.title}
-              fill
-              className="object-cover"
-              sizes="100vw"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/40" />
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="flex items-center justify-between px-6 md:px-8 py-4">
+            <h2 className="text-xl md:text-2xl font-bold tracking-tight truncate pr-4">
+              {step.title}
+            </h2>
+            <button
+              onClick={onClose}
+              className="flex-shrink-0 w-10 h-10 rounded-full bg-background/90 backdrop-blur-md border border-border/40 flex items-center justify-center hover:bg-background transition-all duration-200 hover:scale-110"
+            >
+              <X className="h-5 w-5" />
+            </button>
           </div>
-        )}
+        </div>
 
-        {/* Content Section */}
-        <div className="p-8 md:p-12 overflow-y-auto max-h-[calc(95vh-300px)]">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight leading-tight">{step.title}</h2>
-          
-          <div className="space-y-4">
-            {!showFullDescription ? (
-              <>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  <HighlightedText text={previewText} />
-                </p>
-                {descriptionLines.length > 1 && (
-                  <Button
-                    onClick={() => setShowFullDescription(true)}
-                    variant="outline"
-                    className="mt-4"
-                  >
-                    Read more
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                )}
-              </>
-            ) : (
-              <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
-                <HighlightedText text={fullText} />
-                <Button
-                  onClick={() => setShowFullDescription(false)}
-                  variant="ghost"
-                  size="sm"
-                  className="mt-4"
-                >
-                  Show less
-                </Button>
+        {/* Scrollable Content Area - Document Style */}
+        <div className="flex-1 overflow-y-auto overscroll-contain">
+          <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-8 md:py-12">
+            {/* Hero Image Section - Only show if not UX research, UI design, or User testing */}
+            {step.image && !isUXResearch && !isUIDesign && !isUserTesting && (
+              <div className="mb-12 rounded-lg overflow-hidden border border-border/20">
+                <div className="relative w-full" style={{ minHeight: '400px' }}>
+                  <Image
+                    src={step.image}
+                    alt={step.imageAlt || step.title}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
+                    priority
+                  />
+                </div>
               </div>
             )}
-          </div>
 
-          {step.imageCaption && (
-            <div className="mt-8 pt-8 border-t border-border/20">
-              <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                {step.imageCaption}
-              </p>
+            {/* Document Content with Academic Paper Layout */}
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <div className="space-y-8 text-base md:text-lg leading-relaxed text-foreground">
+                {descriptionLines.map((paragraph, index) => {
+                  // Check if this paragraph is shown on the right of a previous left-layout image
+                  const leftImageWithThisOnRight = allImages.find((img) => {
+                    if (img.layout !== 'left') return false
+                    const isFirstParaOnRight = img.insertAfter + 1 === index
+                    const isSurveySecondPara = img.src.includes('Survey') && img.insertAfter + 2 === index
+                    return isFirstParaOnRight || isSurveySecondPara
+                  })
+                  if (leftImageWithThisOnRight) {
+                    return null // Skip - already shown on the right
+                  }
+                  
+                  // Find image that should be inserted after this paragraph
+                  const imageToInsert = allImages.find((img) => img.insertAfter === index)
+                  
+                  // If there's a left-layout image after this paragraph, show image with next paragraph(s) on right
+                  if (imageToInsert && imageToInsert.layout === 'left') {
+                    // Check if this is the Survey image - show 2 paragraphs on right
+                    const isSurveyImage = imageToInsert.src.includes('Survey')
+                    const paragraphsToShow = isSurveyImage ? 2 : 1
+                    
+                    return (
+                      <div key={index} className="my-8">
+                        {/* Show image on left with next paragraph(s) on right */}
+                        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 items-start">
+                          <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '400px' }}>
+                            <Image
+                              src={imageToInsert.src}
+                              alt={imageToInsert.alt}
+                              fill
+                              className="object-contain p-4"
+                              sizes="(max-width: 768px) 100vw, 35vw"
+                              unoptimized
+                            />
+                          </div>
+                          <div className="md:pl-4">
+                            {/* Show next paragraph(s) text on the right */}
+                            {Array.from({ length: paragraphsToShow }).map((_, i) => {
+                              const paraIndex = index + 1 + i
+                              if (paraIndex < descriptionLines.length) {
+                                return (
+                                  <p key={i} className="mb-6">
+                                    <HighlightedText text={descriptionLines[paraIndex]} />
+                                  </p>
+                                )
+                              }
+                              return null
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                  
+                  // Normal paragraph rendering
+                  return (
+                    <div key={index}>
+                      {/* Paragraph text */}
+                      <p className="mb-6">
+                        <HighlightedText text={paragraph} />
+                      </p>
+                      
+                      {/* Insert image after paragraph (for top layout) */}
+                      {imageToInsert && imageToInsert.layout === 'top' && (
+                        <div className="my-8">
+                          <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <Image
+                              src={imageToInsert.src}
+                              alt={imageToInsert.alt}
+                              fill
+                              className="object-contain p-4"
+                              sizes="(max-width: 768px) 100vw, 80vw"
+                              unoptimized
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+                
+                {/* Display any remaining images that weren't inserted */}
+                {allImages.filter(img => img.insertAfter === undefined || !descriptionLines.some((_, idx) => idx === img.insertAfter)).length > 0 && (
+                  <div className="mt-12 space-y-8">
+                    {(() => {
+                      const filteredImages = allImages.filter(img => img.insertAfter === undefined || !descriptionLines.some((_, idx) => idx === img.insertAfter))
+                      const mainColorsIndex = filteredImages.findIndex(img => img.src.includes('Main colors'))
+                      const uiComponentsIndex = filteredImages.findIndex(img => img.src.includes('UI components'))
+                      const loginPageIndex = filteredImages.findIndex(img => img.src.includes('Login page'))
+                      const singleSearchIndex = filteredImages.findIndex(img => img.src.includes('Single search entry'))
+                      const orderIndex = filteredImages.findIndex(img => img.src.includes('Order.png'))
+                      const mobileUIIndex = filteredImages.findIndex(img => img.src.includes('Mobile UI'))
+                      const userSessionsIndex = filteredImages.findIndex(img => img.src.includes('User sessions'))
+                      const recordingsIndex = filteredImages.findIndex(img => img.src.includes('recordings'))
+                      const headmapIndex = filteredImages.findIndex(img => img.src.includes('headmap'))
+                      const rageClicksIndex = filteredImages.findIndex(img => img.src.includes('Rage clicks'))
+                      const npsIndex = filteredImages.findIndex(img => img.src.includes('NPS'))
+                      const isUIDesignPair = isUIDesign && mainColorsIndex !== -1 && uiComponentsIndex !== -1 && Math.abs(mainColorsIndex - uiComponentsIndex) === 1
+                      
+                      return filteredImages.map((img, imgIndex) => {
+                        // Skip UI components if it's right after Main colors (will be rendered together)
+                        if (isUIDesignPair && imgIndex === uiComponentsIndex && uiComponentsIndex === mainColorsIndex + 1) {
+                          return null
+                        }
+                        
+                        // Render Login page image with text below it
+                        if (isUIDesign && imgIndex === loginPageIndex && loginPageIndex === 0) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="Scania has its own design system, and honestly, I think it is very cool and evolving fast. Most of what we needed was already there, from core components to patterns like login screens. Sometimes we still had to build a few things ourselves, like more complex table variations, but the foundation was strong." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Main colors and UI components side by side
+                        if (isUIDesignPair && imgIndex === mainColorsIndex) {
+                          const mainColorsImg = filteredImages[mainColorsIndex]
+                          const uiComponentsImg = filteredImages[uiComponentsIndex]
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '400px' }}>
+                                  <Image
+                                    src={mainColorsImg.src}
+                                    alt={mainColorsImg.alt}
+                                    fill
+                                    className="object-contain p-4"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    unoptimized
+                                  />
+                                </div>
+                                <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '400px' }}>
+                                  <Image
+                                    src={uiComponentsImg.src}
+                                    alt={uiComponentsImg.alt}
+                                    fill
+                                    className="object-contain p-4"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    unoptimized
+                                  />
+                                </div>
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="The first thing I did was get comfortable with the system. I studied the brand palette and color tones, then went through the component library to understand what is used where, and why." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Single search entry image with text below it
+                        if (isUIDesign && imgIndex === singleSearchIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="Once I had that, I started translating wireframes into UI. One of my favourite moments was designing a landing page that felt almost too simple: the user basically sees one main thing, a single search entry point. It looks obvious now, but getting there took a lot of discussion and decision-making. That simplicity was earned." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Order image with text below it
+                        if (isUIDesign && imgIndex === orderIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text={'On the other side, we had screens that look calm at first glance but carry a lot of complexity under the hood. The "Order" view is a good example. It is packed with information, filtering, and actions. The challenge with these screens is not adding features, it is understanding what connects to what, then communicating it in a clean way, and defending that simplicity through multiple loops of team confusion and change.'} />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Mobile UI image with text below it
+                        if (isUIDesign && imgIndex === mobileUIIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="And if you are wondering where the high-graphics, fancy UI is: I love that too, and we do use it sometimes. It just was not the right fit for this project." />
+                              </p>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="You can find more UI-related information in the next section called Design solution." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render User sessions image with text above and below
+                        if (isUserTesting && imgIndex === userSessionsIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="User testing happened throughout the project, in whatever form made sense at the time. We tested early to understand what was working and what was not. We tested again when the first wireframes were ready. We tested clickable prototypes before sending anything to development. And we kept testing once we had real builds in place. I am describing it here as one track, but it was really an ongoing habit." />
+                              </p>
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text={'One of my favourite tools for this was Hotjar. It was approved by Scania IT, and I was the one driving the setup so we could use it inside internal products. Within a few weeks, we started collecting what Hotjar calls "user sessions", and it quickly became one of our most useful sources of truth.'} />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render recordings image with text below
+                        if (isUserTesting && imgIndex === recordingsIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="Session recordings gave us a real view of how people moved through the system. Recordings were random, with sensitive data removed and user IDs blurred. I watched these sessions to spot patterns and form hypotheses. It was great quantitative direction, it helped us see where to look. But it did not always explain the why, so it worked best when paired with conversations." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render headmap image with text below
+                        if (isUserTesting && imgIndex === headmapIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="Heatmaps helped us understand what people actually used on key pages, and what they ignored. This made it much easier to argue for simplification and optimization, because we could point to real behaviour instead of opinions." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Rage clicks image with text below
+                        if (isUserTesting && imgIndex === rageClicksIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="We also looked for signals like rage clicks and U-turns. Those usually showed friction, broken flows, or areas that were not properly tested. In a large internal system like Conversion, these signals were common, and they helped us prioritize fixes fast." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render NPS image with text below
+                        if (isUserTesting && imgIndex === npsIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="Alongside Hotjar, we used surveys and NPS to answer specific questions as they came up. The built-in surveys were also a good way to find users who were willing to help us improve the system, and to keep a feedback loop open as the product evolved." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render other images normally
+                        return (
+                          <div key={imgIndex} className={img.layout === 'left' ? 'grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 items-start' : ''}>
+                            <div className={`relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20 ${img.layout === 'left' ? '' : 'mb-4'}`} style={{ height: img.layout === 'left' ? '400px' : '500px' }}>
+                              <Image
+                                src={img.src}
+                                alt={img.alt}
+                                fill
+                                className="object-contain p-4"
+                                sizes={img.layout === 'left' ? '(max-width: 768px) 100vw, 35vw' : '(max-width: 768px) 100vw, 80vw'}
+                                unoptimized
+                              />
+                            </div>
+                          </div>
+                        )
+                      })
+                    })()}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
@@ -661,7 +1110,8 @@ function WhatIDidSection({
               return (
                 <div
                   key={index}
-                  className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+                  onClick={() => setSelectedStep(index)}
+                  className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
                 >
                   {/* Apple TV-style card container */}
                   <div className="relative aspect-[4/5] w-full overflow-hidden">
@@ -723,9 +1173,6 @@ function WhatIDidSection({
                             <source src="/Images/What I did/Methods.mov" type="video/mp4" />
                           </video>
                         )}
-                        
-                        {/* Apple TV-style subtle gradient overlay at bottom */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
                       </>
                     )}
                     
@@ -777,8 +1224,6 @@ function WhatIDidSection({
                           height: '100%',
                           width: '100%',
                           background: 'linear-gradient(to top, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)',
-                          backdropFilter: 'blur(20px) saturate(180%)',
-                          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
                           transform: 'translateZ(0)',
                           isolation: 'isolate',
                         }}
@@ -791,25 +1236,46 @@ function WhatIDidSection({
                     </div>
                     
                     {/* Apple TV-style content section - Bottom - Entire block as button */}
-                    <button
-                      onClick={() => setSelectedStep(index)}
-                      className="absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 text-white font-semibold hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2 group/btn cursor-pointer"
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setSelectedStep(index)
+                      }}
+                      className="absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 text-white font-semibold flex items-center justify-center gap-2 group/btn cursor-pointer overflow-hidden"
                       style={{
-                        background: 'rgba(0, 0, 0, 0.85)',
-                        backdropFilter: 'blur(12px) saturate(180%)',
-                        WebkitBackdropFilter: 'blur(12px) saturate(180%)',
-                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                        background: 'rgba(0, 0, 0, 1)',
+                        borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.2)',
+                        transform: 'scale(1)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+                        e.currentTarget.style.transform = 'scale(1.02) translateY(-2px)'
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 1)'
+                        e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2)'
+                        e.currentTarget.style.borderTop = '1px solid rgba(255, 255, 255, 0.25)'
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                        e.currentTarget.style.transform = 'scale(1) translateY(0)'
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 1)'
+                        e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.2)'
+                        e.currentTarget.style.borderTop = '1px solid rgba(255, 255, 255, 0.15)'
                       }}
                     >
-                      <span className="text-sm font-medium tracking-tight">{step.title}</span>
-                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-1 shrink-0" />
-                    </button>
+                      {/* Subtle shine effect on hover - Apple style */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-white/0 group-hover/btn:from-white/5 group-hover/btn:via-white/3 group-hover/btn:to-white/0 transition-all duration-500 pointer-events-none" />
+                      
+                      {/* Top edge highlight - Apple glass effect */}
+                      <div className="absolute top-0 left-0 right-0 h-px pointer-events-none">
+                        <div className="h-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover/btn:via-white/60 transition-all duration-300" />
+                      </div>
+                      
+                      {/* Content */}
+                      <span className="text-sm font-medium tracking-tight relative z-10 group-hover/btn:tracking-tighter transition-all duration-300">
+                        {step.title}
+                      </span>
+                      <ArrowRight className="h-4 w-4 relative z-10 shrink-0 transition-all duration-300 group-hover/btn:translate-x-2 group-hover/btn:scale-110" />
+                    </div>
                   </div>
                 </div>
               )
@@ -818,7 +1284,7 @@ function WhatIDidSection({
         </div>
       </CollapsibleSection>
 
-      {/* Modal */}
+      {/* Modal - Scrollable document style */}
       {selectedStep !== null && steps && (
         <StepModal
           step={steps[selectedStep]}

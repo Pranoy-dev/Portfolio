@@ -75,15 +75,27 @@ export const esperantoCaseStudies = [
           {
             number: "1",
             title: "UX research",
-            description: "I started by going through existing manuals and product documentation to understand the system. Then I interviewed key stakeholders: field engineers, business analysts, and product owners. We also added Hotjar to record sessions, and I ran additional interviews to capture needs across regions. From there, I set up a simple feedback loop so learning kept coming in.",
-            image: "/Images/Conversion.jpg",
+            description: "Since the goal was to understand Conversion and find both quick wins and moonshot opportunities, we started with the basics: reading the manuals. I genuinely believe that without a solid understanding of the technology and features, it is hard to make good design decisions.\n\nSince the goal was to understand Conversion and find both quick wins and moonshot opportunities, we started with the basics: reading the manuals. I genuinely believe that without a solid understanding of the technology and features, it is hard to make good design decisions.\n\nNext, I reviewed the work from the previous designer and their findings. I wanted to build on what already existed, without getting stuck in suggestions that were not fully documented.\n\nAfter that, we spoke to users through a mix of structured and unstructured interviews. I talked with the product owner to understand the vision, engineers across different regions who work with the system daily, and business analysts who have supported the platform for years. One thing became clear fast: most of the real knowledge lives with a small group of people who have been close to Conversion for a long time.\n\nI captured insights first in Miro and later in FigJam, and shared learnings in regular sessions with the team. A lot of the conversations were about how flows actually work today, personal workarounds, what frustrates people, and what they wish the system could do next.\n\nWe also built a small group of \"power users\" and kept coming back to them at every stage to validate direction and decisions. They played a big role in shaping the final design.\n\nDue to Scania's research restrictions, we could not run surveys at the start. We did send them later, once early prototypes were ready.",
+            image: "/Images/What I did/UX research.png",
             imageAlt: "UX research",
-            imageCaption: "Interviewing stakeholders and analyzing user sessions"
+            imageCaption: "Interviewing stakeholders and analyzing user sessions",
+            additionalImages: [
+              {
+                src: "/Images/What I did/User persona.png",
+                alt: "User persona",
+                layout: "left" // image on left, text on right
+              },
+              {
+                src: "/Images/What I did/UX research.png",
+                alt: "UX research insights",
+                layout: "top" // image on top, text below
+              }
+            ]
           },
           {
             number: "2",
             title: "UI design",
-            description: "I designed everything using Scania's design system, Tegel. Once wireframes were approved, I moved into UI, documented patterns, and delivered through Figma and Jira.",
+            description: "",
             image: "/Images/UI design.png",
             imageAlt: "UI design",
             imageCaption: "Designing with Scania's Tegel design system"
@@ -91,7 +103,7 @@ export const esperantoCaseStudies = [
           {
             number: "3",
             title: "User testing",
-            description: "We tested continuously in a dedicated test environment before release. I checked builds against the design, and when something changed, I evaluated it with basic heuristics and usability checks. I also collected feedback from users and adjacent systems, documented it, and shared it with the product team.",
+            description: "",
             image: "/Images/Conversion.jpg",
             imageAlt: "User testing",
             imageCaption: "Continuous testing and user feedback collection"
