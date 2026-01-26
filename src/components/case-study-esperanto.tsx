@@ -169,7 +169,11 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "color tones",
     "component library",
     "wireframes",
-    "UI",
+    "make UI when needed",
+    "ready-to-build",
+    "think and feel",
+    "do not match",
+    "judge",
     "landing page",
     "search entry point",
     "simplicity",
@@ -220,7 +224,49 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "real behaviour",
     "simplification and optimization",
     "broken flows",
-    "prioritize fixes"
+    "prioritize fixes",
+    "Double Diamond",
+    "UX designer",
+    "user experience",
+    "usability",
+    "UX maturity",
+    "R&D teams",
+    "design-mature",
+    "engineering-led teams",
+    "agile setup",
+    "sprints",
+    "backlog",
+    "ongoing delivery",
+    "front-end assets",
+    "user journey maps",
+    "complex flows",
+    "behavioural data",
+    "empathy layer",
+    "user profiles",
+    "product team",
+    "validating solutions",
+    "information moves",
+    "systems and features",
+    "design with confidence",
+    "information flows",
+    "internal information flows",
+    "mock data",
+    "mapped the systems",
+    "send and receive data",
+    "data is exchanged",
+    "product experts",
+    "UML-style flow map",
+    "UML",
+    "flow map",
+    "backbone",
+    "workshops",
+    "data exchange",
+    "data flows",
+    "information architecture",
+    "system mapping",
+    "data mapping",
+    "internal system",
+    "complex internal system"
   ]
 
   // Sort keywords by length (longest first) to prioritize longer matches
@@ -583,6 +629,7 @@ function StepModal({
   const isUXResearch = step.title.toLowerCase().includes('ux research')
   const isUIDesign = step.title.toLowerCase().includes('ui design')
   const isUserTesting = step.title.toLowerCase().includes('user testing')
+  const isMethods = step.title.toLowerCase().includes('methods')
   const uxResearchImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter: number }> = isUXResearch ? [
     { src: '/Images/UX research/Manual.png', alt: 'Reading manuals and product documentation', layout: 'left', insertAfter: 0 },
     { src: '/Images/UX research/Previous designers.png', alt: 'Reviewing previous designer work', layout: 'top', insertAfter: 2 },
@@ -609,14 +656,26 @@ function StepModal({
     { src: '/Images/User testing/NPS.png', alt: 'Net Promoter Score', layout: 'top' }
   ] : []
   
-  // Use UX research images if it's UX research, UI design images if it's UI design, User testing images if it's User testing, otherwise use additionalImages
+  // For Methods, show all images from the Methods folder
+  const methodsImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isMethods ? [
+    { src: '/Images/Methods/The_Double_Diamond_from_the_Fountain_Institute-min.webp', alt: 'Double Diamond design process', layout: 'top' },
+    { src: '/Images/Methods/Agile.png', alt: 'Agile methodology', layout: 'top' },
+    { src: '/Images/Methods/user journey.png', alt: 'User journey mapping', layout: 'top' },
+    { src: '/Images/Methods/Emphathy method.jpeg', alt: 'Empathy method', layout: 'top' },
+    { src: '/Images/Methods/User persona.png', alt: 'User persona', layout: 'top' }
+  ] : []
+  
+  // Use UX research images if it's UX research, UI design images if it's UI design, User testing images if it's User testing, Methods images if it's Methods, otherwise use additionalImages
   const allImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUXResearch 
     ? uxResearchImages 
     : (isUIDesign 
       ? uiDesignImages 
       : (isUserTesting
         ? userTestingImages
-        : (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined }))
+        : (isMethods
+          ? methodsImages
+          : (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined }))
+        )
       )
     )
 
@@ -651,8 +710,8 @@ function StepModal({
         {/* Scrollable Content Area - Document Style */}
         <div className="flex-1 overflow-y-auto overscroll-contain">
           <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-8 md:py-12">
-            {/* Hero Image Section - Only show if not UX research, UI design, or User testing */}
-            {step.image && !isUXResearch && !isUIDesign && !isUserTesting && (
+            {/* Hero Image Section - Only show if not UX research, UI design, User testing, or Methods */}
+            {step.image && !isUXResearch && !isUIDesign && !isUserTesting && !isMethods && (
               <div className="mb-12 rounded-lg overflow-hidden border border-border/20">
                 <div className="relative w-full" style={{ minHeight: '400px' }}>
                   <Image
@@ -767,6 +826,11 @@ function StepModal({
                       const headmapIndex = filteredImages.findIndex(img => img.src.includes('headmap'))
                       const rageClicksIndex = filteredImages.findIndex(img => img.src.includes('Rage clicks'))
                       const npsIndex = filteredImages.findIndex(img => img.src.includes('NPS'))
+                      const doubleDiamondIndex = filteredImages.findIndex(img => img.src.includes('Double_Diamond'))
+                      const agileIndex = filteredImages.findIndex(img => img.src.includes('Agile.png'))
+                      const userJourneyIndex = filteredImages.findIndex(img => img.src.includes('user journey'))
+                      const empathyMethodIndex = filteredImages.findIndex(img => img.src.includes('Emphathy method'))
+                      const userPersonaIndex = filteredImages.findIndex(img => img.src.includes('User persona'))
                       const isUIDesignPair = isUIDesign && mainColorsIndex !== -1 && uiComponentsIndex !== -1 && Math.abs(mainColorsIndex - uiComponentsIndex) === 1
                       
                       return filteredImages.map((img, imgIndex) => {
@@ -1005,6 +1069,111 @@ function StepModal({
                           )
                         }
                         
+                        // Render Double Diamond image with text below
+                        if (isMethods && imgIndex === doubleDiamondIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text={'A responsibility that often comes with being a UX designer is helping the team understand user experience, usability, and how to build it into the process. That said, UX maturity at Scania is not the same everywhere. Some R&D teams I have worked with were much more design-mature than many purely engineering-led teams. In this project, me and my teammate introduced the Double Diamond to the team. We used it to show that design is not just "make UI when needed", it is about understanding the problem properly before jumping into solutions.'} />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Agile image with text below
+                        if (isMethods && imgIndex === agileIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="We then blended that into the agile setup the team already had: sprints, backlog, and ongoing delivery. The main change was that design started being developed a few steps ahead, so developers always had clear, ready-to-build front-end assets when they reached that stage." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render User journey image with text below
+                        if (isMethods && imgIndex === userJourneyIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="We also relied heavily on user journey maps to make sense of complex flows. These maps were built from everything we learned: interviews, surveys, and behavioural data from other systems." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Empathy method image with text below
+                        if (isMethods && imgIndex === empathyMethodIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="One thing we always added was an empathy layer. We documented not just what users do, but what they think and feel while moving through the system. Often those things do not match, and that is where the real insights show up. As a designer, I try to be careful here. You cannot follow every signal blindly, you have to judge what matters." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render User persona image with text below
+                        if (isMethods && imgIndex === userPersonaIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-6">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-4"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-6">
+                                <HighlightedText text="We also explored user profiles to make research and testing more efficient. We did not fully implement it because of time and limited interest from the product team, but we still kept the idea in mind while designing and validating solutions." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
                         // Render other images normally
                         return (
                           <div key={imgIndex} className={img.layout === 'left' ? 'grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 items-start' : ''}>
@@ -1022,6 +1191,366 @@ function StepModal({
                         )
                       })
                     })()}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Design Solutions Section with Thumbnails
+function DesignSolutionsSection({
+  description,
+  keywords
+}: {
+  description?: string
+  keywords?: string[]
+}) {
+  const [selectedStep, setSelectedStep] = useState<number | null>(null)
+
+  // Define the 4 steps for Design solutions
+  const steps = [
+    { title: "Information architecture", description: "" },
+    { title: "wireframe", description: "" },
+    { title: "Prototyping", description: "" },
+    { title: "Design", description: "" }
+  ]
+
+  return (
+    <>
+      <CollapsibleSection
+        number="04"
+        title="Design solutions"
+        subtitle={description}
+        keywords={keywords}
+        isLast={false}
+        theme="light"
+      >
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {steps.map((step, index) => {
+              // Different gradient colors for variety
+              const gradients = [
+                'from-blue-900/80 via-blue-950/90 to-black',
+                'from-purple-900/80 via-purple-950/90 to-black',
+                'from-indigo-900/80 via-indigo-950/90 to-black',
+                'from-violet-900/80 via-violet-950/90 to-black',
+              ]
+              const glows = [
+                'bg-blue-500/30',
+                'bg-purple-500/30',
+                'bg-indigo-500/30',
+                'bg-violet-500/30',
+              ]
+              const gradient = gradients[index % gradients.length]
+              const glow = glows[index % glows.length]
+              
+              // Different animation styles for each card
+              const animations = [
+                {
+                  glow: 'animate-[glow-pulse-1_3s_ease-in-out_infinite]',
+                  wave: 'animate-[wave-1_5s_ease-in-out_infinite]',
+                  gradient: 'bg-[length:200%_200%] animate-[gradient-shift-1_6s_ease_infinite]',
+                },
+                {
+                  glow: 'animate-[glow-pulse-2_3.5s_ease-in-out_infinite]',
+                  wave: 'animate-[wave-2_5.5s_ease-in-out_infinite]',
+                  gradient: 'bg-[length:200%_200%] animate-[gradient-shift-2_7s_ease_infinite]',
+                },
+                {
+                  glow: 'animate-[glow-pulse-3_3.2s_ease-in-out_infinite]',
+                  wave: 'animate-[wave-3_5.2s_ease-in-out_infinite]',
+                  gradient: 'bg-[length:200%_200%] animate-[gradient-shift-3_6.5s_ease_infinite]',
+                },
+                {
+                  glow: 'animate-[glow-pulse-4_3.8s_ease-in-out_infinite]',
+                  wave: 'animate-[wave-4_5.8s_ease-in-out_infinite]',
+                  gradient: 'bg-[length:200%_200%] animate-[gradient-shift-4_7.5s_ease_infinite]',
+                },
+              ]
+              const anim = animations[index % animations.length]
+              
+              // Check if card has video
+              const hasVideo = step.title.toLowerCase().includes('information architecture')
+              
+              return (
+                <div
+                  key={index}
+                  onClick={() => setSelectedStep(index)}
+                  className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                >
+                  {/* Apple TV-style card container */}
+                  <div className="relative aspect-[4/5] w-full overflow-hidden">
+                    {/* Video for Information architecture card - Apple TV style */}
+                    {hasVideo && (
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                        style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+                      >
+                        <source src="/Images/Design solution/Information Architecture/Information Architecture.mov" type="video/quicktime" />
+                        <source src="/Images/Design solution/Information Architecture/Information Architecture.mov" type="video/mp4" />
+                      </video>
+                    )}
+                    
+                    {/* Animated glows only for cards without videos */}
+                    {!hasVideo && (
+                    <>
+                      {/* Animated soft glowing oval at the top */}
+                      <div 
+                        className={`absolute top-0 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full ${glow} opacity-70 group-hover:opacity-90 transition-opacity duration-500 ${anim.glow}`} 
+                        style={{
+                          animationDelay: `${index * 0.3}s`
+                        }} 
+                      />
+                      
+                      {/* Secondary glow for depth with wave animation */}
+                      <div 
+                        className={`absolute top-8 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full ${glow} opacity-40 ${anim.wave}`}
+                        style={{
+                          animationDelay: `${index * 0.3 + 0.5}s`
+                        }} 
+                      />
+                      
+                      {/* Third glow layer for more depth */}
+                      <div 
+                        className={`absolute top-16 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full ${glow} opacity-25 ${anim.glow}`}
+                        style={{
+                          animationDelay: `${index * 0.3 + 1}s`,
+                          animationDuration: '4s'
+                        }} 
+                      />
+                    </>
+                    )}
+                    
+                    {/* Glass blur overlay - Bottom 25% only */}
+                    <div 
+                      className="absolute bottom-0 left-0 right-0 z-[5] pointer-events-none"
+                      style={{
+                        height: '25%',
+                        overflow: 'hidden',
+                        transform: 'translateZ(0)',
+                        willChange: 'transform',
+                      }}
+                    >
+                      <div 
+                        className="absolute bottom-0 left-0 right-0"
+                        style={{
+                          height: '100%',
+                          width: '100%',
+                          background: 'linear-gradient(to top, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)',
+                          transform: 'translateZ(0)',
+                          isolation: 'isolate',
+                        }}
+                      />
+                      
+                      {/* Top edge highlight */}
+                      <div className="absolute top-0 left-0 right-0 h-px z-10">
+                        <div className="h-full bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+                      </div>
+                    </div>
+                    
+                    {/* Apple TV-style content section - Bottom */}
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setSelectedStep(index)
+                      }}
+                      className="absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 text-white font-semibold flex items-center justify-center gap-2 group/btn cursor-pointer overflow-hidden"
+                      style={{
+                        background: 'rgba(0, 0, 0, 1)',
+                        borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.2)',
+                        transform: 'scale(1)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.02) translateY(-2px)'
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 1)'
+                        e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2)'
+                        e.currentTarget.style.borderTop = '1px solid rgba(255, 255, 255, 0.25)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1) translateY(0)'
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 1)'
+                        e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.2)'
+                        e.currentTarget.style.borderTop = '1px solid rgba(255, 255, 255, 0.15)'
+                      }}
+                    >
+                      {/* Subtle shine effect on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-white/0 group-hover/btn:from-white/5 group-hover/btn:via-white/3 group-hover/btn:to-white/0 transition-all duration-500 pointer-events-none" />
+                      
+                      {/* Top edge highlight */}
+                      <div className="absolute top-0 left-0 right-0 h-px pointer-events-none">
+                        <div className="h-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover/btn:via-white/60 transition-all duration-300" />
+                      </div>
+                      
+                      {/* Content */}
+                      <span className="text-sm font-medium tracking-tight relative z-10 group-hover/btn:tracking-tighter transition-all duration-300">
+                        {step.title}
+                      </span>
+                      <ArrowRight className="h-4 w-4 relative z-10 shrink-0 transition-all duration-300 group-hover/btn:translate-x-2 group-hover/btn:scale-110" />
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* Modal - Scrollable document style */}
+      {selectedStep !== null && steps && (
+        <DesignSolutionModal
+          step={steps[selectedStep]}
+          isOpen={selectedStep !== null}
+          onClose={() => setSelectedStep(null)}
+        />
+      )}
+    </>
+  )
+}
+
+// Modal Component for Design Solutions Steps
+function DesignSolutionModal({ 
+  step, 
+  isOpen, 
+  onClose 
+}: { 
+  step: { title: string; description: string }
+  isOpen: boolean
+  onClose: () => void
+}) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  if (!isOpen || !step) return null
+
+  // Get images based on step title
+  const getImagesForStep = (title: string) => {
+    const titleLower = title.toLowerCase()
+    if (titleLower.includes('information architecture')) {
+      return [
+        { src: '/Images/Design solution/Information Architecture/Information UML.png', alt: 'Information UML', layout: 'top' as const },
+        { src: '/Images/Design solution/Information Architecture/Notes.png', alt: 'Notes', layout: 'top' as const },
+        { src: '/Images/Design solution/Information Architecture/All platforms.png', alt: 'All platforms', layout: 'top' as const }
+      ]
+    } else if (titleLower.includes('wireframe')) {
+      return [
+        { src: '/Images/Design solution/Wireframe 1.png', alt: 'Wireframe 1', layout: 'top' as const },
+        { src: '/Images/Design solution/wireframe1.png', alt: 'Wireframe 1', layout: 'top' as const },
+        { src: '/Images/Design solution/wireframe2.jpeg', alt: 'Wireframe 2', layout: 'top' as const },
+        { src: '/Images/Design solution/wireframe3.png', alt: 'Wireframe 3', layout: 'top' as const },
+        { src: '/Images/Design solution/wireframe4.png', alt: 'Wireframe 4', layout: 'top' as const }
+      ]
+    } else if (titleLower.includes('prototyping')) {
+      return [
+        { src: '/Images/Design solution/UI1.jpeg', alt: 'Prototyping UI 1', layout: 'top' as const }
+      ]
+    } else if (titleLower.includes('design')) {
+      return [
+        { src: '/Images/Design solution/Ui2.png', alt: 'UI design 2', layout: 'top' as const },
+        { src: '/Images/Design solution/UI3.png', alt: 'UI design 3', layout: 'top' as const },
+        { src: '/Images/Design solution/UI4.png', alt: 'UI design 4', layout: 'top' as const }
+      ]
+    }
+    return []
+  }
+
+  const allImages = getImagesForStep(step.title)
+
+  return (
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-0"
+      onClick={onClose}
+    >
+      {/* Backdrop with strong blur - Apple style */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-xl" />
+      
+      {/* Modal Content - Document Style, Scrollable */}
+      <div 
+        className="relative z-10 w-full h-full max-w-4xl max-h-[95vh] overflow-hidden rounded-none md:rounded-3xl bg-background border border-border/30 shadow-2xl shadow-black/50 flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="flex items-center justify-between px-6 md:px-8 py-4">
+            <h2 className="text-xl md:text-2xl font-bold tracking-tight truncate pr-4">
+              {step.title}
+            </h2>
+            <button
+              onClick={onClose}
+              className="flex-shrink-0 w-10 h-10 rounded-full bg-background/90 backdrop-blur-md border border-border/40 flex items-center justify-center hover:bg-background transition-all duration-200 hover:scale-110"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable Content Area - Document Style */}
+        <div className="flex-1 overflow-y-auto overscroll-contain">
+          <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-8 md:py-12">
+            {/* Document Content with Academic Paper Layout */}
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <div className="space-y-8 text-base md:text-lg leading-relaxed text-foreground">
+                {/* Display all images */}
+                {allImages.length > 0 && (
+                  <div className="space-y-8">
+                    {allImages.map((img, imgIndex) => {
+                      const isInformationArchitecture = step.title.toLowerCase().includes('information architecture')
+                      const isInformationUML = img.alt.toLowerCase().includes('information uml')
+                      const isNotes = img.alt.toLowerCase().includes('notes')
+                      const isAllPlatforms = img.alt.toLowerCase().includes('all platforms')
+                      
+                      return (
+                        <div key={imgIndex} className="space-y-6">
+                          <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ minHeight: '500px' }}>
+                            <Image
+                              src={img.src}
+                              alt={img.alt}
+                              fill
+                              className="object-contain p-4"
+                              sizes="(max-width: 768px) 100vw, 80vw"
+                              unoptimized
+                            />
+                          </div>
+                          
+                          {/* Text below images for Information Architecture */}
+                          {isInformationArchitecture && isInformationUML && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground">
+                              <HighlightedText text="This is one of the biggest responsibilities in UX, especially in a complex internal system. If you do not understand how information moves between systems and features, you cannot design with confidence. Once you do understand it, you gain a lot more flexibility and influence over the solution. Because Scania is sensitive about internal information flows, I have recreated parts of this work using mock data. But early in the project, we did something very practical: we mapped the systems that send and receive data from Conversion, then dug into what data is exchanged, why it is sent, and who depends on it." />
+                            </p>
+                          )}
+                          
+                          {isInformationArchitecture && isNotes && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground">
+                              <HighlightedText text="We ran workshops with business analysts and product experts to walk through these flows together. They helped clarify what was being collected today, what was missing, and what needed to improve." />
+                            </p>
+                          )}
+                          
+                          {isInformationArchitecture && isAllPlatforms && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground">
+                              <HighlightedText text="From those sessions, we built a UML-style flow map. That became the backbone for the redesign and guided a lot of our decisions going forward." />
+                            </p>
+                          )}
+                        </div>
+                      )
+                    })}
                   </div>
                 )}
               </div>
@@ -1805,50 +2334,10 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
 
           {/* Section 04: Design solutions */}
           {project.sections.designSolutions && (
-            <CollapsibleSection
-              number="04"
-              title="Design solutions"
-              subtitle={project.sections.designSolutions.description}
+            <DesignSolutionsSection
+              description={project.sections.designSolutions.description}
               keywords={project.sections.designSolutions.keywords}
-              isLast={false}
-              theme="light"
-            >
-              <div className="space-y-6">
-                {project.sections.designSolutions.features && (
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {project.sections.designSolutions.features.map((feature, index) => (
-                      <ScrollReveal key={index} delay={index * 150}>
-                        <div className="space-y-3">
-                          {feature.image && (
-                            <div className="relative rounded-xl overflow-hidden border border-border/50">
-                              <div className="relative aspect-video w-full">
-                                <Image
-                                  src={feature.image}
-                                  alt={feature.imageAlt || feature.title}
-                                  fill
-                                  className="object-cover"
-                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                              </div>
-                              {feature.imageCaption && (
-                                <p className="text-xs text-muted-foreground p-3 bg-muted/30">
-                                  {feature.imageCaption}
-                                </p>
-                              )}
-                            </div>
-                          )}
-                          <div>
-                            <h3 className="text-lg font-semibold mb-1.5">{feature.title}</h3>
-                            <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
-                          </div>
-                        </div>
-                      </ScrollReveal>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </CollapsibleSection>
+            />
           )}
 
           {/* Section 05: What did I learn */}

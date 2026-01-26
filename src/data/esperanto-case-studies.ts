@@ -111,7 +111,7 @@ export const esperantoCaseStudies = [
           {
             number: "4",
             title: "Methods",
-            description: "I used a combination of research methods including stakeholder interviews, user session recordings, feedback surveys, and usability testing. I documented findings, shared insights with the team, and logged everything in Jira with designs when needed.",
+            description: "",
             image: "/Images/Conversion.jpg",
             imageAlt: "Methods",
             imageCaption: "Applying various research and design methods"
