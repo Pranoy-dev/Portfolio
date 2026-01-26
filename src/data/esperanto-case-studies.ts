@@ -7,8 +7,8 @@ export const esperantoCaseStudies = [
     subtitle: "Research and development of Internal software",
     description: "A comprehensive case study about solving decision paralysis in global software update processes.",
     heroImage: "/Images/Conversion.jpg",
-    role: ["Lead designer", "Research", "User testing"],
-    team: ["2 designers", "20 developers", "Agile methodology", "Sprints"],
+    role: ["Lead designer"],
+    team: ["2 designers", "20 developers"],
     client: "Scania",
     date: "2024 - 6 Months",
     websiteUrl: undefined,
@@ -24,14 +24,14 @@ export const esperantoCaseStudies = [
         content: [
           {
             title: "Challenge 1: Evolving context",
-            description: "Scania's push for more interconnected truck systems kept adding new complexity. I was not asked to study Conversion in isolation. I had to interview users across countries and connected systems, then identify both quick wins and bigger \"moonshot\" improvements.",
+            description: "Scania's push for more interconnected truck systems kept adding new complexity. I was not asked to study Conversion in isolation. I had to interview users across countries and connected systems, then identify both quick wins and bigger \"moonshot\" improvements.\n\nOn top of that, the IT landscape was not just large, it was changing faster than it had in the past. Scania was moving more towards a software-as-a-service way of working, which meant the platform had to keep evolving while we were redesigning it. And at the same time, new regulatory requirements from the EU and US kept coming in, especially around data security, user management, and how users can access and interact with stored information.",
             image: "/Images/evolving context.png",
             imageAlt: "Evolving context",
             imageCaption: "Understanding interconnected systems across countries"
           },
           {
             title: "Challenge 2: Changing priorities",
-            description: "With large systems, priorities move fast. Plans change, market needs shift, and technical constraints show up late. In this project, product design had to create clarity, make calls with imperfect information, and keep the team moving.",
+            description: "With large systems, priorities move fast. Plans change, market needs shift, and technical constraints show up late. In this project, product design had to create clarity, make calls with imperfect information, and keep the team moving.\n\nOne thing that made it harder was trust. The development team did not fully trust leadership, so the direction of the platform kept changing. At one point, there were serious talks about going fully API-first and not redesigning the UI at all, because it felt like the smarter use of time.\n\nBut that push to remove the UI was not based on real user needs. It came from not seeing the full use case. Once we did the research, it was clear that core users across departments rely heavily on the conversation-style UI to troubleshoot and configure software updates. When we showed that, the direction became much easier to align on.",
             image: "/Images/changing priorities.png",
             imageAlt: "Changing priorities",
             imageCaption: "Adapting to shifting priorities and constraints"
@@ -157,24 +157,19 @@ export const esperantoCaseStudies = [
         keywords: ["Enterprise Systems", "Compliance", "Systems Thinking", "Component Design"],
         items: [
           {
-            title: "Getting out of my comfort zone",
-            description: "Working on enterprise governance systems required learning about compliance, audit trails, and complex approval workflows. I had to adapt quickly and understand domain-specific requirements. Constraints included NDA restrictions, legacy system integration with a 15-year-old backend, multi-language support for 8 languages, and strict compliance requiring audit trails for all decisions.",
+            title: "Managing ambiguity",
+            description: "Ambiguity was everywhere in this project, and it was not the inspiring kind. It was the day-to-day kind where priorities shift, constraints appear late, and everyone has a different version of what the platform should become. Conversion touched so many systems that no single person had the full picture. Some weeks the goal felt like \"modernize the UI,\" and other weeks it was \"do not touch the UI, go API-first.\" As a designer, I could not wait for a perfect plan. I had to work with what was real in front of us and help the team find direction.\n\nThe way I handled it was simple: I kept grounding decisions in user reality. I talked to the people who actually approve updates and troubleshoot problems, and I used quick wireframes and prototypes to make fuzzy conversations tangible. When someone said \"we should remove this screen,\" I could show what users would lose and where the decision would break. When someone wanted to add more info, I could point out that the issue was missing context in the right place, not more data everywhere. In the end, my role was not just designing screens, it was reducing uncertainty and somehow I really enjoyed it",
             icon: Lightbulb
           },
           {
-            title: "Listening to users",
-            description: "My biggest problem during the first interviews was to stop thinking about my next question and to actually listen to the answer to my previous one. I worked a lot on that and discovered that the problem wasn't too much information, but missing context. Users needed all relevant information at the decision point, not scattered across multiple screens.",
+            title: "Building trust",
+            description: "Building trust ended up being one of the most important parts of the work, and it was not something you fix with a nicer UI. Inside the product, people were making decisions that had real consequences, but they often did not feel confident because the system could not answer basic questions like \"who changed this?\" or \"why did we approve that?\" When the platform cannot explain itself, users start relying on personal trust and memory, and that breaks quickly at Scania's scale. A big UX goal for me became making the system feel dependable, not just usable.\n\nTrust also mattered inside the team. There were moments where direction was shaky and opinions were loud, so I leaned on transparency. I brought recordings, patterns from user sessions, and clear prototypes into the room so we could talk about the same reality. I made tradeoffs explicit, wrote down decisions, and kept looping in a small group of power users to validate what we were building. Over time, that consistency helped both sides: users trusted the product more because it was traceable and predictable, and the team trusted the direction more because it was grounded in evidence",
             icon: Users
           },
           {
-            title: "Learning to learn",
-            description: "Learning about enterprise software, compliance requirements, governance systems, and component API design made me better at quickly understanding complex domains and translating them into intuitive designs. I worked directly with engineers on component API design and created interactive prototypes for complex interactions.",
+            title: "Momentum",
+            description: "Momentum became a design problem as much as a delivery problem. In a system this big, it is easy to get stuck in endless discussions, competing priorities, and \"we will fix it later\" decisions. I learned that UX can either slow a product down, or speed it up, depending on how you structure the work. If every question becomes a debate, progress dies. So my focus was to make the next step obvious, for users and for the team.\n\nWhat helped was keeping everything concrete and moving in small steps. I used wireframes and prototypes to turn unclear discussions into clear decisions. I kept the scope tight around flows blocking approvals, and validated early so we did not build the wrong thing.\n\nI agree completely: the person who protects momentum shapes the future of the product, because momentum decides what actually ships, what gets adopted, and what becomes the new normal.",
             icon: Zap
-          },
-          {
-            title: "Systems thinking",
-            description: "This project taught me the importance of thinking in systems rather than screens. Creating reusable decision card components (used across 8 workflows), consistent status indicators, and design tokens for risk levels was crucial for maintaining quality at scale. The component library in Figma + Storybook enabled efficient handoff.",
-            icon: Monitor
           }
         ]
       },
