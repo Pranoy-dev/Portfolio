@@ -990,19 +990,19 @@ function StepModal({
   // For other steps, use their respective image arrays or additionalImages
   const allImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUXResearch 
     ? (projectId === 2 && step.additionalImages && step.additionalImages.length > 0
-        ? (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined }))
-        : (hasDescription ? uxResearchImages : (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined })))
+        ? (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
+        : (hasDescription ? uxResearchImages : (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined })))
       )
     : (isUIDesign 
       ? (projectId === 2 && step.additionalImages && step.additionalImages.length > 0
-          ? (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined }))
+          ? (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
           : uiDesignImages
         )
       : (isUserTesting
         ? userTestingImages
         : (isMethods
           ? methodsImages
-          : (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined }))
+          : (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
         )
       )
     )
