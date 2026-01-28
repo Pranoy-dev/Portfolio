@@ -4109,26 +4109,6 @@ interface EsperantoCaseStudyProps {
         title: string
         description: string
       }
-      challenge?: {
-        title: string
-        description: string
-        content?: Array<{
-          title: string
-          description: string
-          image?: string
-          imageAlt?: string
-          imageCaption?: string
-        }>
-      }
-      realProblems?: {
-        title: string
-        description: string
-        problems?: Array<{
-          title: string
-          description: string
-          evidence?: string
-        }>
-      }
       whatIDid?: {
         title: string
         description: string
