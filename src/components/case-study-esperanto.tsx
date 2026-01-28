@@ -3746,6 +3746,11 @@ function WhatIDidSection({
 
   if (!steps) return null
 
+  // Filter out User testing step and create a map from filtered index to original index
+  const filteredSteps: Array<{ step: typeof steps[0], originalIndex: number }> = steps
+    .map((step, originalIndex) => ({ step, originalIndex }))
+    .filter(({ step }) => !step.title.toLowerCase().includes('user testing'))
+
   return (
     <>
       <CollapsibleSection
@@ -3758,7 +3763,7 @@ function WhatIDidSection({
       >
         <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {steps.map((step, index) => {
+            {filteredSteps.map(({ step, originalIndex }, index) => {
               // Different gradient colors for variety
               const gradients = [
                 'from-blue-900/80 via-blue-950/90 to-black',
@@ -3956,7 +3961,7 @@ function WhatIDidSection({
                     <div
                       onClick={(e) => {
                         e.stopPropagation()
-                        setSelectedStep(index)
+                        setSelectedStep(originalIndex)
                       }}
                       className="absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 text-white font-semibold flex items-center justify-center gap-2 group/btn cursor-pointer overflow-hidden"
                       style={{
@@ -4002,7 +4007,7 @@ function WhatIDidSection({
       </CollapsibleSection>
 
       {/* Modal - Scrollable document style */}
-      {selectedStep !== null && steps && (
+      {selectedStep !== null && steps && steps[selectedStep] && (
         <StepModal
           step={steps[selectedStep]}
           isOpen={selectedStep !== null}
