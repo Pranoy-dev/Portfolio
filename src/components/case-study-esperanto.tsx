@@ -1754,8 +1754,10 @@ function StepModal({
                   // Check if this paragraph is shown on the right of a previous left-layout image
                   const leftImageWithThisOnRight = allImages.find((img) => {
                     if (img.layout !== 'left') return false
-                    const isFirstParaOnRight = img.insertAfter + 1 === index
-                    const isSurveySecondPara = img.src.includes('Survey') && img.insertAfter + 2 === index
+                    const insertAfter = img.insertAfter
+                    if (insertAfter === undefined) return false
+                    const isFirstParaOnRight = insertAfter + 1 === index
+                    const isSurveySecondPara = img.src.includes('Survey') && insertAfter + 2 === index
                     return isFirstParaOnRight || isSurveySecondPara
                   })
                   if (leftImageWithThisOnRight) {
