@@ -65,6 +65,63 @@ function ScrollReveal({ children, delay = 0, className = "" }: { children: React
 // Highlight Keywords Component - Subtle badge styling for important terms
 export function HighlightedText({ text, isDark = false }: { text: string; isDark?: boolean }) {
   const keywords = [
+    "R&D project",
+    "Scania R&D",
+    "strong talent",
+    "priorities constantly compete",
+    "multiple initiatives",
+    "running in parallel",
+    "development time",
+    "attention",
+    "interconnected features",
+    "hardware roadmaps",
+    "business plans",
+    "heavy approval process",
+    "things slow down",
+    "everything gets blocked",
+    "getting everyone involved",
+    "protect quality and standards",
+    "made decisions harder",
+    "more perspectives",
+    "surprisingly difficult",
+    "good idea from start to finish",
+    "bringing stakeholders in too early",
+    "endless discussions",
+    "dropped initiatives",
+    "design and prototyping",
+    "New information was constant",
+    "new technologies",
+    "future concepts",
+    "pulled focus away",
+    "real priorities",
+    "Long presentations",
+    "three to four hours",
+    "align everyone",
+    "drained energy",
+    "drained attention",
+    "work people were actually responsible for",
+    "large organizations",
+    "smart and motivated people",
+    "aligned or connected",
+    "premium lighting experience",
+    "advanced electrical architecture",
+    "SESSAM 7",
+    "shared vision",
+    "clear ownership",
+    "functional misalignment",
+    "Digital Driver Workspace",
+    "DDW",
+    "premium cabin experiences",
+    "automotive space",
+    "hardware",
+    "software",
+    "interaction design",
+    "ambient lighting",
+    "business unit",
+    "user research",
+    "customer satisfaction",
+    "premium lighting options",
+    "in-cabin lighting",
     "monolith systems",
     "highly technical platform",
     "user studies",
@@ -195,7 +252,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "Order view",
     "complexity",
     "filtering",
-    "actions",
     "clean way",
     "team confusion",
     "User testing",
@@ -318,7 +374,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "troubleshoot",
     "configure software updates",
     "core users",
-    "departments",
     "real user needs",
     "full use case",
     "Managing ambiguity",
@@ -352,7 +407,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "validate what we were building",
     "traceable and predictable",
     "grounded in evidence",
-    "Momentum",
     "design problem",
     "delivery problem",
     "competing priorities",
@@ -369,7 +423,83 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "shapes the future",
     "what ships",
     "what gets adopted",
-    "new normal"
+    "new normal",
+    "reading reports",
+    "figma files",
+    "rough mockups",
+    "functional stakeholders",
+    "new UI",
+    "benchmarking",
+    "visited exhibitions",
+    "planetary themes",
+    "focus shifted to specifics",
+    "cabin renderings",
+    "UI concept",
+    "theme-based cabin lighting",
+    "cabin lighting experience",
+    "infotainment UI",
+    "original concepts",
+    "recreated similar prototypes",
+    "thinking and direction",
+    "platform-style layout",
+    "lighting theme",
+    "different atmosphere",
+    "swipe gestures",
+    "calm and continuous",
+    "atmospheric themes",
+    "getting people to believe",
+    "storytelling",
+    "Earth",
+    "natural movements",
+    "AI-generated visuals",
+    "rapid prototyping",
+    "mood, color, and tone",
+    "color selector UI",
+    "existing cabin UI",
+    "weaving the new ideas",
+    "vision to realism",
+    "agreed on",
+    "focus shifted",
+    "Chinese brands",
+    "Polestar",
+    "Stockholm",
+    "exhibitions and fairs",
+    "hands-on time",
+    "vehicles already on the market",
+    "standout inspiration",
+    "stayed with us",
+    "throughout the project",
+    "move fast",
+    "color selection",
+    "brightness control",
+    "navigation",
+    "final concepts",
+    "carefully refined",
+    "every interaction",
+    "documented in detail",
+    "deeper dive",
+    "infotainment interactions",
+    "core idea",
+    "hardest parts",
+    "believe in the vision",
+    "reference point",
+    "feel and flow",
+    "moving between floors",
+    "layers",
+    "cannot be shared",
+    "sensitive",
+    "flowed into",
+    "weaving the new ideas",
+    "forcing something completely new",
+    "vision to realism",
+    "agreed on",
+    "abstract ideas",
+    "react to and care about",
+    "many concepts",
+    "best represents",
+    "designing the UI",
+    "concepts",
+    "some of the concepts"
   ]
   
   // Remove duplicate keywords if any exist
@@ -463,9 +593,11 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
             return (
               <span
                 key={index}
-                className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-colors duration-200 bg-black text-white border-black/50 hover:bg-black/90"
+                className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-all duration-200 bg-black text-white border-black/50 hover:bg-black/90 hover:scale-105 hover:shadow-lg hover:shadow-black/30 relative group/badge"
               >
-                {part.text}
+                <span className="relative z-10">{part.text}</span>
+                {/* Glow effect on hover */}
+                <span className="absolute inset-0 rounded-md bg-black/30 opacity-0 group-hover/badge:opacity-100 blur-md transition-opacity duration-200 -z-10" />
               </span>
             )
           }
@@ -473,13 +605,17 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
           return (
             <span
               key={index}
-              className={`inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-colors duration-200 ${
+              className={`inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-all duration-200 relative group/badge hover:scale-105 hover:shadow-lg ${
                 isDark
-                  ? 'bg-white/15 text-white border-white/30 hover:bg-white/20'
-                  : 'bg-primary/10 text-primary border-primary/20 hover:bg-primary/15'
+                  ? 'bg-white/15 text-white border-white/30 hover:bg-white/20 hover:shadow-white/20'
+                  : 'bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 hover:shadow-primary/20'
               }`}
             >
-              {part.text}
+              <span className="relative z-10">{part.text}</span>
+              {/* Glow effect on hover */}
+              <span className={`absolute inset-0 rounded-md opacity-0 group-hover/badge:opacity-100 blur-md transition-opacity duration-200 -z-10 ${
+                isDark ? 'bg-white/20' : 'bg-primary/20'
+              }`} />
             </span>
           )
         }
@@ -745,7 +881,8 @@ function ProcessStep({
 function StepModal({ 
   step, 
   isOpen, 
-  onClose 
+  onClose,
+  projectId = 1
 }: { 
   step: { 
     title: string
@@ -761,67 +898,106 @@ function StepModal({
   } | null
   isOpen: boolean
   onClose: () => void
+  projectId?: number
 }) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
     } else {
       document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
     }
     return () => {
       document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
     }
   }, [isOpen])
 
   if (!isOpen || !step) return null
 
-  const descriptionLines = step.description.split('\n\n')
+  // Runtime validation: Warn if description is empty
+  const hasDescription = step.description && step.description.trim().length > 0
+  if (process.env.NODE_ENV === 'development' && !hasDescription) {
+    console.warn(
+      `⚠️ [StepModal] Step "${step.title}" has an empty description. ` +
+      `Only images will be displayed. Please add content to the description field in the case study data.`
+    )
+  }
+
+  const descriptionLines = hasDescription ? step.description.split('\n\n') : []
+  
+  // Determine which case study folder to use based on projectId
+  const caseStudyFolder = projectId === 2 ? 'Case study 2' : 'Case study 1'
   
   // For UX research, we'll insert images at strategic points matching the text
+  // Only show images if description is not empty (case study 2 has empty description)
   const isUXResearch = step.title.toLowerCase().includes('ux research')
   const isUIDesign = step.title.toLowerCase().includes('ui design')
   const isUserTesting = step.title.toLowerCase().includes('user testing')
   const isMethods = step.title.toLowerCase().includes('methods')
-  const uxResearchImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter: number }> = isUXResearch ? [
-    { src: '/Images/UX research/Manual.png', alt: 'Reading manuals and product documentation', layout: 'left', insertAfter: 0 },
-    { src: '/Images/UX research/Previous designers.png', alt: 'Reviewing previous designer work', layout: 'top', insertAfter: 2 },
-    { src: '/Images/UX research/Figjam.png', alt: 'Capturing insights in Miro and FigJam', layout: 'top', insertAfter: 3 },
-    { src: '/Images/UX research/Survey.png', alt: 'Surveys sent after prototypes were ready', layout: 'left', insertAfter: 4 }
-  ] : []
+  
+  // UX Research images - different paths for case study 1 vs 2
+  const uxResearchImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter: number }> = (isUXResearch && hasDescription) ? (
+    projectId === 2 ? [] : [ // Case study 2 uses additionalImages from data
+      { src: `/Images/${caseStudyFolder}/UX research/Manual.png`, alt: 'Reading manuals and product documentation', layout: 'left', insertAfter: 0 },
+      { src: `/Images/${caseStudyFolder}/UX research/Previous designers.png`, alt: 'Reviewing previous designer work', layout: 'top', insertAfter: 2 },
+      { src: `/Images/${caseStudyFolder}/UX research/Figjam.png`, alt: 'Capturing insights in Miro and FigJam', layout: 'top', insertAfter: 3 },
+      { src: `/Images/${caseStudyFolder}/UX research/Survey.png`, alt: 'Surveys sent after prototypes were ready', layout: 'left', insertAfter: 4 }
+    ]
+  ) : []
   
   // For UI design, show all images from the UI design folder
-  const uiDesignImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUIDesign ? [
-    { src: '/Images/UI design/Login page.png', alt: 'Scania login page design', layout: 'top' },
-    { src: '/Images/UI design/Main colors.png', alt: 'Scania main colors', layout: 'top' },
-    { src: '/Images/UI design/UI components.png', alt: 'Scania component library', layout: 'top' },
-    { src: '/Images/UI design/Single search entry.png', alt: 'Simple landing page with single search entry point', layout: 'top' },
-    { src: '/Images/UI design/Order.png', alt: 'Order view with complex information and filtering', layout: 'top' },
-    { src: '/Images/UI design/Mobile UI.png', alt: 'Mobile UI design', layout: 'top' }
-  ] : []
+  const uiDesignImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUIDesign ? (
+    projectId === 2 ? [] : [ // Case study 2 doesn't have UI design images in this folder structure
+      { src: `/Images/${caseStudyFolder}/UI design/Login page.png`, alt: 'Scania login page design', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/UI design/Main colors.png`, alt: 'Scania main colors', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/UI design/UI components.png`, alt: 'Scania component library', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/UI design/Single search entry.png`, alt: 'Simple landing page with single search entry point', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/UI design/Order.png`, alt: 'Order view with complex information and filtering', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/UI design/Mobile UI.png`, alt: 'Mobile UI design', layout: 'top' }
+    ]
+  ) : []
   
   // For User testing, show all images from the User testing folder
-  const userTestingImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUserTesting ? [
-    { src: '/Images/User testing/User sessions.png', alt: 'User sessions overview', layout: 'top' },
-    { src: '/Images/User testing/recordings.png', alt: 'User session recordings', layout: 'top' },
-    { src: '/Images/User testing/headmap.png', alt: 'User testing heatmap', layout: 'top' },
-    { src: '/Images/User testing/Rage clicks.png', alt: 'Rage clicks analysis', layout: 'top' },
-    { src: '/Images/User testing/NPS.png', alt: 'Net Promoter Score', layout: 'top' }
-  ] : []
+  const userTestingImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUserTesting ? (
+    projectId === 2 ? [] : [ // Case study 2 doesn't have User testing images in this folder structure
+      { src: `/Images/${caseStudyFolder}/User testing/User sessions.png`, alt: 'User sessions overview', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/User testing/recordings.png`, alt: 'User session recordings', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/User testing/headmap.png`, alt: 'User testing heatmap', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/User testing/Rage clicks.png`, alt: 'Rage clicks analysis', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/User testing/NPS.png`, alt: 'Net Promoter Score', layout: 'top' }
+    ]
+  ) : []
   
   // For Methods, show all images from the Methods folder
-  const methodsImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isMethods ? [
-    { src: '/Images/Methods/The_Double_Diamond_from_the_Fountain_Institute-min.webp', alt: 'Double Diamond design process', layout: 'top' },
-    { src: '/Images/Methods/Agile.png', alt: 'Agile methodology', layout: 'top' },
-    { src: '/Images/Methods/user journey.png', alt: 'User journey mapping', layout: 'top' },
-    { src: '/Images/Methods/Emphathy method.jpeg', alt: 'Empathy method', layout: 'top' },
-    { src: '/Images/Methods/User persona.png', alt: 'User persona', layout: 'top' }
-  ] : []
+  const methodsImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isMethods ? (
+    projectId === 2 ? [] : [ // Case study 2 doesn't have Methods images in this folder structure
+      { src: `/Images/${caseStudyFolder}/Methods/The_Double_Diamond_from_the_Fountain_Institute-min.webp`, alt: 'Double Diamond design process', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/Methods/Agile.png`, alt: 'Agile methodology', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/Methods/user journey.png`, alt: 'User journey mapping', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/Methods/Emphathy method.jpeg`, alt: 'Empathy method', layout: 'top' },
+      { src: `/Images/${caseStudyFolder}/Methods/User persona.png`, alt: 'User persona', layout: 'top' }
+    ]
+  ) : []
   
-  // Use UX research images if it's UX research, UI design images if it's UI design, User testing images if it's User testing, Methods images if it's Methods, otherwise use additionalImages
+  // Use UX research images if it's UX research with description, otherwise use additionalImages for UX research without description
+  // For Case Study 2 UX research, always use additionalImages if available
+  // For Case Study 2 UI design, use additionalImages if available
+  // For other steps, use their respective image arrays or additionalImages
   const allImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUXResearch 
-    ? uxResearchImages 
+    ? (projectId === 2 && step.additionalImages && step.additionalImages.length > 0
+        ? (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined }))
+        : (hasDescription ? uxResearchImages : (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined })))
+      )
     : (isUIDesign 
-      ? uiDesignImages 
+      ? (projectId === 2 && step.additionalImages && step.additionalImages.length > 0
+          ? (step.additionalImages || []).map(img => ({ ...img, insertAfter: undefined }))
+          : uiDesignImages
+        )
       : (isUserTesting
         ? userTestingImages
         : (isMethods
@@ -836,8 +1012,8 @@ function StepModal({
       className="fixed inset-0 z-[9999] flex items-center justify-center p-0"
       onClick={onClose}
     >
-      {/* Backdrop with strong blur - Apple style */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-xl" />
+      {/* Backdrop with strong blur - Apple style - covers full screen */}
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-xl" />
       
       {/* Modal Content - Document Style, Scrollable */}
       <div 
@@ -861,7 +1037,7 @@ function StepModal({
 
         {/* Scrollable Content Area - Document Style */}
         <div className="flex-1 overflow-y-auto overscroll-contain">
-          <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-8 md:py-12">
+          <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-1.5 md:py-2.5">
             {/* Hero Image Section - Only show if not UX research, UI design, User testing, or Methods */}
             {step.image && !isUXResearch && !isUIDesign && !isUserTesting && !isMethods && (
               <div className="mb-8 rounded-lg overflow-hidden border border-border/20">
@@ -881,7 +1057,700 @@ function StepModal({
             {/* Document Content with Academic Paper Layout */}
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <div className="space-y-8 text-base md:text-lg leading-relaxed text-foreground">
-                {descriptionLines.map((paragraph, index) => {
+                {/* If no description but has images, show all images with special text blocks */}
+                {(!hasDescription && allImages.length > 0) ? (
+                  <div className="mt-6 space-y-2">
+                    {(() => {
+                      const filteredImages = allImages
+                      const mainColorsIndex = filteredImages.findIndex(img => img.src.includes('Main colors'))
+                      const uiComponentsIndex = filteredImages.findIndex(img => img.src.includes('UI components'))
+                      const loginPageIndex = filteredImages.findIndex(img => img.src.includes('Login page'))
+                      const singleSearchIndex = filteredImages.findIndex(img => img.src.includes('Single search entry'))
+                      const orderIndex = filteredImages.findIndex(img => img.src.includes('Order.png'))
+                      const mobileUIIndex = filteredImages.findIndex(img => img.src.includes('Mobile UI'))
+                      const userSessionsIndex = filteredImages.findIndex(img => img.src.includes('User sessions'))
+                      const recordingsIndex = filteredImages.findIndex(img => img.src.includes('recordings'))
+                      const headmapIndex = filteredImages.findIndex(img => img.src.includes('headmap'))
+                      const rageClicksIndex = filteredImages.findIndex(img => img.src.includes('Rage clicks'))
+                      const npsIndex = filteredImages.findIndex(img => img.src.includes('NPS'))
+                      const doubleDiamondIndex = filteredImages.findIndex(img => img.src.includes('Double_Diamond'))
+                      const agileIndex = filteredImages.findIndex(img => img.src.includes('Agile.png'))
+                      const userJourneyIndex = filteredImages.findIndex(img => img.src.includes('user journey'))
+                      const empathyMethodIndex = filteredImages.findIndex(img => img.src.includes('Emphathy method'))
+                      const userPersonaIndex = filteredImages.findIndex(img => img.src.includes('User persona'))
+                      const isUIDesignPair = isUIDesign && mainColorsIndex !== -1 && uiComponentsIndex !== -1 && Math.abs(mainColorsIndex - uiComponentsIndex) === 1
+                      
+                      // Case Study 2 UX Research image indices
+                      const uxResearchImage1Index = filteredImages.findIndex(img => img.src.includes('Image 1.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage2Index = filteredImages.findIndex(img => img.src.includes('Image 2.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage3Index = filteredImages.findIndex(img => img.src.includes('image 3.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage4Index = filteredImages.findIndex(img => img.src.includes('Image 4.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage5Index = filteredImages.findIndex(img => img.src.includes('image 5.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage6Index = filteredImages.findIndex(img => img.src.includes('Image 6.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage7Index = filteredImages.findIndex(img => img.src.includes('Image 7.png') && img.src.includes('Case study 2'))
+                      
+                      // Case Study 2 UI Design image indices
+                      const uiDesignImage1Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 1.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage2Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 2.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage3Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 3.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage4Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 4.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage5Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 5.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage6Index = filteredImages.findIndex(img => img.src.includes('UI design/image 6.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage7Index = filteredImages.findIndex(img => img.src.includes('UI design/image 7.png') && img.src.includes('Case study 2'))
+                      
+                      return filteredImages.map((img, imgIndex) => {
+                        // Skip UI components if it's right after Main colors (will be rendered together)
+                        if (isUIDesignPair && imgIndex === uiComponentsIndex && uiComponentsIndex === mainColorsIndex + 1) {
+                          return null
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 1 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage1Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="This was one of those projects where a lot of research already existed. There was third-party market research from the business side, and there were insights from previous designers and teams. My first job was to go through all of it and figure out what was still relevant. That meant spending a lot of time reading reports, digging through Figma files, and separating useful signals from outdated assumptions." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 2 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage2Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Because we already had a strong research base, wireframing started quite early. We used quick, rough mockups as a way to translate research into something concrete and to start conversations with functional stakeholders. These early wireframes helped us collect feedback fast, especially since we knew we had to stay within existing truck UI patterns and frameworks." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 3 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage3Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="At the same time, the new lighting experience introduced features that did not exist before. That meant new UI had to be explored early. Some wireframes were created specifically to test these new ideas and see how they could fit into the broader system." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 4 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage4Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We also did a lot of benchmarking. And I mean a lot. We looked online, watched videos, studied interactions from other manufacturers, visited exhibitions and fairs in Stockholm, and spent hands-on time with vehicles already on the market. One standout inspiration was Polestar, especially their use of planetary themes for lighting, which stayed with us throughout the project." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 5 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage5Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We also studied strong UI and UX work coming from several Chinese brands and tried to learn from what they were doing well." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 6 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage6Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Once we aligned on a general direction, the focus shifted to specifics: which light themes to pursue and what they should feel like. To help stakeholders make decisions faster, we created simple cabin renderings that showed the overall mood and possibilities." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 7 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage7Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="These visuals helped turn abstract ideas into something people could react to and care about." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 1 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage1Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="This work started as a UI concept to explore what a theme-based cabin lighting experience could be. The idea later flowed into the infotainment UI inside the truck. Most of the original concepts are sensitive and cannot be shared, so I recreated similar prototypes here to show the thinking and direction." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 2 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage2Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We began with a platform-style layout, where each lighting theme felt like a different atmosphere, almost like moving between floors in a building. Swipe gestures were used to move between these layers, making the experience feel calm and continuous." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 3 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage3Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Many concepts were explored during this phase, but I am focusing on one that best represents the core idea: atmospheric themes. One of the hardest parts was not designing the UI, but getting people to believe in the vision. To do that, I used storytelling. Earth became the reference point, and its natural movements inspired how the experience should feel and flow." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 4 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage4Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="To move fast, I used AI-generated visuals as part of rapid prototyping. These helped us explore mood, color, and tone quickly. You can see this reflected in elements like the color selector UI in some of the concepts." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 5 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage5Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Once the direction was agreed on, the focus shifted from vision to realism. We looked closely at the existing cabin UI and started weaving the new ideas into what already existed, instead of forcing something completely new." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 6 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage6Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="What followed was a deeper dive into the infotainment interactions: color selection, brightness control, and navigation. The final concepts were carefully refined, with every interaction documented in detail." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 7 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage7Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="The goal was simple but ambitious: create a smooth, visually rich experience that makes drivers feel calm, appreciated, and a little happier during long drives." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Login page image with text below it
+                        if (isUIDesign && imgIndex === loginPageIndex && loginPageIndex === 0) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Scania has its own design system, and honestly, I think it is very cool and evolving fast. Most of what we needed was already there, from core components to patterns like login screens. Sometimes we still had to build a few things ourselves, like more complex table variations, but the foundation was strong." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Main colors and UI components side by side
+                        if (isUIDesignPair && imgIndex === mainColorsIndex) {
+                          const mainColorsImg = filteredImages[mainColorsIndex]
+                          const uiComponentsImg = filteredImages[uiComponentsIndex]
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '300px' }}>
+                                  <Image
+                                    src={mainColorsImg.src}
+                                    alt={mainColorsImg.alt}
+                                    fill
+                                    className="object-contain p-2"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    unoptimized
+                                  />
+                                </div>
+                                <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '300px' }}>
+                                  <Image
+                                    src={uiComponentsImg.src}
+                                    alt={uiComponentsImg.alt}
+                                    fill
+                                    className="object-contain p-2"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    unoptimized
+                                  />
+                                </div>
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="The first thing I did was get comfortable with the system. I studied the brand palette and color tones, then went through the component library to understand what is used where, and why." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Single search entry image with text below it
+                        if (isUIDesign && imgIndex === singleSearchIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Once I had that, I started translating wireframes into UI. One of my favourite moments was designing a landing page that felt almost too simple: the user basically sees one main thing, a single search entry point. It looks obvious now, but getting there took a lot of discussion and decision-making. That simplicity was earned." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Order image with text below it
+                        if (isUIDesign && imgIndex === orderIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text={'On the other side, we had screens that look calm at first glance but carry a lot of complexity under the hood. The "Order" view is a good example. It is packed with information, filtering, and actions. The challenge with these screens is not adding features, it is understanding what connects to what, then communicating it in a clean way, and defending that simplicity through multiple loops of team confusion and change.'} />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Mobile UI image with text below it
+                        if (isUIDesign && imgIndex === mobileUIIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="And if you are wondering where the high-graphics, fancy UI is: I love that too, and we do use it sometimes. It just was not the right fit for this project." />
+                              </p>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="You can find more UI-related information in the next section called Design solution." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render User sessions image with text above and below
+                        if (isUserTesting && imgIndex === userSessionsIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="User testing happened throughout the project, in whatever form made sense at the time. We tested early to understand what was working and what was not. We tested again when the first wireframes were ready. We tested clickable prototypes before sending anything to development. And we kept testing once we had real builds in place. I am describing it here as one track, but it was really an ongoing habit." />
+                              </p>
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text={'One of my favourite tools for this was Hotjar. It was approved by Scania IT, and I was the one driving the setup so we could use it inside internal products. Within a few weeks, we started collecting what Hotjar calls "user sessions", and it quickly became one of our most useful sources of truth.'} />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render recordings image with text below
+                        if (isUserTesting && imgIndex === recordingsIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Session recordings gave us a real view of how people moved through the system. Recordings were random, with sensitive data removed and user IDs blurred. I watched these sessions to spot patterns and form hypotheses. It was great quantitative direction, it helped us see where to look. But it did not always explain the why, so it worked best when paired with conversations." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render headmap image with text below
+                        if (isUserTesting && imgIndex === headmapIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Heatmaps helped us understand what people actually used on key pages, and what they ignored. This made it much easier to argue for simplification and optimization, because we could point to real behaviour instead of opinions." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Rage clicks image with text below
+                        if (isUserTesting && imgIndex === rageClicksIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We also looked for signals like rage clicks and U-turns. Those usually showed friction, broken flows, or areas that were not properly tested. In a large internal system like Conversion, these signals were common, and they helped us prioritize fixes fast." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render NPS image with text below
+                        if (isUserTesting && imgIndex === npsIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Alongside Hotjar, we used surveys and NPS to answer specific questions as they came up. The built-in surveys were also a good way to find users who were willing to help us improve the system, and to keep a feedback loop open as the product evolved." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Double Diamond image with text below
+                        if (isMethods && imgIndex === doubleDiamondIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text={'A responsibility that often comes with being a UX designer is helping the team understand user experience, usability, and how to build it into the process. That said, UX maturity at Scania is not the same everywhere. Some R&D teams I have worked with were much more design-mature than many purely engineering-led teams. In this project, me and my teammate introduced the Double Diamond to the team. We used it to show that design is not just "make UI when needed", it is about understanding the problem properly before jumping into solutions.'} />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Agile image with text below
+                        if (isMethods && imgIndex === agileIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We then blended that into the agile setup the team already had: sprints, backlog, and ongoing delivery. The main change was that design started being developed a few steps ahead, so developers always had clear, ready-to-build front-end assets when they reached that stage." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render User journey image with text below
+                        if (isMethods && imgIndex === userJourneyIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We also relied heavily on user journey maps to make sense of complex flows. These maps were built from everything we learned: interviews, surveys, and behavioural data from other systems." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Empathy method image with text below
+                        if (isMethods && imgIndex === empathyMethodIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="One thing we always added was an empathy layer. We documented not just what users do, but what they think and feel while moving through the system. Often those things do not match, and that is where the real insights show up. As a designer, I try to be careful here. You cannot follow every signal blindly, you have to judge what matters." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render User persona image with text below
+                        if (isMethods && imgIndex === userPersonaIndex) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We also created user personas based on the interviews. These personas helped the team understand who we were designing for, and they guided decisions throughout the project. They kept us focused on real user needs rather than assumptions." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Default: render image without special text
+                        return (
+                          <div key={imgIndex} className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                            <Image
+                              src={img.src}
+                              alt={img.alt}
+                              fill
+                              className="object-contain p-2"
+                              sizes="(max-width: 768px) 100vw, 80vw"
+                              unoptimized
+                            />
+                          </div>
+                        )
+                      })
+                    })()}
+                  </div>
+                ) : (
+                  descriptionLines.map((paragraph, index) => {
                   // Check if this paragraph is shown on the right of a previous left-layout image
                   const leftImageWithThisOnRight = allImages.find((img) => {
                     if (img.layout !== 'left') return false
@@ -906,12 +1775,12 @@ function StepModal({
                       <div key={index} className="my-8">
                         {/* Show image on left with next paragraph(s) on right */}
                         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 items-start">
-                          <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '400px' }}>
+                          <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '300px' }}>
                             <Image
                               src={imageToInsert.src}
                               alt={imageToInsert.alt}
                               fill
-                              className="object-contain p-4"
+                              className="object-contain p-2"
                               sizes="(max-width: 768px) 100vw, 35vw"
                               unoptimized
                             />
@@ -946,12 +1815,12 @@ function StepModal({
                       {/* Insert image after paragraph (for top layout) */}
                       {imageToInsert && imageToInsert.layout === 'top' && (
                         <div className="my-8">
-                          <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                          <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                             <Image
                               src={imageToInsert.src}
                               alt={imageToInsert.alt}
                               fill
-                              className="object-contain p-4"
+                              className="object-contain p-2"
                               sizes="(max-width: 768px) 100vw, 80vw"
                               unoptimized
                             />
@@ -960,11 +1829,13 @@ function StepModal({
                       )}
                     </div>
                   )
-                })}
+                }))}
                 
                 {/* Display any remaining images that weren't inserted */}
-                {allImages.filter(img => img.insertAfter === undefined || !descriptionLines.some((_, idx) => idx === img.insertAfter)).length > 0 && (
-                  <div className="mt-12 space-y-8">
+                {hasDescription && allImages.filter(
+                  img => img.insertAfter === undefined || !descriptionLines.some((_, idx) => idx === img.insertAfter)
+                ).length > 0 && (
+                  <div className="mt-6 space-y-2">
                     {(() => {
                       const filteredImages = allImages.filter(img => img.insertAfter === undefined || !descriptionLines.some((_, idx) => idx === img.insertAfter))
                       const mainColorsIndex = filteredImages.findIndex(img => img.src.includes('Main colors'))
@@ -985,27 +1856,339 @@ function StepModal({
                       const userPersonaIndex = filteredImages.findIndex(img => img.src.includes('User persona'))
                       const isUIDesignPair = isUIDesign && mainColorsIndex !== -1 && uiComponentsIndex !== -1 && Math.abs(mainColorsIndex - uiComponentsIndex) === 1
                       
+                      // Case Study 2 UX Research image indices
+                      const uxResearchImage1Index = filteredImages.findIndex(img => img.src.includes('Image 1.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage2Index = filteredImages.findIndex(img => img.src.includes('Image 2.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage3Index = filteredImages.findIndex(img => img.src.includes('image 3.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage4Index = filteredImages.findIndex(img => img.src.includes('Image 4.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage5Index = filteredImages.findIndex(img => img.src.includes('image 5.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage6Index = filteredImages.findIndex(img => img.src.includes('Image 6.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage7Index = filteredImages.findIndex(img => img.src.includes('Image 7.png') && img.src.includes('Case study 2'))
+                      
+                      // Case Study 2 UI Design image indices
+                      const uiDesignImage1Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 1.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage2Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 2.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage3Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 3.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage4Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 4.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage5Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 5.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage6Index = filteredImages.findIndex(img => img.src.includes('UI design/image 6.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage7Index = filteredImages.findIndex(img => img.src.includes('UI design/image 7.png') && img.src.includes('Case study 2'))
+                      
                       return filteredImages.map((img, imgIndex) => {
                         // Skip UI components if it's right after Main colors (will be rendered together)
                         if (isUIDesignPair && imgIndex === uiComponentsIndex && uiComponentsIndex === mainColorsIndex + 1) {
                           return null
                         }
                         
-                        // Render Login page image with text below it
-                        if (isUIDesign && imgIndex === loginPageIndex && loginPageIndex === 0) {
+                        // Render Case Study 2 UX Research Image 1 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage1Index) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="This was one of those projects where a lot of research already existed. There was third-party market research from the business side, and there were insights from previous designers and teams. My first job was to go through all of it and figure out what was still relevant. That meant spending a lot of time reading reports, digging through Figma files, and separating useful signals from outdated assumptions." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 2 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage2Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Because we already had a strong research base, wireframing started quite early. We used quick, rough mockups as a way to translate research into something concrete and to start conversations with functional stakeholders. These early wireframes helped us collect feedback fast, especially since we knew we had to stay within existing truck UI patterns and frameworks." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 3 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage3Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="At the same time, the new lighting experience introduced features that did not exist before. That meant new UI had to be explored early. Some wireframes were created specifically to test these new ideas and see how they could fit into the broader system." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 4 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage4Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We also did a lot of benchmarking. And I mean a lot. We looked online, watched videos, studied interactions from other manufacturers, visited exhibitions and fairs in Stockholm, and spent hands-on time with vehicles already on the market. One standout inspiration was Polestar, especially their use of planetary themes for lighting, which stayed with us throughout the project." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 5 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage5Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We also studied strong UI and UX work coming from several Chinese brands and tried to learn from what they were doing well." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 6 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage6Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Once we aligned on a general direction, the focus shifted to specifics: which light themes to pursue and what they should feel like. To help stakeholders make decisions faster, we created simple cabin renderings that showed the overall mood and possibilities." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UX Research Image 7 with text below
+                        if (isUXResearch && projectId === 2 && imgIndex === uxResearchImage7Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="These visuals helped turn abstract ideas into something people could react to and care about." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 1 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage1Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="This work started as a UI concept to explore what a theme-based cabin lighting experience could be. The idea later flowed into the infotainment UI inside the truck. Most of the original concepts are sensitive and cannot be shared, so I recreated similar prototypes here to show the thinking and direction." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 2 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage2Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="We began with a platform-style layout, where each lighting theme felt like a different atmosphere, almost like moving between floors in a building. Swipe gestures were used to move between these layers, making the experience feel calm and continuous." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 3 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage3Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Many concepts were explored during this phase, but I am focusing on one that best represents the core idea: atmospheric themes. One of the hardest parts was not designing the UI, but getting people to believe in the vision. To do that, I used storytelling. Earth became the reference point, and its natural movements inspired how the experience should feel and flow." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 4 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage4Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="To move fast, I used AI-generated visuals as part of rapid prototyping. These helped us explore mood, color, and tone quickly. You can see this reflected in elements like the color selector UI in some of the concepts." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 5 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage5Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="Once the direction was agreed on, the focus shifted from vision to realism. We looked closely at the existing cabin UI and started weaving the new ideas into what already existed, instead of forcing something completely new." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 6 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage6Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="What followed was a deeper dive into the infotainment interactions: color selection, brightness control, and navigation. The final concepts were carefully refined, with every interaction documented in detail." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 UI Design Image 7 with text below
+                        if (isUIDesign && projectId === 2 && imgIndex === uiDesignImage7Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="The goal was simple but ambitious: create a smooth, visually rich experience that makes drivers feel calm, appreciated, and a little happier during long drives." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Login page image with text below it
+                        if (isUIDesign && imgIndex === loginPageIndex && loginPageIndex === 0) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="Scania has its own design system, and honestly, I think it is very cool and evolving fast. Most of what we needed was already there, from core components to patterns like login screens. Sometimes we still had to build a few things ourselves, like more complex table variations, but the foundation was strong." />
                               </p>
                             </div>
@@ -1017,30 +2200,30 @@ function StepModal({
                           const mainColorsImg = filteredImages[mainColorsIndex]
                           const uiComponentsImg = filteredImages[uiComponentsIndex]
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '400px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '300px' }}>
                                   <Image
                                     src={mainColorsImg.src}
                                     alt={mainColorsImg.alt}
                                     fill
-                                    className="object-contain p-4"
+                                    className="object-contain p-2"
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                     unoptimized
                                   />
                                 </div>
-                                <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '400px' }}>
+                                <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '300px' }}>
                                   <Image
                                     src={uiComponentsImg.src}
                                     alt={uiComponentsImg.alt}
                                     fill
-                                    className="object-contain p-4"
+                                    className="object-contain p-2"
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                     unoptimized
                                   />
                                 </div>
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="The first thing I did was get comfortable with the system. I studied the brand palette and color tones, then went through the component library to understand what is used where, and why." />
                               </p>
                             </div>
@@ -1050,18 +2233,18 @@ function StepModal({
                         // Render Single search entry image with text below it
                         if (isUIDesign && imgIndex === singleSearchIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="Once I had that, I started translating wireframes into UI. One of my favourite moments was designing a landing page that felt almost too simple: the user basically sees one main thing, a single search entry point. It looks obvious now, but getting there took a lot of discussion and decision-making. That simplicity was earned." />
                               </p>
                             </div>
@@ -1071,18 +2254,18 @@ function StepModal({
                         // Render Order image with text below it
                         if (isUIDesign && imgIndex === orderIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text={'On the other side, we had screens that look calm at first glance but carry a lot of complexity under the hood. The "Order" view is a good example. It is packed with information, filtering, and actions. The challenge with these screens is not adding features, it is understanding what connects to what, then communicating it in a clean way, and defending that simplicity through multiple loops of team confusion and change.'} />
                               </p>
                             </div>
@@ -1092,21 +2275,21 @@ function StepModal({
                         // Render Mobile UI image with text below it
                         if (isUIDesign && imgIndex === mobileUIIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="And if you are wondering where the high-graphics, fancy UI is: I love that too, and we do use it sometimes. It just was not the right fit for this project." />
                               </p>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="You can find more UI-related information in the next section called Design solution." />
                               </p>
                             </div>
@@ -1116,21 +2299,21 @@ function StepModal({
                         // Render User sessions image with text above and below
                         if (isUserTesting && imgIndex === userSessionsIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                            <div key={imgIndex} className="space-y-3">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="User testing happened throughout the project, in whatever form made sense at the time. We tested early to understand what was working and what was not. We tested again when the first wireframes were ready. We tested clickable prototypes before sending anything to development. And we kept testing once we had real builds in place. I am describing it here as one track, but it was really an ongoing habit." />
                               </p>
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text={'One of my favourite tools for this was Hotjar. It was approved by Scania IT, and I was the one driving the setup so we could use it inside internal products. Within a few weeks, we started collecting what Hotjar calls "user sessions", and it quickly became one of our most useful sources of truth.'} />
                               </p>
                             </div>
@@ -1140,18 +2323,18 @@ function StepModal({
                         // Render recordings image with text below
                         if (isUserTesting && imgIndex === recordingsIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="Session recordings gave us a real view of how people moved through the system. Recordings were random, with sensitive data removed and user IDs blurred. I watched these sessions to spot patterns and form hypotheses. It was great quantitative direction, it helped us see where to look. But it did not always explain the why, so it worked best when paired with conversations." />
                               </p>
                             </div>
@@ -1161,18 +2344,18 @@ function StepModal({
                         // Render headmap image with text below
                         if (isUserTesting && imgIndex === headmapIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="Heatmaps helped us understand what people actually used on key pages, and what they ignored. This made it much easier to argue for simplification and optimization, because we could point to real behaviour instead of opinions." />
                               </p>
                             </div>
@@ -1182,18 +2365,18 @@ function StepModal({
                         // Render Rage clicks image with text below
                         if (isUserTesting && imgIndex === rageClicksIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="We also looked for signals like rage clicks and U-turns. Those usually showed friction, broken flows, or areas that were not properly tested. In a large internal system like Conversion, these signals were common, and they helped us prioritize fixes fast." />
                               </p>
                             </div>
@@ -1203,18 +2386,18 @@ function StepModal({
                         // Render NPS image with text below
                         if (isUserTesting && imgIndex === npsIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="Alongside Hotjar, we used surveys and NPS to answer specific questions as they came up. The built-in surveys were also a good way to find users who were willing to help us improve the system, and to keep a feedback loop open as the product evolved." />
                               </p>
                             </div>
@@ -1224,18 +2407,18 @@ function StepModal({
                         // Render Double Diamond image with text below
                         if (isMethods && imgIndex === doubleDiamondIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text={'A responsibility that often comes with being a UX designer is helping the team understand user experience, usability, and how to build it into the process. That said, UX maturity at Scania is not the same everywhere. Some R&D teams I have worked with were much more design-mature than many purely engineering-led teams. In this project, me and my teammate introduced the Double Diamond to the team. We used it to show that design is not just "make UI when needed", it is about understanding the problem properly before jumping into solutions.'} />
                               </p>
                             </div>
@@ -1245,18 +2428,18 @@ function StepModal({
                         // Render Agile image with text below
                         if (isMethods && imgIndex === agileIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="We then blended that into the agile setup the team already had: sprints, backlog, and ongoing delivery. The main change was that design started being developed a few steps ahead, so developers always had clear, ready-to-build front-end assets when they reached that stage." />
                               </p>
                             </div>
@@ -1266,18 +2449,18 @@ function StepModal({
                         // Render User journey image with text below
                         if (isMethods && imgIndex === userJourneyIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="We also relied heavily on user journey maps to make sense of complex flows. These maps were built from everything we learned: interviews, surveys, and behavioural data from other systems." />
                               </p>
                             </div>
@@ -1287,18 +2470,18 @@ function StepModal({
                         // Render Empathy method image with text below
                         if (isMethods && imgIndex === empathyMethodIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="One thing we always added was an empathy layer. We documented not just what users do, but what they think and feel while moving through the system. Often those things do not match, and that is where the real insights show up. As a designer, I try to be careful here. You cannot follow every signal blindly, you have to judge what matters." />
                               </p>
                             </div>
@@ -1308,18 +2491,18 @@ function StepModal({
                         // Render User persona image with text below
                         if (isMethods && imgIndex === userPersonaIndex) {
                           return (
-                            <div key={imgIndex} className="space-y-6">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ height: '500px' }}>
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="(max-width: 768px) 100vw, 80vw"
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-4">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="We also explored user profiles to make research and testing more efficient. We did not fully implement it because of time and limited interest from the product team, but we still kept the idea in mind while designing and validating solutions." />
                               </p>
                             </div>
@@ -1329,12 +2512,12 @@ function StepModal({
                         // Render other images normally
                         return (
                           <div key={imgIndex} className={img.layout === 'left' ? 'grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 items-start' : ''}>
-                            <div className={`relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20 ${img.layout === 'left' ? '' : 'mb-4'}`} style={{ height: img.layout === 'left' ? '400px' : '500px' }}>
+                            <div className={`relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10 ${img.layout === 'left' ? '' : 'mb-4'}`} style={{ height: img.layout === 'left' ? '300px' : '350px' }}>
                               <Image
                                 src={img.src}
                                 alt={img.alt}
                                 fill
-                                className="object-contain p-4"
+                                className="object-contain p-2"
                                 sizes={img.layout === 'left' ? '(max-width: 768px) 100vw, 35vw' : '(max-width: 768px) 100vw, 80vw'}
                                 unoptimized
                               />
@@ -1358,7 +2541,8 @@ function StepModal({
 function ChallengeSection({
   description,
   keywords,
-  content
+  content,
+  projectId = 1
 }: {
   description?: string
   keywords?: string[]
@@ -1369,6 +2553,7 @@ function ChallengeSection({
     imageAlt?: string
     imageCaption?: string
   }>
+  projectId?: number
 }) {
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
 
@@ -1442,7 +2627,7 @@ function ChallengeSection({
                           src={step.image!}
                           alt={step.imageAlt || step.title}
                           fill
-                          className="object-contain"
+                          className="object-cover"
                           sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                           unoptimized
                         />
@@ -1561,6 +2746,7 @@ function ChallengeSection({
           step={steps[selectedStep]}
           isOpen={selectedStep !== null}
           onClose={() => setSelectedStep(null)}
+          projectId={projectId}
         />
       )}
     </>
@@ -1571,7 +2757,8 @@ function ChallengeSection({
 function RealProblemsSection({
   description,
   keywords,
-  problems
+  problems,
+  projectId = 1
 }: {
   description?: string
   keywords?: string[]
@@ -1580,27 +2767,37 @@ function RealProblemsSection({
     description: string
     evidence?: string
   }>
+  projectId?: number
 }) {
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
 
   if (!problems) return null
 
-  // Map problems to steps format with images
+  // Determine which case study folder to use
+  const caseStudyFolder = projectId === 2 ? 'Case study 2' : 'Case study 1'
+
+  // Map problems to steps format with images - dynamic based on projectId
   const imageMap: Record<string, string> = {
-    "context gap": "/Images/contextgap.jpg",
-    "no traceability": "/Images/notracelability.jpg",
-    "broken flows": "/Images/brokenflows.jpg"
+    "unused capabilities": `/Images/${caseStudyFolder}/The real problems/Unused capabilities.jpg`,
+    "lack of a shared vision": `/Images/${caseStudyFolder}/The real problems/Shared vision.jpg`,
+    "functional misalignment": `/Images/${caseStudyFolder}/The real problems/Misalignement.jpg`,
+    "context gap": `/Images/${caseStudyFolder}/The real problems/contextgap.jpg`,
+    "no traceability": `/Images/${caseStudyFolder}/The real problems/notracelability.jpg`,
+    "broken flows": `/Images/${caseStudyFolder}/The real problems/brokenflows.jpg`
   }
 
   const steps = problems.map((problem) => {
     const titleLower = problem.title.toLowerCase()
-    const image = imageMap[titleLower.includes("context gap") ? "context gap" : 
+    const image = imageMap[titleLower.includes("unused capabilities") ? "unused capabilities" :
+                          titleLower.includes("lack of a shared vision") || titleLower.includes("shared vision") ? "lack of a shared vision" :
+                          titleLower.includes("functional misalignment") || titleLower.includes("misalignment") ? "functional misalignment" :
+                          titleLower.includes("context gap") ? "context gap" : 
                           titleLower.includes("traceability") ? "no traceability" : 
                           "broken flows"]
     
     return {
       title: problem.title,
-      description: problem.description + (problem.evidence ? `\n\nData: ${problem.evidence}` : ''),
+      description: problem.description,
       image: image,
       imageAlt: problem.title,
       imageCaption: problem.evidence
@@ -1785,6 +2982,7 @@ function RealProblemsSection({
           step={steps[selectedStep]}
           isOpen={selectedStep !== null}
           onClose={() => setSelectedStep(null)}
+          projectId={projectId}
         />
       )}
     </>
@@ -1795,7 +2993,8 @@ function RealProblemsSection({
 function LearningsSection({
   description,
   keywords,
-  items
+  items,
+  projectId = 1
 }: {
   description?: string
   keywords?: string[]
@@ -1804,16 +3003,20 @@ function LearningsSection({
     description: string
     icon: any
   }>
+  projectId?: number
 }) {
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
 
   if (!items) return null
 
-  // Map items to images
+  // Determine which case study folder to use
+  const caseStudyFolder = projectId === 2 ? 'Case study 2' : 'Case study 1'
+
+  // Map items to images - dynamic based on projectId
   const imageMap: Record<string, string> = {
-    "managing ambiguity": "/Images/ambiguity.jpg",
-    "building trust": "/Images/building trust.jpg",
-    "momentum": "/Images/momentum.jpg"
+    "managing ambiguity": `/Images/${caseStudyFolder}/What Did I learn/ambiguity.jpg`,
+    "building trust": `/Images/${caseStudyFolder}/What Did I learn/building trust.jpg`,
+    "momentum": `/Images/${caseStudyFolder}/What Did I learn/momentum.jpg`
   }
 
   // Convert items to steps format
@@ -2008,6 +3211,7 @@ function LearningsSection({
           step={steps[selectedStep]}
           isOpen={selectedStep !== null}
           onClose={() => setSelectedStep(null)}
+          projectId={projectId}
         />
       )}
     </>
@@ -2278,11 +3482,17 @@ function DesignSolutionModal({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
     } else {
       document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
     }
     return () => {
       document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
     }
   }, [isOpen])
 
@@ -2323,8 +3533,8 @@ function DesignSolutionModal({
       className="fixed inset-0 z-[9999] flex items-center justify-center p-0"
       onClick={onClose}
     >
-      {/* Backdrop with strong blur - Apple style */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-xl" />
+      {/* Backdrop with strong blur - Apple style - covers full screen */}
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-xl" />
       
       {/* Modal Content - Document Style, Scrollable */}
       <div 
@@ -2348,7 +3558,7 @@ function DesignSolutionModal({
 
         {/* Scrollable Content Area - Document Style */}
         <div className="flex-1 overflow-y-auto overscroll-contain">
-          <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-8 md:py-12">
+          <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-1.5 md:py-2.5">
             {/* Document Content with Academic Paper Layout */}
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <div className="space-y-6 text-base md:text-lg leading-relaxed text-foreground">
@@ -2387,23 +3597,23 @@ function DesignSolutionModal({
                           {shouldRenderSideBySide ? (
                             // Side-by-side layout for wireframe3 and wireframe2 - aligned at top
                             <div className="grid grid-cols-2 gap-2 items-start">
-                              <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ minHeight: '500px' }}>
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
                                   alt={img.alt}
                                   fill
-                                  className="object-contain p-4"
+                                  className="object-contain p-2"
                                   sizes="40vw"
                                   unoptimized
                                 />
                               </div>
                               {nextImg && (
-                                <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ minHeight: '500px' }}>
+                                <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                   <Image
                                     src={nextImg.src}
                                     alt={nextImg.alt}
                                     fill
-                                    className="object-contain p-4"
+                                    className="object-contain p-2"
                                     sizes="40vw"
                                     unoptimized
                                   />
@@ -2412,12 +3622,12 @@ function DesignSolutionModal({
                             </div>
                           ) : (
                             // Regular full-width layout
-                            <div className="relative w-full rounded-lg overflow-hidden border border-border/20 bg-muted/20" style={{ minHeight: '500px' }}>
+                            <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                               <Image
                                 src={img.src}
                                 alt={img.alt}
                                 fill
-                                className="object-contain p-4"
+                                className="object-contain p-2"
                                 sizes="(max-width: 768px) 100vw, 80vw"
                                 unoptimized
                               />
@@ -2510,13 +3720,27 @@ function DesignSolutionModal({
 function WhatIDidSection({
   steps,
   description,
-  keywords
+  keywords,
+  projectId = 1
 }: {
   steps?: Array<{ title: string; description: string; image?: string; imageAlt?: string; imageCaption?: string }>
   description?: string
   keywords?: string[]
+  projectId?: number
 }) {
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
+
+  // Runtime validation: Warn if any step has empty description
+  if (process.env.NODE_ENV === 'development' && steps) {
+    steps.forEach((step, index) => {
+      if (!step.description || step.description.trim().length === 0) {
+        console.warn(
+          `⚠️ [WhatIDidSection] Step "${step.title}" (index ${index}) has an empty description. ` +
+          `This will result in only images being displayed. Please add content to the description field.`
+        )
+      }
+    })
+  }
 
   if (!steps) return null
 
@@ -2600,8 +3824,17 @@ function WhatIDidSection({
                             className="absolute inset-0 w-full h-full object-cover"
                             style={{ transform: 'translateZ(0)', willChange: 'transform' }}
                           >
-                            <source src="/Images/What I did/UX research.mov" type="video/quicktime" />
-                            <source src="/Images/What I did/UX research.mov" type="video/mp4" />
+                            {projectId === 2 ? (
+                              <>
+                                <source src="/Images/Case study 2/What I did/UX research/UX research.mov" type="video/quicktime" />
+                                <source src="/Images/Case study 2/What I did/UX research/UX research.mov" type="video/mp4" />
+                              </>
+                            ) : (
+                              <>
+                                <source src="/Images/Case study 1/What I did/UX research.mov" type="video/quicktime" />
+                                <source src="/Images/Case study 1/What I did/UX research.mov" type="video/mp4" />
+                              </>
+                            )}
                           </video>
                         )}
                         
@@ -2614,12 +3847,21 @@ function WhatIDidSection({
                             className="absolute inset-0 w-full h-full object-cover"
                             style={{ transform: 'translateZ(0)', willChange: 'transform' }}
                           >
-                            <source src="/Images/What I did/UI design.mov" type="video/quicktime" />
-                            <source src="/Images/What I did/UI design.mov" type="video/mp4" />
+                            {projectId === 2 ? (
+                              <>
+                                <source src="/Images/Case study 2/What I did/UI design/UI design.mov" type="video/quicktime" />
+                                <source src="/Images/Case study 2/What I did/UI design/UI design.mov" type="video/mp4" />
+                              </>
+                            ) : (
+                              <>
+                                <source src="/Images/Case study 1/What I did/UI design.mov" type="video/quicktime" />
+                                <source src="/Images/Case study 1/What I did/UI design.mov" type="video/mp4" />
+                              </>
+                            )}
                           </video>
                         )}
                         
-                        {step.title.toLowerCase().includes('user testing') && (
+                        {step.title.toLowerCase().includes('user testing') && projectId === 1 && (
                           <video
                             autoPlay
                             loop
@@ -2628,12 +3870,12 @@ function WhatIDidSection({
                             className="absolute inset-0 w-full h-full object-cover"
                             style={{ transform: 'translateZ(0)', willChange: 'transform' }}
                           >
-                            <source src="/Images/What I did/User testing.mov" type="video/quicktime" />
-                            <source src="/Images/What I did/User testing.mov" type="video/mp4" />
+                            <source src="/Images/Case study 1/What I did/User testing.mov" type="video/quicktime" />
+                            <source src="/Images/Case study 1/What I did/User testing.mov" type="video/mp4" />
                           </video>
                         )}
                         
-                        {step.title.toLowerCase().includes('method') && (
+                        {step.title.toLowerCase().includes('method') && projectId === 1 && (
                           <video
                             autoPlay
                             loop
@@ -2642,8 +3884,8 @@ function WhatIDidSection({
                             className="absolute inset-0 w-full h-full object-cover"
                             style={{ transform: 'translateZ(0)', willChange: 'transform' }}
                           >
-                            <source src="/Images/What I did/Methods.mov" type="video/quicktime" />
-                            <source src="/Images/What I did/Methods.mov" type="video/mp4" />
+                            <source src="/Images/Case study 1/What I did/Methods.mov" type="video/quicktime" />
+                            <source src="/Images/Case study 1/What I did/Methods.mov" type="video/mp4" />
                           </video>
                         )}
                       </>
@@ -2763,6 +4005,7 @@ function WhatIDidSection({
           step={steps[selectedStep]}
           isOpen={selectedStep !== null}
           onClose={() => setSelectedStep(null)}
+          projectId={projectId}
         />
       )}
     </>
@@ -3210,6 +4453,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
               description={project.sections.challenge.description}
               keywords={project.sections.challenge.keywords}
               content={project.sections.challenge.content}
+              projectId={project.id}
             />
           )}
 
@@ -3219,6 +4463,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
               description={project.sections.realProblems.description}
               keywords={project.sections.realProblems.keywords}
               problems={project.sections.realProblems.problems}
+              projectId={project.id}
             />
           )}
 
@@ -3228,6 +4473,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
               steps={project.sections.whatIDid.steps}
               description={project.sections.whatIDid.description}
               keywords={project.sections.whatIDid.keywords}
+              projectId={project.id}
             />
           )}
 
@@ -3245,6 +4491,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
               description="Getting out of my comfort zone"
               keywords={project.sections.learnings.keywords}
               items={project.sections.learnings.items}
+              projectId={project.id}
             />
           )}
           </div>

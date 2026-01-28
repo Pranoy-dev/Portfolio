@@ -229,7 +229,7 @@ const caseStudies = [
     problem: "Global software updates create decision paralysis.",
     role: "Lead Designer",
     impact: "40% faster decisions",
-    tags: ["governance", "traceability", "role-based workflows", "global scale"],
+    tags: ["governance", "traceability", "global scale"],
     gradient: "from-blue-500/10 via-purple-500/5 to-pink-500/10",
     borderColor: "border-blue-500/20",
     hoverGradient: "from-blue-500/15 via-purple-500/10 to-pink-500/15",
@@ -388,7 +388,7 @@ const caseStudies = [
     problem: "Ambient lighting experience lags behind competitors.",
     role: "Senior UX Designer",
     impact: "4 concepts shipped",
-    tags: ["0→1", "rapid prototyping", "visual UX", "stakeholder alignment"],
+    tags: ["0→1", "rapid prototyping", "visual UX"],
     gradient: "from-emerald-500/10 via-teal-500/5 to-cyan-500/10",
     borderColor: "border-emerald-500/20",
     hoverGradient: "from-emerald-500/15 via-teal-500/10 to-cyan-500/15",
@@ -413,6 +413,39 @@ const caseStudies = [
   }
 ]
 
+// Dynamic Header Component
+function DynamicHeader({ caseStudyTitle }: { caseStudyTitle: string }) {
+  const { state } = useSidebar()
+  const isCollapsed = state === "collapsed"
+
+  return (
+    <header 
+      className={cn(
+        "fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-[left] duration-200 ease-linear",
+        isCollapsed 
+          ? "md:left-[var(--sidebar-width-icon)]" 
+          : "md:left-[var(--sidebar-width)]"
+      )}
+    >
+      <div className="flex items-center gap-2 px-4 w-full">
+        <SidebarTrigger />
+        <Separator orientation="vertical" className="mr-2 h-4" />
+        <Breadcrumb className="flex-1">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Overview</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{caseStudyTitle}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+    </header>
+  )
+}
+
 export default function CaseStudyPage() {
   const params = useParams()
   const router = useRouter()
@@ -433,9 +466,9 @@ export default function CaseStudyPage() {
     )
   }
 
-  // Check if this is case study 1 - use Esperanto style
+  // Check if this is case study 1 or 2 - use Esperanto style
   const esperantoCaseStudy = esperantoCaseStudies.find(study => study.id === caseStudyId)
-  if (caseStudyId === 1 && esperantoCaseStudy) {
+  if ((caseStudyId === 1 || caseStudyId === 2) && esperantoCaseStudy) {
     return <EsperantoCaseStudy project={esperantoCaseStudy} />
   }
 

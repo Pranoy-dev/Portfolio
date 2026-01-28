@@ -31,10 +31,10 @@ import {
 } from "@/components/ui/collapsible"
 
 // Overview data
-const headline = "Hard problems bring out my best work."
+const headline = "Design is all about tradeoffs. Hide too much and people get lost. Show too much and nothing is clear.\n\nThis portfolio shows how I work: I break complexity into clear steps and reveal details only when they matter. I built it in Next.js using cursor."
 
 const credibilityStrip = {
-  title: "Senior UX/UI Designer building tools and platforms across automotive, gaming, and fintech.",
+  title: "I am a Senior UX/UI Designer building tools and platforms across automotive, gaming, and fintech. I have been designing for around 7 years, and I spend most of my time solving real-world problems, from building a simple app to track my groceries to coding an agentic communication layer for modern work. I genuinely love both design and engineering.",
   skills: ["Complex systems UX", "User research", "UI design + front-end build", "Rapid AI prototyping"]
 }
 
@@ -44,7 +44,7 @@ const caseStudies = [
     problem: "Global software updates create decision paralysis.",
     role: "Lead Designer",
     impact: "40% faster decisions",
-    tags: ["governance", "traceability", "role-based workflows", "global scale"],
+    tags: ["governance", "traceability", "global scale"],
     gradient: "from-blue-500/10 via-purple-500/5 to-pink-500/10",
     borderColor: "border-blue-500/20",
     hoverGradient: "from-blue-500/15 via-purple-500/10 to-pink-500/15",
@@ -57,7 +57,7 @@ const caseStudies = [
     problem: "Ambient lighting experience lags behind competitors.",
     role: "Senior UX Designer",
     impact: "4 concepts shipped",
-    tags: ["0→1", "rapid prototyping", "visual UX", "stakeholder alignment"],
+    tags: ["0→1", "rapid prototyping", "visual UX"],
     gradient: "from-emerald-500/10 via-teal-500/5 to-cyan-500/10",
     borderColor: "border-emerald-500/20",
     hoverGradient: "from-emerald-500/15 via-teal-500/10 to-cyan-500/15",
@@ -85,13 +85,6 @@ const howIWork = [
   "Prototype to kill risk early",
   "Ship, measure, iterate",
   "Systems > screens"
-]
-
-const artifacts = [
-  { label: "Decision log sample", icon: FileText },
-  { label: "PRD-style case study PDF", icon: FileText },
-  { label: "Design system tokens", icon: Code },
-  { label: "Prototype walkthrough", icon: Play }
 ]
 
 function DynamicHeader() {
@@ -123,8 +116,9 @@ function DynamicHeader() {
 }
 
 export default function Home() {
-  const [hasInteracted, setHasInteracted] = useState(false)
+  const [isCaseStudiesOpen, setIsCaseStudiesOpen] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [isHeadlineExpanded, setIsHeadlineExpanded] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -134,6 +128,8 @@ export default function Home() {
     }, 50)
     return () => clearTimeout(timer)
   }, [])
+
+
 
   return (
     <SidebarProvider>
@@ -148,49 +144,56 @@ export default function Home() {
           )}
         >
           {/* 1. Headline */}
-          <section>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-              {headline}
-            </h1>
-          </section>
-
-          {/* 2. Credibility Strip */}
-          <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-background via-muted/30 to-background border border-border/40 p-8 md:p-10 backdrop-blur-xl shadow-sm hover:shadow-md transition-all duration-300">
-            {/* Subtle shine effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
-            
-            <div className="space-y-6 relative z-10">
-              <p className="text-lg font-medium text-foreground leading-relaxed tracking-tight">
-                {credibilityStrip.title}
-              </p>
-              <div className="flex flex-wrap items-center gap-2.5 pt-4 border-t border-border/20">
-                {credibilityStrip.skills.map((skill, index) => (
-                  <Badge 
-                    key={index} 
-                    variant="outline" 
-                    className="px-4 py-2 text-xs font-medium rounded-full bg-background/80 backdrop-blur-sm border-border/30 hover:bg-background hover:border-border/50 hover:shadow-sm transition-all duration-200"
+          <section className="max-w-3xl">
+            <div className="text-2xl md:text-3xl font-semibold tracking-tight leading-relaxed space-y-6 text-foreground">
+              <p className="text-foreground inline-flex items-start gap-3 flex-wrap">
+                <span>{headline.split('\n\n')[0]}</span>
+                {!isHeadlineExpanded && (
+                  <button
+                    onClick={() => setIsHeadlineExpanded(true)}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-200 group/btn shrink-0 -mt-0.5"
+                    aria-label="Read more"
                   >
-                    {skill}
-                  </Badge>
-                ))}
+                    <span>Read more</span>
+                    <ChevronDown className="h-4 w-4 transition-all duration-300 ease-in-out" />
+                  </button>
+                )}
+              </p>
+              <div 
+                className={cn(
+                  "overflow-hidden transition-all duration-500 ease-in-out",
+                  isHeadlineExpanded ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0"
+                )}
+              >
+                <p className="text-muted-foreground inline-flex items-start gap-3 flex-wrap">
+                  <span>{headline.split('\n\n')[1]}</span>
+                  {isHeadlineExpanded && (
+                    <button
+                      onClick={() => setIsHeadlineExpanded(false)}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-200 group/btn shrink-0 -mt-0.5"
+                      aria-label="Read less"
+                    >
+                      <span>Read less</span>
+                      <ChevronDown className="h-4 w-4 transition-all duration-300 ease-in-out rotate-180" />
+                    </button>
+                  )}
+                </p>
               </div>
             </div>
           </section>
 
-          {/* 3. Case Studies */}
+          {/* 2. Case Studies */}
           <Collapsible 
             defaultOpen={false} 
             className="group/collapsible w-full"
             onOpenChange={(open) => {
-              if (!hasInteracted) {
-                setHasInteracted(true)
-              }
+              setIsCaseStudiesOpen(open)
             }}
           >
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center justify-between w-full py-4 border-b border-border/50 hover:border-border transition-colors group/trigger">
+              <div className="flex items-center justify-between w-full py-4 group/trigger border-b border-border/50 hover:border-border transition-colors">
                 <h2 className="text-2xl font-semibold">Case studies</h2>
-                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0 ${!hasInteracted ? 'animate-pulse-strong' : 'animate-pulse-subtle'}`} />
+                <ChevronDown className="h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0 animate-pulse-subtle" />
               </div>
             </CollapsibleTrigger>
             <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up will-change-[height] w-full">
@@ -251,10 +254,6 @@ export default function Home() {
                       <p className="text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">Role</p>
                       <p className="text-sm text-foreground/80">{study.role}</p>
                     </div>
-                    <div className="pt-2 border-t border-border/20">
-                      <p className="text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">Impact</p>
-                      <p className="text-lg font-semibold text-primary leading-tight">{study.impact}</p>
-                    </div>
                     <div className="flex flex-wrap gap-2 pt-3 mt-auto">
                       {study.tags.map((tag) => (
                         <Badge 
@@ -281,11 +280,45 @@ export default function Home() {
             </CollapsibleContent>
           </Collapsible>
 
+          {/* 3. Who is Pranoy? */}
+          <Collapsible defaultOpen={false} className="group/collapsible w-full">
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center justify-between w-full py-4 border-b border-border/50 hover:border-border transition-colors group/trigger">
+                <h2 className="text-2xl font-semibold">Who is Pranoy?</h2>
+                <ChevronDown className="h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0 animate-pulse-subtle" />
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up will-change-[height] w-full">
+              <div className="pt-6">
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-background via-muted/30 to-background border border-border/40 p-8 md:p-10 backdrop-blur-xl shadow-sm">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
+                  
+                  <div className="space-y-6 relative z-10">
+                    <p className="text-lg font-medium text-foreground leading-relaxed tracking-tight">
+                      {credibilityStrip.title}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2.5 pt-4 border-t border-border/20">
+                      {credibilityStrip.skills.map((skill, index) => (
+                        <Badge 
+                          key={index} 
+                          variant="outline" 
+                          className="px-4 py-2 text-xs font-medium rounded-full bg-background/80 backdrop-blur-sm border-border/30 hover:bg-background hover:border-border/50 hover:shadow-sm transition-all duration-200"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
           {/* 4. How I Work */}
           <Collapsible defaultOpen={false} className="group/collapsible">
             <CollapsibleTrigger className="w-full">
               <div className="flex items-center justify-between w-full py-4 border-b border-border/50 hover:border-border transition-colors group/trigger">
-                <h2 className="text-2xl font-semibold">How I Work</h2>
+                <h2 className="text-2xl font-semibold">How I Work?</h2>
                 <ChevronDown className="h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0 animate-pulse-subtle" />
               </div>
             </CollapsibleTrigger>
@@ -303,41 +336,6 @@ export default function Home() {
                   <p className="text-base leading-relaxed">{item}</p>
                 </div>
               ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* 5. Artifacts Preview */}
-          <Collapsible defaultOpen={false} className="group/collapsible">
-            <CollapsibleTrigger className="w-full">
-              <div className="flex items-center justify-between w-full py-4 border-b border-border/50 hover:border-border transition-colors group/trigger">
-                <h2 className="text-2xl font-semibold">Artifacts</h2>
-                <ChevronDown className="h-5 w-5 text-muted-foreground transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 group-hover/trigger:scale-110 group-hover/trigger:text-foreground shrink-0 animate-pulse-subtle" />
-              </div>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up will-change-[height]">
-              <div className="pt-6">
-                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-background via-muted/30 to-background border border-border/40 p-8 md:p-10 backdrop-blur-xl shadow-sm">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
-                  <div className="relative z-10">
-                    <div className="grid gap-3 md:grid-cols-2">
-                  {artifacts.map((artifact, index) => {
-                    const Icon = artifact.icon
-                    return (
-                      <a
-                        key={index}
-                        href="#"
-                        className="flex items-center gap-3 p-4 rounded-lg border hover:border-primary/50 hover:bg-accent/50 transition-colors group"
-                      >
-                        <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        <span className="text-sm font-medium flex-1">{artifact.label}</span>
-                        <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                      </a>
-                    )
-                  })}
                     </div>
                   </div>
                 </div>
