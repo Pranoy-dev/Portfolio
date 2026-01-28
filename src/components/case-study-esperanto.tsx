@@ -4109,29 +4109,6 @@ interface EsperantoCaseStudyProps {
         title: string
         description: string
       }
-      whatIDid?: {
-        title: string
-        description: string
-        steps?: Array<{
-          number: string
-          title: string
-          description: string
-          image?: string
-          imageAlt?: string
-          imageCaption?: string
-        }>
-      }
-      designSolutions?: {
-        title: string
-        description: string
-        features?: Array<{
-          title: string
-          description: string
-          image?: string
-          imageAlt?: string
-          imageCaption?: string
-        }>
-      }
       learnings?: {
         keywords?: string[]
         items?: Array<{
