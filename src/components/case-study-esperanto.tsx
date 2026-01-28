@@ -641,7 +641,7 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
 }
 
 // Scroll Indicator Component - Shows only initially before sections are visible
-function ScrollIndicator({ sectionsRef }: { sectionsRef?: React.RefObject<HTMLDivElement> }) {
+function ScrollIndicator({ sectionsRef }: { sectionsRef?: React.RefObject<HTMLDivElement | null> }) {
   const [showIndicator, setShowIndicator] = useState(true)
   const [scrollProgress, setScrollProgress] = useState(0)
 
