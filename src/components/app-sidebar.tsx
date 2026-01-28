@@ -178,7 +178,7 @@ export function AppSidebar({ collapsible = "icon", ...props }: React.ComponentPr
                         <SidebarMenuSub>
                           {item.items.map((subItem) => (
                             <SidebarMenuSubItem key={subItem.title}>
-                              <SidebarMenuSubButton asChild isActive={subItem.isActive}>
+                              <SidebarMenuSubButton asChild>
                                 <a href={subItem.url}>{subItem.title}</a>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
