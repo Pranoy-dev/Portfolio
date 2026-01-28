@@ -3746,10 +3746,16 @@ function WhatIDidSection({
 
   if (!steps) return null
 
-  // Filter out User testing step and create a map from filtered index to original index
+  // Filter out User testing step only for case study 2, keep it for case study 1
   const filteredSteps: Array<{ step: typeof steps[0], originalIndex: number }> = steps
     .map((step, originalIndex) => ({ step, originalIndex }))
-    .filter(({ step }) => !step.title.toLowerCase().includes('user testing'))
+    .filter(({ step }) => {
+      // Only filter out User testing for case study 2
+      if (projectId === 2 && step.title.toLowerCase().includes('user testing')) {
+        return false
+      }
+      return true
+    })
 
   return (
     <>
