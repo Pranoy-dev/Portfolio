@@ -67,39 +67,23 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
   const keywords = [
     "R&D project",
     "Scania R&D",
-    "strong talent",
     "priorities constantly compete",
     "multiple initiatives",
     "running in parallel",
     "development time",
-    "attention",
     "interconnected features",
     "hardware roadmaps",
     "business plans",
     "heavy approval process",
-    "things slow down",
-    "everything gets blocked",
     "getting everyone involved",
     "protect quality and standards",
-    "made decisions harder",
-    "more perspectives",
-    "surprisingly difficult",
-    "good idea from start to finish",
     "bringing stakeholders in too early",
     "endless discussions",
     "dropped initiatives",
     "design and prototyping",
-    "New information was constant",
     "new technologies",
     "future concepts",
-    "pulled focus away",
     "real priorities",
-    "Long presentations",
-    "three to four hours",
-    "align everyone",
-    "drained energy",
-    "drained attention",
-    "work people were actually responsible for",
     "large organizations",
     "smart and motivated people",
     "aligned or connected",
@@ -113,8 +97,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "DDW",
     "premium cabin experiences",
     "automotive space",
-    "hardware",
-    "software",
     "interaction design",
     "ambient lighting",
     "business unit",
@@ -176,8 +158,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "60%+ of their time",
     "hunting for context",
     "approving updates",
-    "who did what",
-    "when, and why",
     "lack of traceability",
     "20% of downtime",
     "two decades",
@@ -212,7 +192,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "adjacent systems",
     "product team",
     "design system",
-    "Tegel",
     "core components",
     "login screens",
     "table variations",
@@ -221,11 +200,7 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "color tones",
     "component library",
     "wireframes",
-    "make UI when needed",
     "ready-to-build",
-    "think and feel",
-    "do not match",
-    "judge",
     "landing page",
     "search entry point",
     "simplicity",
@@ -233,25 +208,12 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "filtering",
     "high-graphics",
     "fancy UI",
-    "Figma",
-    "Jira",
-    "design system",
     "evolving fast",
     "patterns",
-    "table variations",
-    "foundation",
     "get comfortable",
-    "brand palette",
-    "color tones",
-    "component library",
     "translating wireframes",
-    "landing page",
-    "search entry point",
     "decision-making",
-    "simplicity",
-    "Order view",
     "complexity",
-    "filtering",
     "clean way",
     "team confusion",
     "User testing",
@@ -265,11 +227,8 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "NPS",
     "surveys",
     "built-in surveys",
-    "feedback loop",
-    "wireframes",
     "clickable prototypes",
     "real builds",
-    "ongoing habit",
     "sources of truth",
     "quantitative direction",
     "real behaviour",
@@ -305,7 +264,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "mapped the systems",
     "send and receive data",
     "data is exchanged",
-    "product experts",
     "UML-style flow map",
     "UML",
     "flow map",
@@ -347,8 +305,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "final checkpoint",
     "butterfly effect",
     "operational issues",
-    "clickable prototypes",
-    "Figma",
     "Prototype feature",
     "flow of events",
     "Package Specification",
@@ -365,9 +321,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "EU and US",
     "stored information",
     "IT landscape",
-    "large systems",
-    "technical constraints",
-    "imperfect information",
     "development team",
     "API-first",
     "conversation-style UI",
@@ -375,13 +328,11 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "configure software updates",
     "core users",
     "real user needs",
-    "full use case",
     "Managing ambiguity",
     "priorities shift",
     "constraints appear late",
     "modernize the UI",
     "API-first",
-    "perfect plan",
     "grounding decisions",
     "user reality",
     "approve updates",
@@ -423,7 +374,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "shapes the future",
     "what ships",
     "what gets adopted",
-    "new normal",
     "reading reports",
     "figma files",
     "rough mockups",
@@ -458,8 +408,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "existing cabin UI",
     "weaving the new ideas",
     "vision to realism",
-    "agreed on",
-    "focus shifted",
     "Chinese brands",
     "Polestar",
     "Stockholm",
@@ -489,17 +437,74 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "cannot be shared",
     "sensitive",
     "flowed into",
-    "weaving the new ideas",
     "forcing something completely new",
-    "vision to realism",
-    "agreed on",
     "abstract ideas",
     "react to and care about",
     "many concepts",
     "best represents",
     "designing the UI",
     "concepts",
-    "some of the concepts"
+    // Technical terms - Methods and processes
+    "design thinking",
+    "PI planning",
+    "UML-based",
+    "UML-based process diagrams",
+    "process diagrams",
+    "information flow",
+    "system behaviour",
+    "Agile principles",
+    "short sprints",
+    "user journey mapping",
+    "empathy methods",
+    "user personas",
+    "R&D environment",
+    "problem space",
+    "converging on solutions",
+    "iterative approach",
+    "quality checks",
+    "departments",
+    "dependencies",
+    "next steps",
+    "non-technical stakeholders",
+    "highly technical teams",
+    "design decisions",
+    "flows",
+    "ideation",
+    "feedback",
+    "tight loops",
+    "momentum",
+    "four sprints",
+    "cycle",
+    "multiple departments",
+    "align on priorities",
+    "Double Diamond framework",
+    "exploratory nature",
+    "test concepts early",
+    "refine them",
+    "feedback from stakeholders",
+    "feedback from users",
+    "lighting experience",
+    "driver's perspective",
+    "visualization",
+    "identify opportunities",
+    "improvement",
+    "broader cabin experience",
+    "driver needs",
+    "driver preferences",
+    "research and interviews",
+    "guide design decisions",
+    "real user value",
+    "drivers would actually want",
+    "technical challenge",
+    "human problem",
+    "sense of warmth",
+    "comfort",
+    "hope",
+    "meaningful lighting themes",
+    "UML-based process diagrams",
+    "system behaviour",
+    "non-technical stakeholders",
+    "highly technical teams"
   ]
   
   // Remove duplicate keywords if any exist
@@ -715,7 +720,9 @@ function CollapsibleSection({
   children, 
   defaultOpen = false,
   isLast = false,
-  theme = "light" // "light" (lighter grey) or "dark" (darker grey)
+  theme = "light", // "light" (lighter grey) or "dark" (darker grey)
+  badge,
+  disabled = false
 }: { 
   number: string
   title: string
@@ -725,100 +732,132 @@ function CollapsibleSection({
   defaultOpen?: boolean
   isLast?: boolean
   theme?: "light" | "dark"
+  badge?: string
+  disabled?: boolean
 }) {
   const isDark = theme === "dark"
   
+  const headerContent = (
+    <div className={`relative overflow-hidden rounded-2xl p-4 md:p-6 transition-all duration-300 w-full min-w-0 max-w-full ${
+      isDark 
+        ? 'bg-zinc-900 text-white border border-zinc-800/50 hover:border-zinc-700 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30' 
+        : 'bg-zinc-50 text-zinc-900 border border-zinc-200/50 hover:border-zinc-300 shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10'
+    } ${disabled ? 'opacity-75 cursor-not-allowed' : ''}`}>
+      {/* Grid pattern background - subtle */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, ${isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.03)'} 1px, transparent 1px),
+                            linear-gradient(to bottom, ${isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.03)'} 1px, transparent 1px)`,
+          backgroundSize: '20px 20px'
+        }}
+      />
+      
+      {/* Additional horizontal lines for more structure - subtle */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, ${isDark ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.02)'} 1px, transparent 1px)`,
+          backgroundSize: '100% 40px'
+        }}
+      />
+      
+      {/* Minimal hover effect */}
+      {!disabled && (
+        <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? 'from-white/[0.03]' : 'from-black/[0.02]'} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+      )}
+      
+      <div className="relative z-10 space-y-3 min-w-0">
+        <div className="flex items-start justify-between gap-4 min-w-0">
+          <div className="flex-1 space-y-2 min-w-0">
+            <div className="flex items-baseline gap-3 min-w-0">
+              <span className={`text-base md:text-lg font-mono tracking-wider tabular-nums font-bold shrink-0 ${isDark ? 'text-white' : 'text-zinc-900'}`}>{number}</span>
+              <h2 className={`text-lg md:text-xl font-bold tracking-tight leading-tight min-w-0 ${isDark ? 'text-white' : 'text-zinc-900'}`}>{title}</h2>
+              {badge && (
+                <Badge 
+                  variant="outline" 
+                  className={`ml-2 px-2 py-0.5 text-xs font-medium shrink-0 ${
+                    isDark 
+                      ? 'bg-amber-500/20 border-amber-500/40 text-amber-300' 
+                      : 'bg-amber-500/10 border-amber-500/30 text-amber-700'
+                  }`}
+                >
+                  {badge}
+                </Badge>
+              )}
+            </div>
+            {subtitle && (
+              <div className={`overflow-hidden transition-all duration-300 ${disabled ? '' : 'group-data-[state=closed]/collapsible:max-h-0 group-data-[state=closed]/collapsible:opacity-0 group-data-[state=open]/collapsible:max-h-[200px] group-data-[state=open]/collapsible:opacity-100'}`}>
+                <p className={`text-sm leading-relaxed max-w-full pl-8 min-w-0 ${isDark ? 'text-white/90' : 'text-zinc-800'}`}>
+                  <HighlightedText text={subtitle} isDark={isDark} />
+                </p>
+              </div>
+            )}
+            {keywords && keywords.length > 0 && (
+              <div className="flex flex-col gap-3 pt-4 pl-8">
+                <div className={`h-px w-full ${isDark ? 'bg-white/10' : 'bg-black/10'}`} />
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className={`text-xs font-semibold ${isDark ? 'text-white/70' : 'text-zinc-600'}`}>Subsections:</span>
+                  {keywords.map((keyword, i) => (
+                    <Badge 
+                      key={i} 
+                      variant="outline" 
+                      className={`px-2 py-0.5 text-xs font-medium transition-colors ${
+                        isDark 
+                          ? 'bg-white/15 border-white/30 text-white/90 hover:bg-white/20' 
+                          : 'bg-black/8 border-zinc-400/60 text-zinc-800 hover:bg-black/12'
+                      }`}
+                    >
+                      {keyword}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          {!disabled && (
+            <div 
+              className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 shrink-0 ${
+                isDark 
+                  ? 'bg-white/10 group-hover:bg-white/20 border border-white/20' 
+                  : 'bg-black/5 group-hover:bg-black/10 border border-black/10'
+              }`}
+            >
+              <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${
+                isDark ? 'text-white' : 'text-zinc-900'
+              }`} />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+  
   return (
     <div className="relative">
-      <Collapsible defaultOpen={defaultOpen} className="group/collapsible">
+      {disabled ? (
         <div>
           {/* Timeline dot - aligned with continuous timeline line */}
           <div className={`absolute -left-8 md:-left-12 top-6 w-3 h-3 rounded-full ${isDark ? 'bg-white' : 'bg-black'} border-2 ${isDark ? 'border-zinc-900' : 'border-zinc-50'} z-10`} style={{ transform: 'translateX(-50%)' }} />
-          
-          <CollapsibleTrigger className="w-full text-left">
-            <div className={`relative overflow-hidden rounded-2xl p-4 md:p-6 transition-all duration-300 w-full min-w-0 max-w-full ${
-              isDark 
-                ? 'bg-zinc-900 text-white border border-zinc-800/50 hover:border-zinc-700 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30' 
-                : 'bg-zinc-50 text-zinc-900 border border-zinc-200/50 hover:border-zinc-300 shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10'
-            }`}>
-              {/* Grid pattern background - subtle */}
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage: `linear-gradient(to right, ${isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.03)'} 1px, transparent 1px),
-                                    linear-gradient(to bottom, ${isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.03)'} 1px, transparent 1px)`,
-                  backgroundSize: '20px 20px'
-                }}
-              />
-              
-              {/* Additional horizontal lines for more structure - subtle */}
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage: `linear-gradient(to bottom, ${isDark ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.02)'} 1px, transparent 1px)`,
-                  backgroundSize: '100% 40px'
-                }}
-              />
-              
-              {/* Minimal hover effect */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${isDark ? 'from-white/[0.03]' : 'from-black/[0.02]'} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
-              
-              <div className="relative z-10 space-y-3 min-w-0">
-                <div className="flex items-start justify-between gap-4 min-w-0">
-                  <div className="flex-1 space-y-2 min-w-0">
-                    <div className="flex items-baseline gap-3 min-w-0">
-                      <span className={`text-base md:text-lg font-mono tracking-wider tabular-nums font-bold shrink-0 ${isDark ? 'text-white' : 'text-zinc-900'}`}>{number}</span>
-                      <h2 className={`text-lg md:text-xl font-bold tracking-tight leading-tight min-w-0 ${isDark ? 'text-white' : 'text-zinc-900'}`}>{title}</h2>
-                    </div>
-                    {subtitle && (
-                      <div className={`overflow-hidden transition-all duration-300 group-data-[state=closed]/collapsible:max-h-0 group-data-[state=closed]/collapsible:opacity-0 group-data-[state=open]/collapsible:max-h-[200px] group-data-[state=open]/collapsible:opacity-100`}>
-                        <p className={`text-sm leading-relaxed max-w-full pl-8 min-w-0 ${isDark ? 'text-white/90' : 'text-zinc-800'}`}>
-                          <HighlightedText text={subtitle} isDark={isDark} />
-                        </p>
-                      </div>
-                    )}
-                    {keywords && keywords.length > 0 && (
-                      <div className="flex flex-col gap-3 pt-4 pl-8">
-                        <div className={`h-px w-full ${isDark ? 'bg-white/10' : 'bg-black/10'}`} />
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <span className={`text-xs font-semibold ${isDark ? 'text-white/70' : 'text-zinc-600'}`}>Subsections:</span>
-                          {keywords.map((keyword, i) => (
-                            <Badge 
-                              key={i} 
-                              variant="outline" 
-                              className={`px-2 py-0.5 text-xs font-medium transition-colors ${
-                                isDark 
-                                  ? 'bg-white/15 border-white/30 text-white/90 hover:bg-white/20' 
-                                  : 'bg-black/8 border-zinc-400/60 text-zinc-800 hover:bg-black/12'
-                              }`}
-                            >
-                              {keyword}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div 
-                    className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 group-data-[state=open]/collapsible:rotate-180 shrink-0 ${
-                      isDark 
-                        ? 'bg-white/10 group-hover:bg-white/20 border border-white/20' 
-                        : 'bg-black/5 group-hover:bg-black/10 border border-black/10'
-                    }`}
-                  >
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${
-                      isDark ? 'text-white' : 'text-zinc-900'
-                    }`} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up mt-8">
-            {children}
-          </CollapsibleContent>
+          <div className="w-full text-left pointer-events-none">
+            {headerContent}
+          </div>
         </div>
-      </Collapsible>
+      ) : (
+        <Collapsible defaultOpen={defaultOpen} className="group/collapsible">
+          <div>
+            {/* Timeline dot - aligned with continuous timeline line */}
+            <div className={`absolute -left-8 md:-left-12 top-6 w-3 h-3 rounded-full ${isDark ? 'bg-white' : 'bg-black'} border-2 ${isDark ? 'border-zinc-900' : 'border-zinc-50'} z-10`} style={{ transform: 'translateX(-50%)' }} />
+            
+            <CollapsibleTrigger className="w-full text-left">
+              {headerContent}
+            </CollapsibleTrigger>
+            <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up mt-8">
+              {children}
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      )}
     </div>
   )
 }
@@ -975,7 +1014,7 @@ function StepModal({
   
   // For Methods, show all images from the Methods folder
   const methodsImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isMethods ? (
-    projectId === 2 ? [] : [ // Case study 2 doesn't have Methods images in this folder structure
+    projectId === 2 ? [] : [ // Case study 2 uses additionalImages from data
       { src: `/Images/${caseStudyFolder}/Methods/The_Double_Diamond_from_the_Fountain_Institute-min.webp`, alt: 'Double Diamond design process', layout: 'top' },
       { src: `/Images/${caseStudyFolder}/Methods/Agile.png`, alt: 'Agile methodology', layout: 'top' },
       { src: `/Images/${caseStudyFolder}/Methods/user journey.png`, alt: 'User journey mapping', layout: 'top' },
@@ -1001,7 +1040,10 @@ function StepModal({
       : (isUserTesting
         ? userTestingImages
         : (isMethods
-          ? methodsImages
+          ? (projectId === 2 && step.additionalImages && step.additionalImages.length > 0
+              ? (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
+              : methodsImages
+            )
           : (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
         )
       )
@@ -1097,6 +1139,12 @@ function StepModal({
                       const uiDesignImage5Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 5.png') && img.src.includes('Case study 2'))
                       const uiDesignImage6Index = filteredImages.findIndex(img => img.src.includes('UI design/image 6.png') && img.src.includes('Case study 2'))
                       const uiDesignImage7Index = filteredImages.findIndex(img => img.src.includes('UI design/image 7.png') && img.src.includes('Case study 2'))
+                      
+                      // Case Study 2 Methods image indices
+                      const methodsImage1Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 1.png') && img.src.includes('Case study 2'))
+                      const methodsImage2Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 2.png') && img.src.includes('Case study 2'))
+                      const methodsImage3Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 3.png') && img.src.includes('Case study 2'))
+                      const methodsImage4Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 4.webp') && img.src.includes('Case study 2'))
                       
                       return filteredImages.map((img, imgIndex) => {
                         // Skip UI components if it's right after Main colors (will be rendered together)
@@ -1393,6 +1441,90 @@ function StepModal({
                               </div>
                               <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="The goal was simple but ambitious: create a smooth, visually rich experience that makes drivers feel calm, appreciated, and a little happier during long drives." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 Methods Image 1 with text below
+                        if (isMethods && projectId === 2 && imgIndex === methodsImage1Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="More than following a strict Double Diamond, this project leaned heavily on design thinking. We spent a lot of time empathising with the end user and clearly defining the real problem. This was not just a technical challenge about lighting. At its core, it was a human problem: long drives can be tiring and demotivating, especially under load. Our goal became to bring a sense of warmth, comfort, and even hope into those long hours, using technology to create meaningful lighting themes." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 Methods Image 2 with text below
+                        if (isMethods && projectId === 2 && imgIndex === methodsImage2Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="The design process was agile from start to finish. We worked in tight loops of ideation, feedback, and quality checks. Brainstorming and validation were part of everyday work, not something saved for workshops. This helped us move forward in a structured way without losing momentum." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 Methods Image 3 with text below
+                        if (isMethods && projectId === 2 && imgIndex === methodsImage3Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="At a broader level, the work was planned across four sprints, with PI planning after each cycle. These sessions brought multiple departments into the same room to align on priorities, dependencies, and next steps. It was one of the most effective ways to move a system of this size forward while keeping everyone aligned." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 Methods Image 4 with text below
+                        if (isMethods && projectId === 2 && imgIndex === methodsImage4Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="A big part of the work, even though it is not fully shown here due to sensitivity, involved UML-based process diagrams. We used these to map information flow and system behaviour. It was a very technical but powerful way to explain design decisions and the importance of flows to both non-technical stakeholders and highly technical teams." />
                               </p>
                             </div>
                           )
@@ -1876,6 +2008,12 @@ function StepModal({
                       const uiDesignImage6Index = filteredImages.findIndex(img => img.src.includes('UI design/image 6.png') && img.src.includes('Case study 2'))
                       const uiDesignImage7Index = filteredImages.findIndex(img => img.src.includes('UI design/image 7.png') && img.src.includes('Case study 2'))
                       
+                      // Case Study 2 Methods image indices
+                      const methodsImage1Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 1.png') && img.src.includes('Case study 2'))
+                      const methodsImage2Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 2.png') && img.src.includes('Case study 2'))
+                      const methodsImage3Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 3.png') && img.src.includes('Case study 2'))
+                      const methodsImage4Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 4.webp') && img.src.includes('Case study 2'))
+                      
                       return filteredImages.map((img, imgIndex) => {
                         // Skip UI components if it's right after Main colors (will be rendered together)
                         if (isUIDesignPair && imgIndex === uiComponentsIndex && uiComponentsIndex === mainColorsIndex + 1) {
@@ -2171,6 +2309,90 @@ function StepModal({
                               </div>
                               <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
                                 <HighlightedText text="The goal was simple but ambitious: create a smooth, visually rich experience that makes drivers feel calm, appreciated, and a little happier during long drives." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 Methods Image 1 with text below
+                        if (isMethods && projectId === 2 && imgIndex === methodsImage1Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="More than following a strict Double Diamond, this project leaned heavily on design thinking. We spent a lot of time empathising with the end user and clearly defining the real problem. This was not just a technical challenge about lighting. At its core, it was a human problem: long drives can be tiring and demotivating, especially under load. Our goal became to bring a sense of warmth, comfort, and even hope into those long hours, using technology to create meaningful lighting themes." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 Methods Image 2 with text below
+                        if (isMethods && projectId === 2 && imgIndex === methodsImage2Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="The design process was agile from start to finish. We worked in tight loops of ideation, feedback, and quality checks. Brainstorming and validation were part of everyday work, not something saved for workshops. This helped us move forward in a structured way without losing momentum." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 Methods Image 3 with text below
+                        if (isMethods && projectId === 2 && imgIndex === methodsImage3Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="At a broader level, the work was planned across four sprints, with PI planning after each cycle. These sessions brought multiple departments into the same room to align on priorities, dependencies, and next steps. It was one of the most effective ways to move a system of this size forward while keeping everyone aligned." />
+                              </p>
+                            </div>
+                          )
+                        }
+                        
+                        // Render Case Study 2 Methods Image 4 with text below
+                        if (isMethods && projectId === 2 && imgIndex === methodsImage4Index) {
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                                <HighlightedText text="A big part of the work, even though it is not fully shown here due to sensitivity, involved UML-based process diagrams. We used these to map information flow and system behaviour. It was a very technical but powerful way to explain design decisions and the importance of flows to both non-technical stakeholders and highly technical teams." />
                               </p>
                             </div>
                           )
@@ -3044,6 +3266,8 @@ function LearningsSection({
         keywords={keywords}
         isLast={false}
         theme="dark"
+        badge={projectId === 2 ? "Not finished" : undefined}
+        disabled={projectId === 2}
       >
         <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -3223,10 +3447,12 @@ function LearningsSection({
 // Design Solutions Section with Thumbnails
 function DesignSolutionsSection({
   description,
-  keywords
+  keywords,
+  projectId = 1
 }: {
   description?: string
   keywords?: string[]
+  projectId?: number
 }) {
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
 
@@ -3246,6 +3472,8 @@ function DesignSolutionsSection({
         keywords={keywords}
         isLast={false}
         theme="light"
+        badge={projectId === 2 ? "Not finished" : undefined}
+        disabled={projectId === 2}
       >
         <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -3811,16 +4039,23 @@ function WhatIDidSection({
               ]
               const anim = animations[index % animations.length]
               
-              // Check if card has video
-              const hasVideo = step.title.toLowerCase().includes('ux research') || 
-                              step.title.toLowerCase().includes('ui design') || 
-                              step.title.toLowerCase().includes('user testing') || 
-                              step.title.toLowerCase().includes('method')
+              // Check if card has video - completely separated by projectId
+              const stepTitleLower = step.title.toLowerCase()
+              const isUXResearch = stepTitleLower.includes('ux research')
+              const isUIDesign = stepTitleLower.includes('ui design')
+              const isUserTesting = stepTitleLower.includes('user testing')
+              const isMethods = stepTitleLower.includes('method')
+              
+              // Case Study 1: UX Research, UI Design, User Testing, Methods
+              // Case Study 2: UX Research, UI Design, Methods (no User Testing)
+              const hasVideo = projectId === 1 
+                ? (isUXResearch || isUIDesign || isUserTesting || isMethods)
+                : (isUXResearch || isUIDesign || isMethods) // Case study 2: no User Testing videos
               
               return (
                 <div
                   key={index}
-                  onClick={() => setSelectedStep(index)}
+                  onClick={() => setSelectedStep(originalIndex)}
                   className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
                 >
                   {/* Apple TV-style card container */}
@@ -3828,7 +4063,8 @@ function WhatIDidSection({
                     {/* Video for cards with available videos - Apple TV style */}
                     {hasVideo && (
                       <>
-                        {step.title.toLowerCase().includes('ux research') && (
+                        {/* Case Study 1 Videos */}
+                        {projectId === 1 && isUXResearch && (
                           <video
                             autoPlay
                             loop
@@ -3837,21 +4073,12 @@ function WhatIDidSection({
                             className="absolute inset-0 w-full h-full object-cover"
                             style={{ transform: 'translateZ(0)', willChange: 'transform' }}
                           >
-                            {projectId === 2 ? (
-                              <>
-                                <source src="/Images/Case study 2/What I did/UX research/UX research.mov" type="video/quicktime" />
-                                <source src="/Images/Case study 2/What I did/UX research/UX research.mov" type="video/mp4" />
-                              </>
-                            ) : (
-                              <>
-                                <source src="/Images/Case study 1/What I did/UX research.mov" type="video/quicktime" />
-                                <source src="/Images/Case study 1/What I did/UX research.mov" type="video/mp4" />
-                              </>
-                            )}
+                            <source src="/Images/Case study 1/What I did/UX research.mov" type="video/quicktime" />
+                            <source src="/Images/Case study 1/What I did/UX research.mov" type="video/mp4" />
                           </video>
                         )}
                         
-                        {step.title.toLowerCase().includes('ui design') && (
+                        {projectId === 1 && isUIDesign && (
                           <video
                             autoPlay
                             loop
@@ -3860,21 +4087,12 @@ function WhatIDidSection({
                             className="absolute inset-0 w-full h-full object-cover"
                             style={{ transform: 'translateZ(0)', willChange: 'transform' }}
                           >
-                            {projectId === 2 ? (
-                              <>
-                                <source src="/Images/Case study 2/What I did/UI design/UI design.mov" type="video/quicktime" />
-                                <source src="/Images/Case study 2/What I did/UI design/UI design.mov" type="video/mp4" />
-                              </>
-                            ) : (
-                              <>
-                                <source src="/Images/Case study 1/What I did/UI design.mov" type="video/quicktime" />
-                                <source src="/Images/Case study 1/What I did/UI design.mov" type="video/mp4" />
-                              </>
-                            )}
+                            <source src="/Images/Case study 1/What I did/UI design.mov" type="video/quicktime" />
+                            <source src="/Images/Case study 1/What I did/UI design.mov" type="video/mp4" />
                           </video>
                         )}
                         
-                        {step.title.toLowerCase().includes('user testing') && projectId === 1 && (
+                        {projectId === 1 && isUserTesting && (
                           <video
                             autoPlay
                             loop
@@ -3888,7 +4106,7 @@ function WhatIDidSection({
                           </video>
                         )}
                         
-                        {step.title.toLowerCase().includes('method') && projectId === 1 && (
+                        {projectId === 1 && isMethods && (
                           <video
                             autoPlay
                             loop
@@ -3899,6 +4117,49 @@ function WhatIDidSection({
                           >
                             <source src="/Images/Case study 1/What I did/Methods.mov" type="video/quicktime" />
                             <source src="/Images/Case study 1/What I did/Methods.mov" type="video/mp4" />
+                          </video>
+                        )}
+                        
+                        {/* Case Study 2 Videos - Completely separate */}
+                        {projectId === 2 && isUXResearch && (
+                          <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="absolute inset-0 w-full h-full object-cover"
+                            style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+                          >
+                            <source src="/Images/Case study 2/What I did/UX research/UX research.mov" type="video/quicktime" />
+                            <source src="/Images/Case study 2/What I did/UX research/UX research.mov" type="video/mp4" />
+                          </video>
+                        )}
+                        
+                        {projectId === 2 && isUIDesign && (
+                          <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="absolute inset-0 w-full h-full object-cover"
+                            style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+                          >
+                            <source src="/Images/Case study 2/What I did/UI design/UI design.mov" type="video/quicktime" />
+                            <source src="/Images/Case study 2/What I did/UI design/UI design.mov" type="video/mp4" />
+                          </video>
+                        )}
+                        
+                        {projectId === 2 && isMethods && (
+                          <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="absolute inset-0 w-full h-full object-cover"
+                            style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+                          >
+                            <source src="/Images/Case study 2/What I did/Methods/Methods.mov" type="video/quicktime" />
+                            <source src="/Images/Case study 2/What I did/Methods/Methods.mov" type="video/mp4" />
                           </video>
                         )}
                       </>
@@ -4452,6 +4713,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
             <DesignSolutionsSection
               description={project.sections.designSolutions.description}
               keywords={project.sections.designSolutions.keywords}
+              projectId={project.id}
             />
           )}
 

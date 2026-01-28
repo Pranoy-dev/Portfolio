@@ -440,7 +440,7 @@ export const esperantoCaseStudies = [
           {
             number: "3",
             title: "User testing",
-            description: "User testing for the ambient lighting experience involved both lab sessions and real-world scenarios. We tested the interface with drivers in simulated cabin environments to understand how they interacted with the lighting controls while focusing on driving tasks.\n\nWe collected feedback on the intuitiveness of the controls, the clarity of visual feedback, and how well the interface matched driver expectations. The testing revealed that drivers preferred quick access to preset lighting modes, with the ability to fine-tune when needed.\n\nWe also measured satisfaction through structured interviews and feedback sessions. Drivers appreciated the premium feel of the interface and how it enhanced their cabin experience. The testing helped us refine the balance between simplicity and advanced features.\n\nContinuous iteration based on feedback was key. We made adjustments to the interface layout, transition animations, and control placement based on what we learned from each testing round.",
+            description: "",
             image: "/Images/Conversion.jpg",
             imageAlt: "User testing",
             imageCaption: "Continuous testing and user feedback collection"
@@ -448,10 +448,32 @@ export const esperantoCaseStudies = [
           {
             number: "4",
             title: "Methods",
-            description: "The project used a combination of design methods tailored to an R&D environment. The Double Diamond framework provided structure for exploring the problem space and converging on solutions. This was especially useful given the exploratory nature of the work.\n\nWe applied Agile principles with short sprints to maintain momentum and adapt quickly to new information. This iterative approach allowed us to test concepts early and refine them based on feedback from stakeholders and users.\n\nUser journey mapping helped us understand the complete lighting experience from the driver's perspective. This visualization made it easier to identify opportunities for improvement and see how the interface fit into the broader cabin experience.\n\nEmpathy methods were essential for understanding driver needs and preferences. We created user personas based on research and interviews, which helped guide design decisions and keep the focus on real user value. These methods ensured we were building something that drivers would actually want to use.",
+            description: "",
             image: "/Images/Conversion.jpg",
             imageAlt: "Methods",
-            imageCaption: "Applying various research and design methods"
+            imageCaption: "Applying various research and design methods",
+            additionalImages: [
+              {
+                src: "/Images/Case study 2/What I did/Methods/Image 1.png",
+                alt: "Methods image 1",
+                layout: "top"
+              },
+              {
+                src: "/Images/Case study 2/What I did/Methods/Image 2.png",
+                alt: "Methods image 2",
+                layout: "top"
+              },
+              {
+                src: "/Images/Case study 2/What I did/Methods/Image 3.png",
+                alt: "Methods image 3",
+                layout: "top"
+              },
+              {
+                src: "/Images/Case study 2/What I did/Methods/Image 4.webp",
+                alt: "Methods image 4",
+                layout: "top"
+              }
+            ]
           }
         ]
       },
