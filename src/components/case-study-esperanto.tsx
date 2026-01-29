@@ -195,7 +195,6 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "core components",
     "login screens",
     "table variations",
-    "foundation",
     "brand palette",
     "color tones",
     "component library",
@@ -504,7 +503,31 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "UML-based process diagrams",
     "system behaviour",
     "non-technical stakeholders",
-    "highly technical teams"
+    "highly technical teams",
+    "3D visuals",
+    "3D models",
+    "mood boards",
+    "nature-inspired",
+    "atmospheric settings",
+    "aurora lights",
+    "lighting controls",
+    "color research",
+    "interaction patterns",
+    "visualisation",
+    "illustrations",
+    "sliders and controls",
+    "Scania's UI framework",
+    "thinking out of the box",
+    "storytelling",
+    "Scania R&D",
+    "interior lighting",
+    "bold thinking",
+    "futuristic or visually appealing",
+    "pushing it forward",
+    "loops of uncertainty",
+    "stand behind an idea",
+    "vision needed a strong story",
+    "feel real and human"
   ]
   
   // Remove duplicate keywords if any exist
@@ -978,6 +1001,13 @@ function StepModal({
   const isUIDesign = step.title.toLowerCase().includes('ui design')
   const isUserTesting = step.title.toLowerCase().includes('user testing')
   const isMethods = step.title.toLowerCase().includes('methods')
+  const isLearnings = ['managing ambiguity', 'building trust', 'momentum'].includes(step.title.toLowerCase())
+  const learningsDisplayTitles: Record<string, string> = {
+    'managing ambiguity': 'Out of the box',
+    'building trust': 'Ownership',
+    'momentum': 'Storytelling'
+  }
+  const stepDisplayTitle = Number(projectId) === 2 && isLearnings ? (learningsDisplayTitles[step.title.toLowerCase()] || step.title) : step.title
   
   // UX Research images - different paths for case study 1 vs 2
   const uxResearchImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter: number }> = (isUXResearch && hasDescription) ? (
@@ -1066,7 +1096,7 @@ function StepModal({
         <div className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="flex items-center justify-between px-6 md:px-8 py-4">
             <h2 className="text-xl md:text-2xl font-bold tracking-tight truncate pr-4">
-              {step.title}
+              {stepDisplayTitle}
             </h2>
             <button
               onClick={onClose}
@@ -1082,17 +1112,39 @@ function StepModal({
           <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-1.5 md:py-2.5">
             {/* Hero Image Section - Only show if not UX research, UI design, User testing, or Methods */}
             {step.image && !isUXResearch && !isUIDesign && !isUserTesting && !isMethods && (
-              <div className="mb-8 rounded-lg overflow-hidden border border-border/20">
-                <div className="relative w-full" style={{ minHeight: '400px' }}>
-                  <Image
-                    src={step.image}
-                    alt={step.imageAlt || step.title}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
-                    priority
-                  />
+              <div className="mb-6">
+                <div className="rounded-lg overflow-hidden border border-border/20">
+                  <div className="relative w-full" style={{ minHeight: '400px' }}>
+                    <Image
+                      src={step.image}
+                      alt={step.imageAlt || step.title}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
+                      priority
+                    />
+                  </div>
                 </div>
+                {isLearnings && (Number(projectId) === 2 ? (
+                  <div className="mt-4 space-y-4 pb-5">
+                    {(step.title.toLowerCase() === 'managing ambiguity'
+                      ? 'In fast-paced corporate environments, "thinking out of the box" often gets pushed aside. A lot of creativity already went into building the foundations of these systems, and the focus naturally shifts to maintaining and scaling them. But sometimes, progress requires breaking away from those constraints and aiming higher. Real innovation often comes from efficient problem-solving paired with bold thinking, even if users only experience it as a smooth, effortless product.\n\nOn this project, I had to actively protect space for creativity. Not just to design something futuristic or visually appealing, but to remind people that there is more to product work than incremental, mechanical improvements. Creativity here was not a luxury, it was necessary to inspire new possibilities.'
+                      : step.title.toLowerCase() === 'building trust'
+                      ? 'What often decides whether a feature like this survives is simple: who owns it. Without someone genuinely invested in pushing it forward, ideas can easily get stuck in loops of uncertainty and eventually disappear due to shifting priorities or lack of resources.\n\nNo one explicitly asked me to take ownership of this project, but I did anyway. I could see the potential and did not want it to fade out. Taking that responsibility pushed me to grow, not just as a designer, but as someone willing to stand behind an idea and keep it alive in every discussion. I probably became "that person" in design meetings who would not let go of the interior lighting concept, and I am okay with that.'
+                      : step.title.toLowerCase() === 'momentum'
+                      ? 'Competition for time and resources is very real, especially in a place like Scania R&D. I knew that to move this forward, logic alone would not be enough. The vision needed a strong story, something that stood out and helped people imagine the future.\n\nAnd it worked. I still remember rooms going quiet during presentations, not because of the visuals, but because the story made the idea feel real and human. When you want a large group of people to move in the same direction, storytelling is often the most powerful tool you have.'
+                      : step.description || ''
+                    ).split('\n\n').map((para, i) => (
+                      <p key={i} className="text-base md:text-lg leading-relaxed text-foreground">
+                        <HighlightedText text={para} isDark={false} />
+                      </p>
+                    ))}
+                  </div>
+                ) : hasDescription && (
+                  <p className="mt-4 text-base md:text-lg leading-relaxed text-foreground pb-5">
+                    <HighlightedText text={step.description} isDark={false} />
+                  </p>
+                ))}
               </div>
             )}
 
@@ -1166,7 +1218,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="This was one of those projects where a lot of research already existed. There was third-party market research from the business side, and there were insights from previous designers and teams. My first job was to go through all of it and figure out what was still relevant. That meant spending a lot of time reading reports, digging through Figma files, and separating useful signals from outdated assumptions." />
                               </p>
                             </div>
@@ -1187,7 +1239,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Because we already had a strong research base, wireframing started quite early. We used quick, rough mockups as a way to translate research into something concrete and to start conversations with functional stakeholders. These early wireframes helped us collect feedback fast, especially since we knew we had to stay within existing truck UI patterns and frameworks." />
                               </p>
                             </div>
@@ -1208,7 +1260,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="At the same time, the new lighting experience introduced features that did not exist before. That meant new UI had to be explored early. Some wireframes were created specifically to test these new ideas and see how they could fit into the broader system." />
                               </p>
                             </div>
@@ -1229,7 +1281,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also did a lot of benchmarking. And I mean a lot. We looked online, watched videos, studied interactions from other manufacturers, visited exhibitions and fairs in Stockholm, and spent hands-on time with vehicles already on the market. One standout inspiration was Polestar, especially their use of planetary themes for lighting, which stayed with us throughout the project." />
                               </p>
                             </div>
@@ -1250,7 +1302,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also studied strong UI and UX work coming from several Chinese brands and tried to learn from what they were doing well." />
                               </p>
                             </div>
@@ -1271,7 +1323,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Once we aligned on a general direction, the focus shifted to specifics: which light themes to pursue and what they should feel like. To help stakeholders make decisions faster, we created simple cabin renderings that showed the overall mood and possibilities." />
                               </p>
                             </div>
@@ -1292,7 +1344,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="These visuals helped turn abstract ideas into something people could react to and care about." />
                               </p>
                             </div>
@@ -1313,7 +1365,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="This work started as a UI concept to explore what a theme-based cabin lighting experience could be. The idea later flowed into the infotainment UI inside the truck. Most of the original concepts are sensitive and cannot be shared, so I recreated similar prototypes here to show the thinking and direction." />
                               </p>
                             </div>
@@ -1334,7 +1386,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We began with a platform-style layout, where each lighting theme felt like a different atmosphere, almost like moving between floors in a building. Swipe gestures were used to move between these layers, making the experience feel calm and continuous." />
                               </p>
                             </div>
@@ -1355,7 +1407,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Many concepts were explored during this phase, but I am focusing on one that best represents the core idea: atmospheric themes. One of the hardest parts was not designing the UI, but getting people to believe in the vision. To do that, I used storytelling. Earth became the reference point, and its natural movements inspired how the experience should feel and flow." />
                               </p>
                             </div>
@@ -1376,7 +1428,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="To move fast, I used AI-generated visuals as part of rapid prototyping. These helped us explore mood, color, and tone quickly. You can see this reflected in elements like the color selector UI in some of the concepts." />
                               </p>
                             </div>
@@ -1397,7 +1449,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Once the direction was agreed on, the focus shifted from vision to realism. We looked closely at the existing cabin UI and started weaving the new ideas into what already existed, instead of forcing something completely new." />
                               </p>
                             </div>
@@ -1418,7 +1470,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="What followed was a deeper dive into the infotainment interactions: color selection, brightness control, and navigation. The final concepts were carefully refined, with every interaction documented in detail." />
                               </p>
                             </div>
@@ -1439,7 +1491,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="The goal was simple but ambitious: create a smooth, visually rich experience that makes drivers feel calm, appreciated, and a little happier during long drives." />
                               </p>
                             </div>
@@ -1460,7 +1512,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="More than following a strict Double Diamond, this project leaned heavily on design thinking. We spent a lot of time empathising with the end user and clearly defining the real problem. This was not just a technical challenge about lighting. At its core, it was a human problem: long drives can be tiring and demotivating, especially under load. Our goal became to bring a sense of warmth, comfort, and even hope into those long hours, using technology to create meaningful lighting themes." />
                               </p>
                             </div>
@@ -1481,7 +1533,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="The design process was agile from start to finish. We worked in tight loops of ideation, feedback, and quality checks. Brainstorming and validation were part of everyday work, not something saved for workshops. This helped us move forward in a structured way without losing momentum." />
                               </p>
                             </div>
@@ -1502,7 +1554,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="At a broader level, the work was planned across four sprints, with PI planning after each cycle. These sessions brought multiple departments into the same room to align on priorities, dependencies, and next steps. It was one of the most effective ways to move a system of this size forward while keeping everyone aligned." />
                               </p>
                             </div>
@@ -1523,7 +1575,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="A big part of the work, even though it is not fully shown here due to sensitivity, involved UML-based process diagrams. We used these to map information flow and system behaviour. It was a very technical but powerful way to explain design decisions and the importance of flows to both non-technical stakeholders and highly technical teams." />
                               </p>
                             </div>
@@ -1544,7 +1596,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Scania has its own design system, and honestly, I think it is very cool and evolving fast. Most of what we needed was already there, from core components to patterns like login screens. Sometimes we still had to build a few things ourselves, like more complex table variations, but the foundation was strong." />
                               </p>
                             </div>
@@ -1579,7 +1631,7 @@ function StepModal({
                                   />
                                 </div>
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="The first thing I did was get comfortable with the system. I studied the brand palette and color tones, then went through the component library to understand what is used where, and why." />
                               </p>
                             </div>
@@ -1600,7 +1652,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Once I had that, I started translating wireframes into UI. One of my favourite moments was designing a landing page that felt almost too simple: the user basically sees one main thing, a single search entry point. It looks obvious now, but getting there took a lot of discussion and decision-making. That simplicity was earned." />
                               </p>
                             </div>
@@ -1621,7 +1673,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text={'On the other side, we had screens that look calm at first glance but carry a lot of complexity under the hood. The "Order" view is a good example. It is packed with information, filtering, and actions. The challenge with these screens is not adding features, it is understanding what connects to what, then communicating it in a clean way, and defending that simplicity through multiple loops of team confusion and change.'} />
                               </p>
                             </div>
@@ -1642,10 +1694,10 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="And if you are wondering where the high-graphics, fancy UI is: I love that too, and we do use it sometimes. It just was not the right fit for this project." />
                               </p>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="You can find more UI-related information in the next section called Design solution." />
                               </p>
                             </div>
@@ -1656,7 +1708,7 @@ function StepModal({
                         if (isUserTesting && imgIndex === userSessionsIndex) {
                           return (
                             <div key={imgIndex} className="space-y-3">
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="User testing happened throughout the project, in whatever form made sense at the time. We tested early to understand what was working and what was not. We tested again when the first wireframes were ready. We tested clickable prototypes before sending anything to development. And we kept testing once we had real builds in place. I am describing it here as one track, but it was really an ongoing habit." />
                               </p>
                               <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
@@ -1669,7 +1721,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text={'One of my favourite tools for this was Hotjar. It was approved by Scania IT, and I was the one driving the setup so we could use it inside internal products. Within a few weeks, we started collecting what Hotjar calls "user sessions", and it quickly became one of our most useful sources of truth.'} />
                               </p>
                             </div>
@@ -1690,7 +1742,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Session recordings gave us a real view of how people moved through the system. Recordings were random, with sensitive data removed and user IDs blurred. I watched these sessions to spot patterns and form hypotheses. It was great quantitative direction, it helped us see where to look. But it did not always explain the why, so it worked best when paired with conversations." />
                               </p>
                             </div>
@@ -1711,7 +1763,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Heatmaps helped us understand what people actually used on key pages, and what they ignored. This made it much easier to argue for simplification and optimization, because we could point to real behaviour instead of opinions." />
                               </p>
                             </div>
@@ -1732,7 +1784,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also looked for signals like rage clicks and U-turns. Those usually showed friction, broken flows, or areas that were not properly tested. In a large internal system like Conversion, these signals were common, and they helped us prioritize fixes fast." />
                               </p>
                             </div>
@@ -1753,7 +1805,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Alongside Hotjar, we used surveys and NPS to answer specific questions as they came up. The built-in surveys were also a good way to find users who were willing to help us improve the system, and to keep a feedback loop open as the product evolved." />
                               </p>
                             </div>
@@ -1774,7 +1826,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text={'A responsibility that often comes with being a UX designer is helping the team understand user experience, usability, and how to build it into the process. That said, UX maturity at Scania is not the same everywhere. Some R&D teams I have worked with were much more design-mature than many purely engineering-led teams. In this project, me and my teammate introduced the Double Diamond to the team. We used it to show that design is not just "make UI when needed", it is about understanding the problem properly before jumping into solutions.'} />
                               </p>
                             </div>
@@ -1795,7 +1847,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We then blended that into the agile setup the team already had: sprints, backlog, and ongoing delivery. The main change was that design started being developed a few steps ahead, so developers always had clear, ready-to-build front-end assets when they reached that stage." />
                               </p>
                             </div>
@@ -1816,7 +1868,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also relied heavily on user journey maps to make sense of complex flows. These maps were built from everything we learned: interviews, surveys, and behavioural data from other systems." />
                               </p>
                             </div>
@@ -1837,7 +1889,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="One thing we always added was an empathy layer. We documented not just what users do, but what they think and feel while moving through the system. Often those things do not match, and that is where the real insights show up. As a designer, I try to be careful here. You cannot follow every signal blindly, you have to judge what matters." />
                               </p>
                             </div>
@@ -1858,7 +1910,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also created user personas based on the interviews. These personas helped the team understand who we were designing for, and they guided decisions throughout the project. They kept us focused on real user needs rather than assumptions." />
                               </p>
                             </div>
@@ -1881,7 +1933,7 @@ function StepModal({
                       })
                     })()}
                   </div>
-                ) : (
+                ) : isLearnings ? null : (
                   descriptionLines.map((paragraph, index) => {
                   // Check if this paragraph is shown on the right of a previous left-layout image
                   const leftImageWithThisOnRight = allImages.find((img) => {
@@ -2034,7 +2086,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="This was one of those projects where a lot of research already existed. There was third-party market research from the business side, and there were insights from previous designers and teams. My first job was to go through all of it and figure out what was still relevant. That meant spending a lot of time reading reports, digging through Figma files, and separating useful signals from outdated assumptions." />
                               </p>
                             </div>
@@ -2055,7 +2107,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Because we already had a strong research base, wireframing started quite early. We used quick, rough mockups as a way to translate research into something concrete and to start conversations with functional stakeholders. These early wireframes helped us collect feedback fast, especially since we knew we had to stay within existing truck UI patterns and frameworks." />
                               </p>
                             </div>
@@ -2076,7 +2128,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="At the same time, the new lighting experience introduced features that did not exist before. That meant new UI had to be explored early. Some wireframes were created specifically to test these new ideas and see how they could fit into the broader system." />
                               </p>
                             </div>
@@ -2097,7 +2149,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also did a lot of benchmarking. And I mean a lot. We looked online, watched videos, studied interactions from other manufacturers, visited exhibitions and fairs in Stockholm, and spent hands-on time with vehicles already on the market. One standout inspiration was Polestar, especially their use of planetary themes for lighting, which stayed with us throughout the project." />
                               </p>
                             </div>
@@ -2118,7 +2170,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also studied strong UI and UX work coming from several Chinese brands and tried to learn from what they were doing well." />
                               </p>
                             </div>
@@ -2139,7 +2191,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Once we aligned on a general direction, the focus shifted to specifics: which light themes to pursue and what they should feel like. To help stakeholders make decisions faster, we created simple cabin renderings that showed the overall mood and possibilities." />
                               </p>
                             </div>
@@ -2160,7 +2212,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="These visuals helped turn abstract ideas into something people could react to and care about." />
                               </p>
                             </div>
@@ -2181,7 +2233,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="This work started as a UI concept to explore what a theme-based cabin lighting experience could be. The idea later flowed into the infotainment UI inside the truck. Most of the original concepts are sensitive and cannot be shared, so I recreated similar prototypes here to show the thinking and direction." />
                               </p>
                             </div>
@@ -2202,7 +2254,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We began with a platform-style layout, where each lighting theme felt like a different atmosphere, almost like moving between floors in a building. Swipe gestures were used to move between these layers, making the experience feel calm and continuous." />
                               </p>
                             </div>
@@ -2223,7 +2275,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Many concepts were explored during this phase, but I am focusing on one that best represents the core idea: atmospheric themes. One of the hardest parts was not designing the UI, but getting people to believe in the vision. To do that, I used storytelling. Earth became the reference point, and its natural movements inspired how the experience should feel and flow." />
                               </p>
                             </div>
@@ -2244,7 +2296,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="To move fast, I used AI-generated visuals as part of rapid prototyping. These helped us explore mood, color, and tone quickly. You can see this reflected in elements like the color selector UI in some of the concepts." />
                               </p>
                             </div>
@@ -2265,7 +2317,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Once the direction was agreed on, the focus shifted from vision to realism. We looked closely at the existing cabin UI and started weaving the new ideas into what already existed, instead of forcing something completely new." />
                               </p>
                             </div>
@@ -2286,7 +2338,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="What followed was a deeper dive into the infotainment interactions: color selection, brightness control, and navigation. The final concepts were carefully refined, with every interaction documented in detail." />
                               </p>
                             </div>
@@ -2307,7 +2359,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="The goal was simple but ambitious: create a smooth, visually rich experience that makes drivers feel calm, appreciated, and a little happier during long drives." />
                               </p>
                             </div>
@@ -2328,7 +2380,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="More than following a strict Double Diamond, this project leaned heavily on design thinking. We spent a lot of time empathising with the end user and clearly defining the real problem. This was not just a technical challenge about lighting. At its core, it was a human problem: long drives can be tiring and demotivating, especially under load. Our goal became to bring a sense of warmth, comfort, and even hope into those long hours, using technology to create meaningful lighting themes." />
                               </p>
                             </div>
@@ -2349,7 +2401,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="The design process was agile from start to finish. We worked in tight loops of ideation, feedback, and quality checks. Brainstorming and validation were part of everyday work, not something saved for workshops. This helped us move forward in a structured way without losing momentum." />
                               </p>
                             </div>
@@ -2370,7 +2422,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="At a broader level, the work was planned across four sprints, with PI planning after each cycle. These sessions brought multiple departments into the same room to align on priorities, dependencies, and next steps. It was one of the most effective ways to move a system of this size forward while keeping everyone aligned." />
                               </p>
                             </div>
@@ -2391,7 +2443,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="A big part of the work, even though it is not fully shown here due to sensitivity, involved UML-based process diagrams. We used these to map information flow and system behaviour. It was a very technical but powerful way to explain design decisions and the importance of flows to both non-technical stakeholders and highly technical teams." />
                               </p>
                             </div>
@@ -2412,7 +2464,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Scania has its own design system, and honestly, I think it is very cool and evolving fast. Most of what we needed was already there, from core components to patterns like login screens. Sometimes we still had to build a few things ourselves, like more complex table variations, but the foundation was strong." />
                               </p>
                             </div>
@@ -2447,7 +2499,7 @@ function StepModal({
                                   />
                                 </div>
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="The first thing I did was get comfortable with the system. I studied the brand palette and color tones, then went through the component library to understand what is used where, and why." />
                               </p>
                             </div>
@@ -2468,7 +2520,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Once I had that, I started translating wireframes into UI. One of my favourite moments was designing a landing page that felt almost too simple: the user basically sees one main thing, a single search entry point. It looks obvious now, but getting there took a lot of discussion and decision-making. That simplicity was earned." />
                               </p>
                             </div>
@@ -2489,7 +2541,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text={'On the other side, we had screens that look calm at first glance but carry a lot of complexity under the hood. The "Order" view is a good example. It is packed with information, filtering, and actions. The challenge with these screens is not adding features, it is understanding what connects to what, then communicating it in a clean way, and defending that simplicity through multiple loops of team confusion and change.'} />
                               </p>
                             </div>
@@ -2510,10 +2562,10 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="And if you are wondering where the high-graphics, fancy UI is: I love that too, and we do use it sometimes. It just was not the right fit for this project." />
                               </p>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="You can find more UI-related information in the next section called Design solution." />
                               </p>
                             </div>
@@ -2524,7 +2576,7 @@ function StepModal({
                         if (isUserTesting && imgIndex === userSessionsIndex) {
                           return (
                             <div key={imgIndex} className="space-y-3">
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="User testing happened throughout the project, in whatever form made sense at the time. We tested early to understand what was working and what was not. We tested again when the first wireframes were ready. We tested clickable prototypes before sending anything to development. And we kept testing once we had real builds in place. I am describing it here as one track, but it was really an ongoing habit." />
                               </p>
                               <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
@@ -2537,7 +2589,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text={'One of my favourite tools for this was Hotjar. It was approved by Scania IT, and I was the one driving the setup so we could use it inside internal products. Within a few weeks, we started collecting what Hotjar calls "user sessions", and it quickly became one of our most useful sources of truth.'} />
                               </p>
                             </div>
@@ -2558,7 +2610,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Session recordings gave us a real view of how people moved through the system. Recordings were random, with sensitive data removed and user IDs blurred. I watched these sessions to spot patterns and form hypotheses. It was great quantitative direction, it helped us see where to look. But it did not always explain the why, so it worked best when paired with conversations." />
                               </p>
                             </div>
@@ -2579,7 +2631,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Heatmaps helped us understand what people actually used on key pages, and what they ignored. This made it much easier to argue for simplification and optimization, because we could point to real behaviour instead of opinions." />
                               </p>
                             </div>
@@ -2600,7 +2652,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also looked for signals like rage clicks and U-turns. Those usually showed friction, broken flows, or areas that were not properly tested. In a large internal system like Conversion, these signals were common, and they helped us prioritize fixes fast." />
                               </p>
                             </div>
@@ -2621,7 +2673,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="Alongside Hotjar, we used surveys and NPS to answer specific questions as they came up. The built-in surveys were also a good way to find users who were willing to help us improve the system, and to keep a feedback loop open as the product evolved." />
                               </p>
                             </div>
@@ -2642,7 +2694,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text={'A responsibility that often comes with being a UX designer is helping the team understand user experience, usability, and how to build it into the process. That said, UX maturity at Scania is not the same everywhere. Some R&D teams I have worked with were much more design-mature than many purely engineering-led teams. In this project, me and my teammate introduced the Double Diamond to the team. We used it to show that design is not just "make UI when needed", it is about understanding the problem properly before jumping into solutions.'} />
                               </p>
                             </div>
@@ -2663,7 +2715,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We then blended that into the agile setup the team already had: sprints, backlog, and ongoing delivery. The main change was that design started being developed a few steps ahead, so developers always had clear, ready-to-build front-end assets when they reached that stage." />
                               </p>
                             </div>
@@ -2684,7 +2736,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also relied heavily on user journey maps to make sense of complex flows. These maps were built from everything we learned: interviews, surveys, and behavioural data from other systems." />
                               </p>
                             </div>
@@ -2705,7 +2757,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="One thing we always added was an empathy layer. We documented not just what users do, but what they think and feel while moving through the system. Often those things do not match, and that is where the real insights show up. As a designer, I try to be careful here. You cannot follow every signal blindly, you have to judge what matters." />
                               </p>
                             </div>
@@ -2726,7 +2778,7 @@ function StepModal({
                                   unoptimized
                                 />
                               </div>
-                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2">
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5">
                                 <HighlightedText text="We also explored user profiles to make research and testing more efficient. We did not fully implement it because of time and limited interest from the product team, but we still kept the idea in mind while designing and validating solutions." />
                               </p>
                             </div>
@@ -3214,6 +3266,7 @@ function RealProblemsSection({
 }
 
 // Learnings Section with Thumbnails
+// Case study 1 and case study 2 are isolated: edit only the projectId === 2 block for case study 2 so case study 1 is unaffected.
 function LearningsSection({
   description,
   keywords,
@@ -3237,7 +3290,13 @@ function LearningsSection({
   const caseStudyFolder = projectId === 2 ? 'Case study 2' : 'Case study 1'
 
   // Map items to images - dynamic based on projectId
-  const imageMap: Record<string, string> = {
+  const imageMap: Record<string, string> = projectId === 2 ? {
+    // Case study 2: uses "What I learned" folder with different images
+    "managing ambiguity": `/Images/${caseStudyFolder}/What I learned/Out of the box.jpg`,
+    "building trust": `/Images/${caseStudyFolder}/What I learned/Ownership.jpg`,
+    "momentum": `/Images/${caseStudyFolder}/What I learned/Story telling.jpg`
+  } : {
+    // Case study 1: uses "What Did I learn" folder
     "managing ambiguity": `/Images/${caseStudyFolder}/What Did I learn/ambiguity.jpg`,
     "building trust": `/Images/${caseStudyFolder}/What Did I learn/building trust.jpg`,
     "momentum": `/Images/${caseStudyFolder}/What Did I learn/momentum.jpg`
@@ -3257,6 +3316,102 @@ function LearningsSection({
     }
   })
 
+  const pid = Number(projectId)
+
+  // Case study 2 only: separate branch so edits here never affect case study 1
+  if (pid === 2) {
+    const learningsDisplayTitles: Record<string, string> = {
+      'managing ambiguity': 'Out of the box',
+      'building trust': 'Ownership',
+      'momentum': 'Storytelling'
+    }
+    const getDisplayTitle = (title: string) => learningsDisplayTitles[title.toLowerCase()] || title
+    const subsectionKeywords = steps.map((s) => getDisplayTitle(s.title))
+    return (
+      <>
+        <CollapsibleSection
+          number="05"
+          title="What did I learn"
+          subtitle={description}
+          keywords={subsectionKeywords}
+          isLast={false}
+          theme="dark"
+        >
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {steps.map((step, index) => {
+                const displayTitle = getDisplayTitle(step.title)
+                const gradients = [
+                  'from-blue-900/80 via-blue-950/90 to-black',
+                  'from-purple-900/80 via-purple-950/90 to-black',
+                  'from-indigo-900/80 via-indigo-950/90 to-black',
+                ]
+                const glow = gradients[index % gradients.length]
+                const animations = [
+                  { glow: 'animate-[glow-pulse-1_3s_ease-in-out_infinite]', wave: 'animate-[wave-1_5s_ease-in-out_infinite]', gradient: 'bg-[length:200%_200%] animate-[gradient-shift-1_6s_ease_infinite]' },
+                  { glow: 'animate-[glow-pulse-2_3.5s_ease-in-out_infinite]', wave: 'animate-[wave-2_5.5s_ease-in-out_infinite]', gradient: 'bg-[length:200%_200%] animate-[gradient-shift-2_7s_ease_infinite]' },
+                  { glow: 'animate-[glow-pulse-3_3.2s_ease-in-out_infinite]', wave: 'animate-[wave-3_5.2s_ease-in-out_infinite]', gradient: 'bg-[length:200%_200%] animate-[gradient-shift-3_6.5s_ease_infinite]' },
+                ]
+                const anim = animations[index % animations.length]
+                const hasImage = step.image
+                return (
+                  <div
+                    key={index}
+                    onClick={() => setSelectedStep(index)}
+                    className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                  >
+                    <div className="relative aspect-[4/5] w-full overflow-hidden">
+                      {hasImage && (
+                        <div className="absolute inset-0">
+                          <Image
+                            src={step.image!}
+                            alt={step.imageAlt || displayTitle}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            unoptimized
+                          />
+                        </div>
+                      )}
+                      {!hasImage && (
+                        <>
+                          <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full ${glow} opacity-70 group-hover:opacity-90 transition-opacity duration-500 ${anim.glow}`} style={{ animationDelay: `${index * 0.3}s` }} />
+                          <div className={`absolute top-8 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full ${glow} opacity-40 ${anim.wave}`} style={{ animationDelay: `${index * 0.3 + 0.5}s` }} />
+                          <div className={`absolute top-16 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full ${glow} opacity-25 ${anim.glow}`} style={{ animationDelay: `${index * 0.3 + 1}s`, animationDuration: '4s' }} />
+                        </>
+                      )}
+                      <div className="absolute bottom-0 left-0 right-0 z-[5] pointer-events-none" style={{ height: '25%', overflow: 'hidden', transform: 'translateZ(0)', willChange: 'transform' }}>
+                        <div className="absolute bottom-0 left-0 right-0" style={{ height: '100%', width: '100%', background: 'linear-gradient(to top, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)', transform: 'translateZ(0)', isolation: 'isolate' }} />
+                        <div className="absolute top-0 left-0 right-0 h-px z-10"><div className="h-full bg-gradient-to-r from-transparent via-white/50 to-transparent" /></div>
+                      </div>
+                      <div
+                        onClick={(e) => { e.stopPropagation(); setSelectedStep(index) }}
+                        className="absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 text-white font-semibold flex items-center justify-center gap-2 group/btn cursor-pointer overflow-hidden"
+                        style={{ background: 'rgba(0, 0, 0, 1)', borderTop: '1px solid rgba(255, 255, 255, 0.15)', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.2)', transform: 'scale(1)', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                      >
+                        <span className="text-sm font-medium tracking-tight relative z-10 group-hover/btn:tracking-tighter transition-all duration-300">{displayTitle}</span>
+                        <ArrowRight className="h-4 w-4 relative z-10 shrink-0 transition-all duration-300 group-hover/btn:translate-x-2 group-hover/btn:scale-110" />
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </CollapsibleSection>
+        {selectedStep !== null && steps && (
+          <StepModal
+            step={steps[selectedStep]}
+            isOpen={selectedStep !== null}
+            onClose={() => setSelectedStep(null)}
+            projectId={2}
+          />
+        )}
+      </>
+    )
+  }
+
+  // Case study 1 only: do not edit above when changing case study 2
   return (
     <>
       <CollapsibleSection
@@ -3266,8 +3421,6 @@ function LearningsSection({
         keywords={keywords}
         isLast={false}
         theme="dark"
-        badge={projectId === 2 ? "Not finished" : undefined}
-        disabled={projectId === 2}
       >
         <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -3445,6 +3598,7 @@ function LearningsSection({
 }
 
 // Design Solutions Section with Thumbnails
+// Case study 1 and case study 2 are fully isolated: changes to case study 2 branches do not affect case study 1.
 function DesignSolutionsSection({
   description,
   keywords,
@@ -3456,13 +3610,148 @@ function DesignSolutionsSection({
 }) {
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
 
-  // Define the 3 steps for Design solutions
+  // Define the 3 steps for Design solutions (shared structure)
   const steps = [
     { title: "Information architecture", description: "" },
     { title: "wireframe", description: "" },
     { title: "Design", description: "" }
   ]
 
+  // Case study 2: separate branch so edits here never affect case study 1
+  const pid = Number(projectId)
+  if (pid === 2) {
+    const stepsCaseStudy2 = [
+      { title: "Concept design", description: "" },
+      { title: "wireframe", description: "" },
+      { title: "UI design", description: "" }
+    ]
+    return (
+      <>
+        <CollapsibleSection
+          number="04"
+          title="Design solutions"
+          subtitle={description}
+          keywords={keywords}
+          isLast={false}
+          theme="light"
+        >
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {stepsCaseStudy2.map((step, index) => {
+                const gradients = [
+                  'from-blue-900/80 via-blue-950/90 to-black',
+                  'from-purple-900/80 via-purple-950/90 to-black',
+                  'from-indigo-900/80 via-indigo-950/90 to-black',
+                ]
+                const glows = [
+                  'bg-blue-500/30',
+                  'bg-purple-500/30',
+                  'bg-indigo-500/30',
+                ]
+                const gradient = gradients[index % gradients.length]
+                const glow = glows[index % glows.length]
+                const animations = [
+                  { glow: 'animate-[glow-pulse-1_3s_ease-in-out_infinite]', wave: 'animate-[wave-1_5s_ease-in-out_infinite]', gradient: 'bg-[length:200%_200%] animate-[gradient-shift-1_6s_ease_infinite]' },
+                  { glow: 'animate-[glow-pulse-2_3.5s_ease-in-out_infinite]', wave: 'animate-[wave-2_5.5s_ease-in-out_infinite]', gradient: 'bg-[length:200%_200%] animate-[gradient-shift-2_7s_ease_infinite]' },
+                  { glow: 'animate-[glow-pulse-3_3.2s_ease-in-out_infinite]', wave: 'animate-[wave-3_5.2s_ease-in-out_infinite]', gradient: 'bg-[length:200%_200%] animate-[gradient-shift-3_6.5s_ease_infinite]' },
+                ]
+                const anim = animations[index % animations.length]
+                const isConceptDesign = step.title.toLowerCase().includes('concept design')
+                const isWireframe = step.title.toLowerCase().includes('wireframe')
+                const isUIDesign = step.title.toLowerCase().includes('ui design')
+                const hasVideo = isConceptDesign || isWireframe || isUIDesign
+                return (
+                  <div
+                    key={index}
+                    onClick={() => setSelectedStep(index)}
+                    className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                  >
+                    <div className="relative aspect-[4/5] w-full overflow-hidden">
+                      {hasVideo && (
+                        <>
+                          {isConceptDesign && (
+                            <video
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              poster={encodeURI("/Images/Case study 2/Design solutions/Concept design/Screenshot 2026-01-29 at 10.13.06.png")}
+                              className="absolute inset-0 w-full h-full object-cover"
+                              style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+                            >
+                              <source src={encodeURI("/Images/Case study 2/Design solutions/Concept design/concept design.mov")} type="video/quicktime" />
+                              <source src={encodeURI("/Images/Case study 2/Design solutions/Concept design/concept design.mov")} type="video/mp4" />
+                            </video>
+                          )}
+                          {isWireframe && (
+                            <video
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              poster={encodeURI("/Images/Case study 2/Design solutions/Wireframing/Areas.png")}
+                              className="absolute inset-0 w-full h-full object-cover"
+                              style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+                            >
+                              <source src={encodeURI("/Images/Case study 2/Design solutions/Wireframing/wireframing.mov")} type="video/quicktime" />
+                              <source src={encodeURI("/Images/Case study 2/Design solutions/Wireframing/wireframing.mov")} type="video/mp4" />
+                            </video>
+                          )}
+                          {isUIDesign && (
+                            <video
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              poster={encodeURI("/Images/Case study 2/Design solutions/UI design/Screenshot 2026-01-29 at 10.12.27.png")}
+                              className="absolute inset-0 w-full h-full object-cover"
+                              style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+                            >
+                              <source src={encodeURI("/Images/Case study 2/Design solutions/UI design/UI design.mov")} type="video/quicktime" />
+                              <source src={encodeURI("/Images/Case study 2/Design solutions/UI design/UI design.mov")} type="video/mp4" />
+                            </video>
+                          )}
+                        </>
+                      )}
+                      {!hasVideo && (
+                        <>
+                          <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full ${glow} opacity-70 group-hover:opacity-90 transition-opacity duration-500 ${anim.glow}`} style={{ animationDelay: `${index * 0.3}s` }} />
+                          <div className={`absolute top-8 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full ${glow} opacity-40 ${anim.wave}`} style={{ animationDelay: `${index * 0.3 + 0.5}s` }} />
+                          <div className={`absolute top-16 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full ${glow} opacity-25 ${anim.glow}`} style={{ animationDelay: `${index * 0.3 + 1}s`, animationDuration: '4s' }} />
+                        </>
+                      )}
+                      <div className="absolute bottom-0 left-0 right-0 z-[5] pointer-events-none" style={{ height: '25%', overflow: 'hidden', transform: 'translateZ(0)', willChange: 'transform' }}>
+                        <div className="absolute bottom-0 left-0 right-0" style={{ height: '100%', width: '100%', background: 'linear-gradient(to top, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)', transform: 'translateZ(0)', isolation: 'isolate' }} />
+                        <div className="absolute top-0 left-0 right-0 h-px z-10"><div className="h-full bg-gradient-to-r from-transparent via-white/50 to-transparent" /></div>
+                      </div>
+                      <div
+                        onClick={(e) => { e.stopPropagation(); setSelectedStep(index) }}
+                        className="absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 text-white font-semibold flex items-center justify-center gap-2 group/btn cursor-pointer overflow-hidden"
+                        style={{ background: 'rgba(0, 0, 0, 1)', borderTop: '1px solid rgba(255, 255, 255, 0.15)', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.2)', transform: 'scale(1)', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                      >
+                        <span className="text-sm font-medium tracking-tight relative z-10 group-hover/btn:tracking-tighter transition-all duration-300">{step.title}</span>
+                        <ArrowRight className="h-4 w-4 relative z-10 shrink-0 transition-all duration-300 group-hover/btn:translate-x-2 group-hover/btn:scale-110" />
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </CollapsibleSection>
+        {selectedStep !== null && stepsCaseStudy2 && (
+          <DesignSolutionModal
+            step={stepsCaseStudy2[selectedStep]}
+            isOpen={selectedStep !== null}
+            onClose={() => setSelectedStep(null)}
+            projectId={2}
+          />
+        )}
+      </>
+    )
+  }
+
+  // Case study 1 only: cards and modal (do not edit above when changing case study 2)
   return (
     <>
       <CollapsibleSection
@@ -3472,8 +3761,6 @@ function DesignSolutionsSection({
         keywords={keywords}
         isLast={false}
         theme="light"
-        badge={projectId === 2 ? "Not finished" : undefined}
-        disabled={projectId === 2}
       >
         <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -3700,14 +3987,17 @@ function DesignSolutionsSection({
 }
 
 // Modal Component for Design Solutions Steps
+// When changing case study 2 modal content, only edit inside "if (projectId === 2)" branches so case study 1 is unaffected.
 function DesignSolutionModal({ 
   step, 
   isOpen, 
-  onClose 
+  onClose,
+  projectId = 1
 }: { 
   step: { title: string; description: string }
   isOpen: boolean
   onClose: () => void
+  projectId?: number
 }) {
   useEffect(() => {
     if (isOpen) {
@@ -3728,8 +4018,8 @@ function DesignSolutionModal({
 
   if (!isOpen || !step) return null
 
-  // Get images based on step title
-  const getImagesForStep = (title: string) => {
+  // Case study 1 only: images and copy below. Case study 2 uses the branch after so edits there never affect case study 1.
+  const getImagesForStepCaseStudy1 = (title: string) => {
     const titleLower = title.toLowerCase()
     if (titleLower.includes('information architecture')) {
       return [
@@ -3756,7 +4046,50 @@ function DesignSolutionModal({
     return []
   }
 
-  const allImages = getImagesForStep(step.title)
+  // Case study 2: add images/copy here so case study 1 is never affected.
+  const getImagesForStepCaseStudy2 = (title: string) => {
+    const titleLower = title.toLowerCase()
+    if (titleLower.includes('concept design')) {
+      return [
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 1.png', alt: 'Concept design 1', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 2.png', alt: 'Concept design 2', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 3.png', alt: 'Concept design 3', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 4.png', alt: 'Concept design 4', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 5.png', alt: 'Concept design 5', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 6.png', alt: 'Concept design 6', layout: 'side-by-side' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/iamge 7.png', alt: 'Concept design 7', layout: 'side-by-side' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 8.png', alt: 'Concept design 8', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 9.png', alt: 'Concept design 9', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Concept design/image 10.png', alt: 'Concept design 10', layout: 'top' as const }
+      ]
+    } else if (titleLower.includes('wireframe')) {
+      return [
+        { src: '/Images/Case study 2/Design solutions/Wireframing/Image 1.png', alt: 'Wireframe 1', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Wireframing/Image 2.png', alt: 'Wireframe 2', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Wireframing/Image 3.png', alt: 'Wireframe 3', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Wireframing/Image 4.png', alt: 'Wireframe 4', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Wireframing/Image 5.png', alt: 'Wireframe 5', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Wireframing/Image 6.png', alt: 'Wireframe 6', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/Wireframing/Image 7.png', alt: 'Wireframe 7', layout: 'top' as const }
+      ]
+    } else if (titleLower.includes('ui design')) {
+      return [
+        { src: '/Images/Case study 2/Design solutions/UI design/image 1.png', alt: 'UI design 1', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/UI design/image 2.png', alt: 'UI design 2', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/UI design/image 3.png', alt: 'UI design 3', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/UI design/image 4.png', alt: 'UI design 4', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/UI design/image 5.png', alt: 'UI design 5', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/UI design/image 6.png', alt: 'UI design 6', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/UI design/image 7.png', alt: 'UI design 7', layout: 'top' as const },
+        { src: '/Images/Case study 2/Design solutions/UI design/image 8.png', alt: 'UI design 8', layout: 'top' as const }
+      ]
+    }
+    return [] as Array<{ src: string; alt: string; layout: 'top' | 'side-by-side' }>
+  }
+
+  const allImages = projectId === 2
+    ? getImagesForStepCaseStudy2(step.title)
+    : getImagesForStepCaseStudy1(step.title)
 
   return (
     <div 
@@ -3775,7 +4108,7 @@ function DesignSolutionModal({
         <div className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="flex items-center justify-between px-6 md:px-8 py-4">
             <h2 className="text-xl md:text-2xl font-bold tracking-tight truncate pr-4">
-              {step.title}
+              {Number(projectId) === 2 && step.title.toLowerCase() === 'wireframe' ? 'Wireframe' : step.title}
             </h2>
             <button
               onClick={onClose}
@@ -3799,6 +4132,7 @@ function DesignSolutionModal({
                       const isInformationArchitecture = step.title.toLowerCase().includes('information architecture')
                       const isWireframe = step.title.toLowerCase().includes('wireframe')
                       const isDesign = step.title.toLowerCase().includes('design')
+                      const isUIDesign = step.title.toLowerCase().includes('ui design')
                       const isInformationUML = img.alt.toLowerCase().includes('information uml')
                       const isNotes = img.alt.toLowerCase().includes('notes')
                       const isAllPlatforms = img.alt.toLowerCase().includes('all platforms')
@@ -3806,25 +4140,44 @@ function DesignSolutionModal({
                       const isWireframe3 = img.alt.toLowerCase().includes('wireframe 3')
                       const isWireframe1 = img.alt.toLowerCase().includes('wireframe 1')
                       const isWireframe2 = img.alt.toLowerCase().includes('wireframe 2')
+                      const isWireframe5 = img.alt.toLowerCase().includes('wireframe 5')
+                      const isWireframe7 = img.alt.toLowerCase().includes('wireframe 7')
                       const isUI4 = img.alt.toLowerCase().includes('ui design 4')
                       const isUI1 = img.alt.toLowerCase().includes('ui design 1')
                       const isUI2 = img.alt.toLowerCase().includes('ui design 2')
                       const isUI3 = img.alt.toLowerCase().includes('ui design 3')
+                      const isUI5 = img.alt.toLowerCase().includes('ui design 5')
+                      const isUI7 = img.alt.toLowerCase().includes('ui design 7')
+                      const isUI8 = img.alt.toLowerCase().includes('ui design 8')
                       const isPrototype1 = img.alt.toLowerCase().includes('prototype 1')
+                      const isConceptDesign = step.title.toLowerCase().includes('concept design')
+                      const isConceptDesign1 = img.alt.toLowerCase().includes('concept design 1')
+                      const isConceptDesign2 = img.alt.toLowerCase().includes('concept design 2')
+                      const isConceptDesign3 = img.alt.toLowerCase().includes('concept design 3')
+                      const isConceptDesign4 = img.alt.toLowerCase().includes('concept design 4')
+                      const isConceptDesign5 = img.alt.toLowerCase().includes('concept design 5')
+                      const isConceptDesign6 = img.alt.toLowerCase().includes('concept design 6')
+                      const isConceptDesign7 = img.alt.toLowerCase().includes('concept design 7')
+                      const isConceptDesign9 = img.alt.toLowerCase().includes('concept design 9')
+                      const isConceptDesign10 = img.alt.toLowerCase().includes('concept design 10')
                       
                       // Check if this is part of a side-by-side layout
                       const isSideBySide = img.layout === 'side-by-side'
                       const nextImg = allImages[imgIndex + 1]
                       const shouldRenderSideBySide = isWireframe && isSideBySide && isWireframe4 && nextImg && nextImg.layout === 'side-by-side'
+                      const shouldRenderConceptDesignSideBySide = Number(projectId) === 2 && isConceptDesign && isConceptDesign6 && isSideBySide && nextImg && nextImg.layout === 'side-by-side'
                       
                       // Skip rendering if this is the second image in a side-by-side pair
                       if (isSideBySide && !isWireframe4 && imgIndex > 0 && allImages[imgIndex - 1]?.layout === 'side-by-side') {
                         return null
                       }
+                      if (Number(projectId) === 2 && isConceptDesign && isConceptDesign7 && imgIndex > 0 && allImages[imgIndex - 1]?.layout === 'side-by-side') {
+                        return null
+                      }
                       
                       return (
                         <div key={imgIndex} className="space-y-4">
-                          {shouldRenderSideBySide ? (
+                          {(shouldRenderSideBySide || shouldRenderConceptDesignSideBySide) ? (
                             // Side-by-side layout for wireframe3 and wireframe2 - aligned at top
                             <div className="grid grid-cols-2 gap-2 items-start">
                               <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
@@ -3864,70 +4217,179 @@ function DesignSolutionModal({
                             </div>
                           )}
                           
-                          {/* Text below images for Information Architecture */}
-                          {isInformationArchitecture && isInformationUML && (
+                          {/* Case study 2: Concept design captions below each image */}
+                          {Number(projectId) === 2 && isConceptDesign && isConceptDesign1 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="Designing a lighting experience goes far beyond what appears on a screen. It requires imagining how the driver actually feels inside the cabin, how light, color, and movement affect mood over long hours on the road. A big part of the work was not just creating the experience, but helping others see and believe in it. That meant strong visualisation to communicate the idea clearly." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isConceptDesign && isConceptDesign2 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="We worked closely with a visual designer and used existing Scania assets to create 3D visuals of the cabin. At the same time, we studied the truck hardware in detail to understand where lights were placed and what they could do, things like grouping, intensity, and range." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isConceptDesign && isConceptDesign3 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="Many concepts were explored, though not all can be shown here due to sensitivity. A lot of the exploration focused on nature-inspired color research, looking at natural phenomena as a source of calm and rhythm." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isConceptDesign && isConceptDesign4 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="We also explored ideas inspired by planetary movement and light patterns from different parts of the world, collecting these into mood boards for discussion and brainstorming." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isConceptDesign && isConceptDesign5 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="We spent time thinking about how the experience should behave, not just how it should look. That meant studying physical objects and modern interaction patterns to shape how the UI and lighting would respond together." />
+                            </p>
+                          )}
+                          {(Number(projectId) === 2 && isConceptDesign && (isConceptDesign7 || shouldRenderConceptDesignSideBySide)) && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="One concept that gained a lot of attention was built around 3D models of different atmospheric settings, like aurora lights, sunsets, and cloud patterns. Each theme had its own character, light behaviour, and emotional tone." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isConceptDesign && isConceptDesign9 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="As the ideas matured, we explored how they could live inside Scania's existing design system and infotainment UI. We tested many variations and gradually narrowed them down. AI-based visualisation was also used to create more realistic imagery and explore possible outcomes." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isConceptDesign && isConceptDesign10 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="All of this work had one goal: make the vision clear enough that stakeholders could understand it, feel it, and support moving it forward." />
+                            </p>
+                          )}
+                          
+                          {/* Case study 2: Wireframe captions below each image */}
+                          {Number(projectId) === 2 && isWireframe && isWireframe1 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="Based on the research and early concepts, we started shaping how the infotainment UI could work. Some of the initial wireframes came from previous designers, and I built on top of them, refining the structure and adding what we had learned from user research." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isWireframe && isWireframe2 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="Early on, we explored a structure with three main sections: Interior Lights, Areas, and Presets. Each section had a clear purpose based on driver needs. Interior Lights already existed in the cabin, but only with basic functionality. A key goal was to improve this UI and unlock more premium features." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isWireframe && isWireframe3 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="Presets originally represented simple light settings, but as the concept evolved, they became Themes. This shift came from a clearer vision of what the experience could be and how lighting could shape mood, not just function." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isWireframe && isWireframe4 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="We also explored alternative, simpler concepts for lighting. These versions were easier to implement and avoided heavy graphics. They were part of an intentional iteration process, helping us compare directions and make better decisions." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isWireframe && isWireframe5 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="A lot of attention went into color selection. On the surface it looks simple, but matching multiple light sources into one smooth experience requires real hardware and system considerations. That complexity showed up early in the wireframes." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isWireframe && isWireframe7 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="I am including some early wireframes for color selection to give a sense of how detailed we were even at this stage." />
+                            </p>
+                          )}
+                          
+                          {/* Case study 2: UI design captions below each image */}
+                          {Number(projectId) === 2 && isUIDesign && isUI1 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="The HMI in this project was especially interesting because you could see changes happen in real time inside the cabin as you interacted with the UI. When we prepared the designs for delivery, we put a lot of effort into clearly explaining what each interaction would change and how it would affect the cabin experience." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isUIDesign && isUI2 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="We created illustrations to show how different lights were positioned in the cabin and how they connected to UI elements like sliders and controls in the Digital Driver Workspace. Visual assets were a mix of new creations and existing Scania material, which helped keep things familiar while still pushing the experience forward." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isUIDesign && isUI3 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="Within the team, it was standard practice to explore multiple directions. At least four UI concepts were created and reviewed before any decision was made. All concepts stayed within Scania's UI framework, but they explored different balances of density, clarity, and interaction." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isUIDesign && isUI4 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="One variation closely followed the existing Digital Driver Workspace design. We felt it was too congested, but we still explored it to make sure everyone clearly understood that direction and its limitations. Another variation focused more on clarity and simplicity, reducing visual noise and making interactions easier to understand." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isUIDesign && isUI5 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="We also explored a few experimental concepts that were far from the usual Scania experience. These were meant to push thinking and help the team imagine other possibilities." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isUIDesign && isUI7 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="Some ideas from these experiments made their way into the final concepts, even though the concepts themselves are not shown here." />
+                            </p>
+                          )}
+                          {Number(projectId) === 2 && isUIDesign && isUI8 && (
+                            <p className="text-base md:text-lg leading-relaxed text-foreground pb-5">
+                              <HighlightedText text="A major constraint throughout the project was the physical hardware. Many features were tied to both digital and physical buttons, and those had very different timelines. Physical buttons could take close to a year to approve and implement, which meant some ideas had to be dropped or redesigned. Balancing digital flexibility with physical limitations was challenging, but it was also one of the most educational and exciting parts of the project." />
+                            </p>
+                          )}
+                          
+                          {/* Case study 1 only: text below images. Case study 2 caption logic goes in a separate projectId === 2 block if needed. */}
+                          {projectId === 1 && isInformationArchitecture && isInformationUML && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <HighlightedText text="This is one of the biggest responsibilities in UX, especially in a complex internal system. If you do not understand how information moves between systems and features, you cannot design with confidence. Once you do understand it, you gain a lot more flexibility and influence over the solution. Because Scania is sensitive about internal information flows, I have recreated parts of this work using mock data. But early in the project, we did something very practical: we mapped the systems that send and receive data from Conversion, then dug into what data is exchanged, why it is sent, and who depends on it." />
                             </p>
                           )}
                           
-                          {isInformationArchitecture && isNotes && (
+                          {projectId === 1 && isInformationArchitecture && isNotes && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <HighlightedText text="We ran workshops with business analysts and product experts to walk through these flows together. They helped clarify what was being collected today, what was missing, and what needed to improve." />
                             </p>
                           )}
                           
-                          {isInformationArchitecture && isAllPlatforms && (
+                          {projectId === 1 && isInformationArchitecture && isAllPlatforms && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <HighlightedText text="From those sessions, we built a UML-style flow map. That became the backbone for the redesign and guided a lot of our decisions going forward." />
                             </p>
                           )}
                           
-                          {/* Text below images for Wireframe */}
-                          {isWireframe && isWireframe4 && shouldRenderSideBySide && (
+                          {projectId === 1 && isWireframe && isWireframe4 && shouldRenderSideBySide && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <HighlightedText text="After we had the research insights, I moved into wireframing. Simple black-and-white flows helped us test the information architecture and, more importantly, align stakeholders on direction. It kept conversations focused on structure and logic instead of getting stuck on colors, styling, or button placement." />
                             </p>
                           )}
                           
-                          {isWireframe && isWireframe1 && (
+                          {projectId === 1 && isWireframe && isWireframe1 && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <HighlightedText text="Wireframes also made the later UI phase smoother. When the layout and flow are agreed early, the final design needs fewer big changes." />
                             </p>
                           )}
                           
-                          {isWireframe && isWireframe2 && (
+                          {projectId === 1 && isWireframe && isWireframe2 && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <HighlightedText text="One example is the Vehicle Modification area. We had a piece of information called Customized Conversion, and it was a tricky feature to fit into the existing flows. By iterating in wireframes, placing it in different sections, and walking through real scenarios with the team, we eventually landed on a solution that worked for both users and stakeholders." />
                             </p>
                           )}
                           
-                          {/* Text below images for Design */}
-                          {isDesign && isUI4 && (
+                          {projectId === 1 && isDesign && isUI4 && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <HighlightedText text="This project was big. We designed around 150+ screens and mapped 200+ flows inside one platform. Explaining each one would take more Scania and truck-specific knowledge than design knowledge, so I will focus on one flow that shows the kind of UI work we did: Package Specification Update. This flow is part of a much larger chain that ends in over-the-air updates, sent directly to trucks through the built-in connection." />
                             </p>
                           )}
                           
-                          {isDesign && isUI1 && (
+                          {projectId === 1 && isDesign && isUI1 && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <strong>Step 1:</strong> <HighlightedText text="Build the right package. A field engineer starts by creating the right mechanical package for a specific vehicle owner. The UI stays simple on purpose: search, dropdowns, and clear selections to help them pick from hundreds of possibilities. When something does not work together, the system warns them with a compatibility prompt so they can fix it early." />
                             </p>
                           )}
                           
-                          {isDesign && isUI2 && (
+                          {projectId === 1 && isDesign && isUI2 && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <strong>Step 2:</strong> <HighlightedText text="Customized specification update. Next, the user moves into a section where the system helps narrow things down. It suggests options from a searchable list, based on what has worked before and what fits the current requirements. The goal here is to reduce the space of choices from thousands to a manageable few." />
                             </p>
                           )}
                           
-                          {isDesign && isUI3 && (
+                          {projectId === 1 && isDesign && isUI3 && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <strong>Step 3:</strong> <HighlightedText text="Order (final checkpoint). Finally, the flow ends in Order, where the most important details are shown again before the update is logged and documents are sent forward in the process. This screen is intentionally calm and minimal. At this point, clarity matters more than features. If something goes wrong here, it can trigger a butterfly effect across multiple systems, and in the worst case, cause serious operational issues." />
                             </p>
                           )}
                           
-                          {isDesign && isPrototype1 && (
+                          {projectId === 1 && isDesign && isPrototype1 && (
                             <p className="text-base md:text-lg leading-relaxed text-foreground">
                               <HighlightedText text="I am also keeping a single image that shows how we built clickable prototypes in Figma using the Prototype feature. This helped users understand the flow of events and make decisions faster, with less guesswork." />
                             </p>

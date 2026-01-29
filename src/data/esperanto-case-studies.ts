@@ -345,7 +345,7 @@ export const esperantoCaseStudies = [
       whatIDid: {
         title: "What I did",
         description: "To make this feel like a great Scania experience, I focused on three things: research, design and prototyping.",
-        keywords: ["UX research", "UI design", "User testing", "Methods"],
+        keywords: ["UX research", "UI design", "Methods"],
         steps: [
           {
             number: "1",
