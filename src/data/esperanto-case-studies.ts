@@ -200,6 +200,7 @@ export const esperantoCaseStudies = [
         ]
       },
       learnings: {
+        description: "Getting out of my comfort zone",
         keywords: ["Enterprise Systems", "Compliance", "Systems Thinking", "Component Design"],
         items: [
           {
@@ -513,6 +514,7 @@ export const esperantoCaseStudies = [
         ]
       },
       learnings: {
+        description: "Getting out of my comfort zone",
         keywords: ["Enterprise Systems", "Compliance", "Systems Thinking", "Component Design"],
         items: [
           {
@@ -587,6 +589,170 @@ export const esperantoCaseStudies = [
           organization: "CSSDA"
         }
       ]
+    }
+  },
+  {
+    id: 3,
+    title: "Visma's Neo Bank concept",
+    subtitle: "Neo bank R&D for early-stage startups at SpeedLedger (Visma)",
+    description: "R&D exploration of simplified banking and automated bookkeeping for small businesses, from research through design solutions.",
+    heroImage: "/Images/Banking.jpg",
+    role: ["First designer"],
+    team: ["Senior developer", "Product owner"],
+    client: "SpeedLedger (Visma)",
+    date: "R&D — SpeedLedger era",
+    websiteUrl: undefined,
+    sections: {
+      about: {
+        title: "Simplified Banking and Automated Bookkeeping",
+        description: "This was an R&D project at SpeedLedger, later acquired by Visma. The goal was to study early-stage entrepreneurs and explore how a neo bank could better support their financial workflows. I joined as the first designer in a small team together with a senior developer and product owner.\n\nWe worked with rapid research, prototyping, and testing to validate ideas quickly. The initiative was treated as a moonshot project within the company."
+      },
+      challenge: {
+        title: "The challenge",
+        description: "The biggest challenge was making fast decisions while balancing risk and uncertainty. We worked like an early-stage startup, building for a niche that was still being defined.",
+        keywords: ["Speed", "Balancing risk", "Uncertainty"],
+        content: [
+          {
+            title: "Challenge 1: Speed",
+            description: "We rarely had perfect information about the market or the product surface area. The team had to choose directions, cut scope, and still keep momentum. I helped make tradeoffs visible with lightweight prototypes and short research cycles so we could align on the next bet without stalling in analysis.",
+            image: "/Images/Case study 3/speed.jpg",
+            imageAlt: "Speed",
+            imageCaption: "Fast decisions with imperfect information"
+          },
+          {
+            title: "Challenge 2: Balancing risk",
+            description: "Banking and bookkeeping operate in heavily regulated environments, which meant we had to balance speed with responsibility. We could not move recklessly, but we also could not slow down to the point where experimentation and learning stopped. To manage this, we worked in small and testable product slices, where legal, compliance, and product discussions stayed grounded in real user scenarios instead of abstract assumptions.",
+            image: "/Images/Case study 3/risk.jpg",
+            imageAlt: "Balancing risk",
+            imageCaption: "Compliance without killing learning speed"
+          },
+          {
+            title: "Challenge 3: Uncertainty",
+            description: "Another major challenge was understanding the diversity within early-stage startups. Founders, freelancers, consultants, and small business owners often shared similar financial frustrations, but their workflows, priorities, and risk tolerance were very different. We had to stay focused enough to design for a clear target group while also recognizing the complexity and variation within that audience.",
+            image: "/Images/Case study 3/Uncertainity.jpg",
+            imageAlt: "Uncertainty",
+            imageCaption: "A moving target that still needed a clear story"
+          }
+        ]
+      },
+      realProblems: {
+        title: "The real problems",
+        description: "Internal assumptions and biases sometimes affected the direction of the project. It showed how difficult it can be for organizations to accept when early assumptions are wrong.",
+        keywords: ["Assumptions", "Bias", "Organizational learning"],
+        problems: [
+          {
+            title: "Problem 1: Strong early assumptions",
+            description: "We often anchored on the first plausible story about what founders needed. That helped us start, but it also made it harder to hear contradictory evidence later.\n\nWhen research disagreed with the initial narrative, progress depended on whether the team could update the model together.",
+            evidence: "Early hypotheses were sticky even when new data appeared",
+            image: "/Images/Banking.jpg"
+          },
+          {
+            title: "Problem 2: Internal bias toward the familiar",
+            description: "Comfortable patterns from existing products leaked into concepts, even when we were trying to think from zero.\n\nWe had to repeatedly ask whether a flow was \"true for users\" or \"true because it matched what we already knew how to build.\"",
+            evidence: "Familiar UI patterns reappeared before problems were fully reframed",
+            image: "/Images/Banking.jpg"
+          },
+          {
+            title: "Problem 3: Accepting being wrong",
+            description: "Organizations celebrate learning in theory, but admitting a wrong bet can still feel costly in practice.\n\nThis project surfaced how much design work is actually social: creating enough safety to change direction without losing credibility.",
+            evidence: "Pivot moments were emotionally harder than technically hard",
+            image: "/Images/Banking.jpg"
+          }
+        ]
+      },
+      whatIDid: {
+        title: "What I did",
+        description: "We worked using the Google Design Sprint methodology and a build-measure-learn approach. I actively researched users, conducted interviews, created prototypes, and continuously tested ideas with target users.",
+        keywords: ["Google Design Sprint", "Build-measure-learn", "Interviews", "Prototypes"],
+        steps: [
+          {
+            number: "1",
+            title: "UX research",
+            description: "",
+            image: "",
+            imageAlt: "UX research",
+            imageCaption: "",
+            additionalImages: [{ src: "/Images/Banking.jpg", alt: "Founder interviews and research synthesis", layout: "top" as const }] as { src: string; alt: string; layout: "top" }[],
+          },
+          {
+            number: "2",
+            title: "UI design",
+            description: "",
+            image: "/Images/Banking.jpg",
+            imageAlt: "UI design",
+            imageCaption: "Prototypes and flows for core banking and bookkeeping moments",
+            additionalImages: [{ src: "/Images/Banking.jpg", alt: "UI explorations and screens", layout: "top" as const }] as { src: string; alt: string; layout: "top" }[],
+          },
+          {
+            number: "3",
+            title: "User testing",
+            description: "",
+            image: "/Images/Banking.jpg",
+            imageAlt: "User testing",
+            imageCaption: "Testing ideas with target users"
+          },
+          {
+            number: "4",
+            title: "Methods",
+            description: "",
+            image: "/Images/Banking.jpg",
+            imageAlt: "Methods",
+            imageCaption: "Design sprints and iterative delivery",
+            additionalImages: [{ src: "/Images/Banking.jpg", alt: "Sprint artifacts and learnings", layout: "top" as const }] as { src: string; alt: string; layout: "top" }[],
+          }
+        ]
+      },
+      designSolutions: {
+        title: "Design solutions",
+        description: "The product focused on simplicity, clarity, and building trust with users. We designed systems that provided guidance and financial clarity during important moments.",
+        keywords: ["Simplicity", "Clarity", "Trust", "Guidance"],
+        features: []
+      },
+      learnings: {
+        description: "What this moonshot changed for me",
+        keywords: ["Focus", "Core problems", "Restraint"],
+        items: [
+          {
+            title: "Focus in high-risk environments",
+            description: "The project taught me how important focus is in high-risk startup environments. When timelines and credibility are fragile, a sharp problem statement is a strategy.\n\nSpreading attention across too many hypotheses diluted both the product story and the research signal. Narrowing the bet made the work easier to explain and easier to test.",
+            icon: Lightbulb,
+            image: "/Images/Banking.jpg",
+          },
+          {
+            title: "Core problems first",
+            description: "Solving core user problems well is often more valuable than trying to solve too many problems at once.\n\nUsers rewarded clarity in the basics: understanding balances, knowing what happens next, and feeling guided through intimidating tasks. The \"extra\" features mattered less than we initially assumed.",
+            icon: Users,
+            image: "/Images/Banking.jpg",
+          },
+          {
+            title: "Restraint as craft",
+            description: "Restraint became a design skill: choosing what not to build, what not to explain yet, and what to keep calm on screen.\n\nIn a neo bank concept, confidence often comes from fewer words, fewer choices, and fewer surprises — not from more surface area.",
+            icon: Zap,
+            image: "/Images/Banking.jpg",
+          }
+        ]
+      },
+      impact: {
+        title: "Impact",
+        description: "As an R&D initiative, impact was measured in learning velocity and stakeholder alignment as much as shipped code. The work informed how the organization thinks about small-business financial workflows and neo-bank concepts.",
+        keywords: ["Validated direction", "Shared language", "Faster learning"],
+        metrics: [
+          { value: "Sprint", label: "Research rhythm", change: "Weekly" },
+          { value: "3", label: "Core journeys", change: "Prioritized" },
+          { value: "10+", label: "Ideas explored", change: "Moonshot" },
+          { value: "1", label: "Design seat", change: "From zero" }
+        ],
+        testimonials: [
+          {
+            name: "Product owner",
+            role: "SpeedLedger R&D",
+            location: "🇸🇪",
+            quote: "Having design in the room from day one changed how fast we could test whether founders actually wanted this.",
+            avatar: undefined
+          }
+        ]
+      },
+      awards: []
     }
   }
 ]

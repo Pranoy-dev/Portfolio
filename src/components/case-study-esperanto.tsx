@@ -48,10 +48,23 @@ import {
   Mail,
   ArrowRight,
   ChevronDown,
-  X
+  X,
 } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+
+/** Same section template as case study 2 (Visma-style); each project uses its own data and asset folder. */
+function usesVismaStyleCaseStudyLayout(projectId?: number): boolean {
+  const id = Number(projectId)
+  return id === 2 || id === 3
+}
+
+function caseStudyImagesFolder(projectId?: number): "Case study 1" | "Case study 2" | "Case study 3" {
+  const id = Number(projectId)
+  if (id === 2) return "Case study 2"
+  if (id === 3) return "Case study 3"
+  return "Case study 1"
+}
 
 // Scroll Reveal Wrapper Component - No animation, always visible
 function ScrollReveal({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) {
@@ -527,9 +540,21 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "loops of uncertainty",
     "stand behind an idea",
     "vision needed a strong story",
-    "feel real and human"
+    "feel real and human",
+    // Visma neo bank — challenge modal (balancing risk) emphasis
+    "small and testable product slices",
+    "heavily regulated environments",
+    "balance speed with responsibility",
+    "experimentation and learning",
+    // Visma neo bank — challenge 3 modal (uncertainty) emphasis (short terms)
+    "diversity",
+    "freelancers",
+    "frustrations",
+    "tolerance",
+    "variation",
+    "audience"
   ]
-  
+
   // Remove duplicate keywords if any exist
   const uniqueKeywords = Array.from(new Set(keywords))
 
@@ -558,33 +583,29 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
   })
   
   sortedKeywords.forEach(keyword => {
+    if (!keyword.trim()) return
     const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    const regex = new RegExp(escapedKeyword, 'gi')
-    const textLower = text.toLowerCase()
-    const keywordLower = keyword.toLowerCase()
-    let searchIndex = 0
-    
-    while (searchIndex < text.length) {
-      const index = textLower.indexOf(keywordLower, searchIndex)
-      if (index === -1) break
-      
-      const end = index + keyword.length
-      // Check if this range overlaps with existing matches (including percentage matches)
-      const overlaps = matches.some(m => 
+    // Single-token keywords: whole-word only so e.g. "cycle" does not match inside "cycles"
+    const useWordBoundary = !/\s/.test(keyword)
+    const pattern = useWordBoundary ? `\\b${escapedKeyword}\\b` : escapedKeyword
+    const regex = new RegExp(pattern, 'gi')
+    let match: RegExpExecArray | null
+    while ((match = regex.exec(text)) !== null) {
+      const index = match.index
+      const end = index + match[0].length
+      const overlaps = matches.some(m =>
         (index >= m.start && index < m.end) ||
         (end > m.start && end <= m.end) ||
         (index <= m.start && end >= m.end)
       )
-      
       if (!overlaps) {
         matches.push({
           start: index,
-          end: end,
+          end,
           text: text.substring(index, end),
           isPercentage: false
         })
       }
-      searchIndex = index + 1
     }
   })
   
@@ -993,7 +1014,7 @@ function StepModal({
   const descriptionLines = hasDescription ? step.description.split('\n\n') : []
   
   // Determine which case study folder to use based on projectId
-  const caseStudyFolder = projectId === 2 ? 'Case study 2' : 'Case study 1'
+  const caseStudyFolder = caseStudyImagesFolder(projectId)
   
   // For UX research, we'll insert images at strategic points matching the text
   // Only show images if description is not empty (case study 2 has empty description)
@@ -1007,11 +1028,16 @@ function StepModal({
     'building trust': 'Ownership',
     'momentum': 'Storytelling'
   }
-  const stepDisplayTitle = Number(projectId) === 2 && isLearnings ? (learningsDisplayTitles[step.title.toLowerCase()] || step.title) : step.title
+  const stepDisplayTitle =
+    usesVismaStyleCaseStudyLayout(projectId) && isLearnings
+      ? Number(projectId) === 3
+        ? step.title
+        : (learningsDisplayTitles[step.title.toLowerCase()] || step.title)
+      : step.title
   
   // UX Research images - different paths for case study 1 vs 2
   const uxResearchImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter: number }> = (isUXResearch && hasDescription) ? (
-    projectId === 2 ? [] : [ // Case study 2 uses additionalImages from data
+    usesVismaStyleCaseStudyLayout(projectId) ? [] : [ // Visma-style case studies use additionalImages from data
       { src: `/Images/${caseStudyFolder}/UX research/Manual.png`, alt: 'Reading manuals and product documentation', layout: 'left', insertAfter: 0 },
       { src: `/Images/${caseStudyFolder}/UX research/Previous designers.png`, alt: 'Reviewing previous designer work', layout: 'top', insertAfter: 2 },
       { src: `/Images/${caseStudyFolder}/UX research/Figjam.png`, alt: 'Capturing insights in Miro and FigJam', layout: 'top', insertAfter: 3 },
@@ -1021,7 +1047,7 @@ function StepModal({
   
   // For UI design, show all images from the UI design folder
   const uiDesignImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUIDesign ? (
-    projectId === 2 ? [] : [ // Case study 2 doesn't have UI design images in this folder structure
+    usesVismaStyleCaseStudyLayout(projectId) ? [] : [ // Visma-style case studies use additionalImages from data
       { src: `/Images/${caseStudyFolder}/UI design/Login page.png`, alt: 'Scania login page design', layout: 'top' },
       { src: `/Images/${caseStudyFolder}/UI design/Main colors.png`, alt: 'Scania main colors', layout: 'top' },
       { src: `/Images/${caseStudyFolder}/UI design/UI components.png`, alt: 'Scania component library', layout: 'top' },
@@ -1033,7 +1059,7 @@ function StepModal({
   
   // For User testing, show all images from the User testing folder
   const userTestingImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUserTesting ? (
-    projectId === 2 ? [] : [ // Case study 2 doesn't have User testing images in this folder structure
+    usesVismaStyleCaseStudyLayout(projectId) ? [] : [ // Visma-style case studies don't use this folder structure
       { src: `/Images/${caseStudyFolder}/User testing/User sessions.png`, alt: 'User sessions overview', layout: 'top' },
       { src: `/Images/${caseStudyFolder}/User testing/recordings.png`, alt: 'User session recordings', layout: 'top' },
       { src: `/Images/${caseStudyFolder}/User testing/headmap.png`, alt: 'User testing heatmap', layout: 'top' },
@@ -1044,7 +1070,7 @@ function StepModal({
   
   // For Methods, show all images from the Methods folder
   const methodsImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isMethods ? (
-    projectId === 2 ? [] : [ // Case study 2 uses additionalImages from data
+    usesVismaStyleCaseStudyLayout(projectId) ? [] : [ // Visma-style case studies use additionalImages from data
       { src: `/Images/${caseStudyFolder}/Methods/The_Double_Diamond_from_the_Fountain_Institute-min.webp`, alt: 'Double Diamond design process', layout: 'top' },
       { src: `/Images/${caseStudyFolder}/Methods/Agile.png`, alt: 'Agile methodology', layout: 'top' },
       { src: `/Images/${caseStudyFolder}/Methods/user journey.png`, alt: 'User journey mapping', layout: 'top' },
@@ -1058,19 +1084,19 @@ function StepModal({
   // For Case Study 2 UI design, use additionalImages if available
   // For other steps, use their respective image arrays or additionalImages
   const allImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUXResearch 
-    ? (projectId === 2 && step.additionalImages && step.additionalImages.length > 0
+    ? (usesVismaStyleCaseStudyLayout(projectId) && step.additionalImages && step.additionalImages.length > 0
         ? (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
         : (hasDescription ? uxResearchImages : (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined })))
       )
     : (isUIDesign 
-      ? (projectId === 2 && step.additionalImages && step.additionalImages.length > 0
+      ? (usesVismaStyleCaseStudyLayout(projectId) && step.additionalImages && step.additionalImages.length > 0
           ? (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
           : uiDesignImages
         )
       : (isUserTesting
         ? userTestingImages
         : (isMethods
-          ? (projectId === 2 && step.additionalImages && step.additionalImages.length > 0
+          ? (usesVismaStyleCaseStudyLayout(projectId) && step.additionalImages && step.additionalImages.length > 0
               ? (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
               : methodsImages
             )
@@ -1125,15 +1151,19 @@ function StepModal({
                     />
                   </div>
                 </div>
-                {isLearnings && (Number(projectId) === 2 ? (
+                {isLearnings && (usesVismaStyleCaseStudyLayout(projectId) ? (
                   <div className="mt-4 space-y-4 pb-5">
-                    {(step.title.toLowerCase() === 'managing ambiguity'
+                    {(Number(projectId) === 3
+                      ? (step.description && step.description.trim().length > 0
+                        ? step.description
+                        : step.title)
+                      : (step.title.toLowerCase() === 'managing ambiguity'
                       ? 'In fast-paced corporate environments, "thinking out of the box" often gets pushed aside. A lot of creativity already went into building the foundations of these systems, and the focus naturally shifts to maintaining and scaling them. But sometimes, progress requires breaking away from those constraints and aiming higher. Real innovation often comes from efficient problem-solving paired with bold thinking, even if users only experience it as a smooth, effortless product.\n\nOn this project, I had to actively protect space for creativity. Not just to design something futuristic or visually appealing, but to remind people that there is more to product work than incremental, mechanical improvements. Creativity here was not a luxury, it was necessary to inspire new possibilities.'
                       : step.title.toLowerCase() === 'building trust'
                       ? 'What often decides whether a feature like this survives is simple: who owns it. Without someone genuinely invested in pushing it forward, ideas can easily get stuck in loops of uncertainty and eventually disappear due to shifting priorities or lack of resources.\n\nNo one explicitly asked me to take ownership of this project, but I did anyway. I could see the potential and did not want it to fade out. Taking that responsibility pushed me to grow, not just as a designer, but as someone willing to stand behind an idea and keep it alive in every discussion. I probably became "that person" in design meetings who would not let go of the interior lighting concept, and I am okay with that.'
                       : step.title.toLowerCase() === 'momentum'
                       ? 'Competition for time and resources is very real, especially in a place like Scania R&D. I knew that to move this forward, logic alone would not be enough. The vision needed a strong story, something that stood out and helped people imagine the future.\n\nAnd it worked. I still remember rooms going quiet during presentations, not because of the visuals, but because the story made the idea feel real and human. When you want a large group of people to move in the same direction, storytelling is often the most powerful tool you have.'
-                      : step.description || ''
+                      : step.description || '')
                     ).split('\n\n').map((para, i) => (
                       <p key={i} className="text-base md:text-lg leading-relaxed text-foreground">
                         <HighlightedText text={para} isDark={false} />
@@ -1175,28 +1205,28 @@ function StepModal({
                       const isUIDesignPair = isUIDesign && mainColorsIndex !== -1 && uiComponentsIndex !== -1 && Math.abs(mainColorsIndex - uiComponentsIndex) === 1
                       
                       // Case Study 2 UX Research image indices
-                      const uxResearchImage1Index = filteredImages.findIndex(img => img.src.includes('Image 1.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage2Index = filteredImages.findIndex(img => img.src.includes('Image 2.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage3Index = filteredImages.findIndex(img => img.src.includes('image 3.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage4Index = filteredImages.findIndex(img => img.src.includes('Image 4.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage5Index = filteredImages.findIndex(img => img.src.includes('image 5.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage6Index = filteredImages.findIndex(img => img.src.includes('Image 6.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage7Index = filteredImages.findIndex(img => img.src.includes('Image 7.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage1Index = filteredImages.findIndex(img => img.src.includes('Image 1.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage2Index = filteredImages.findIndex(img => img.src.includes('Image 2.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage3Index = filteredImages.findIndex(img => img.src.includes('image 3.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage4Index = filteredImages.findIndex(img => img.src.includes('Image 4.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage5Index = filteredImages.findIndex(img => img.src.includes('image 5.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage6Index = filteredImages.findIndex(img => img.src.includes('Image 6.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage7Index = filteredImages.findIndex(img => img.src.includes('Image 7.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
                       
                       // Case Study 2 UI Design image indices
-                      const uiDesignImage1Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 1.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage2Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 2.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage3Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 3.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage4Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 4.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage5Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 5.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage6Index = filteredImages.findIndex(img => img.src.includes('UI design/image 6.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage7Index = filteredImages.findIndex(img => img.src.includes('UI design/image 7.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage1Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 1.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage2Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 2.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage3Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 3.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage4Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 4.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage5Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 5.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage6Index = filteredImages.findIndex(img => img.src.includes('UI design/image 6.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage7Index = filteredImages.findIndex(img => img.src.includes('UI design/image 7.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
                       
                       // Case Study 2 Methods image indices
-                      const methodsImage1Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 1.png') && img.src.includes('Case study 2'))
-                      const methodsImage2Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 2.png') && img.src.includes('Case study 2'))
-                      const methodsImage3Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 3.png') && img.src.includes('Case study 2'))
-                      const methodsImage4Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 4.webp') && img.src.includes('Case study 2'))
+                      const methodsImage1Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 1.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const methodsImage2Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 2.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const methodsImage3Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 3.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const methodsImage4Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 4.webp') && img.src.includes(`/Images/${caseStudyFolder}/`))
                       
                       return filteredImages.map((img, imgIndex) => {
                         // Skip UI components if it's right after Main colors (will be rendered together)
@@ -2043,28 +2073,28 @@ function StepModal({
                       const isUIDesignPair = isUIDesign && mainColorsIndex !== -1 && uiComponentsIndex !== -1 && Math.abs(mainColorsIndex - uiComponentsIndex) === 1
                       
                       // Case Study 2 UX Research image indices
-                      const uxResearchImage1Index = filteredImages.findIndex(img => img.src.includes('Image 1.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage2Index = filteredImages.findIndex(img => img.src.includes('Image 2.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage3Index = filteredImages.findIndex(img => img.src.includes('image 3.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage4Index = filteredImages.findIndex(img => img.src.includes('Image 4.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage5Index = filteredImages.findIndex(img => img.src.includes('image 5.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage6Index = filteredImages.findIndex(img => img.src.includes('Image 6.png') && img.src.includes('Case study 2'))
-                      const uxResearchImage7Index = filteredImages.findIndex(img => img.src.includes('Image 7.png') && img.src.includes('Case study 2'))
+                      const uxResearchImage1Index = filteredImages.findIndex(img => img.src.includes('Image 1.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage2Index = filteredImages.findIndex(img => img.src.includes('Image 2.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage3Index = filteredImages.findIndex(img => img.src.includes('image 3.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage4Index = filteredImages.findIndex(img => img.src.includes('Image 4.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage5Index = filteredImages.findIndex(img => img.src.includes('image 5.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage6Index = filteredImages.findIndex(img => img.src.includes('Image 6.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uxResearchImage7Index = filteredImages.findIndex(img => img.src.includes('Image 7.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
                       
                       // Case Study 2 UI Design image indices
-                      const uiDesignImage1Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 1.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage2Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 2.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage3Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 3.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage4Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 4.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage5Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 5.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage6Index = filteredImages.findIndex(img => img.src.includes('UI design/image 6.png') && img.src.includes('Case study 2'))
-                      const uiDesignImage7Index = filteredImages.findIndex(img => img.src.includes('UI design/image 7.png') && img.src.includes('Case study 2'))
+                      const uiDesignImage1Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 1.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage2Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 2.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage3Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 3.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage4Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 4.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage5Index = filteredImages.findIndex(img => img.src.includes('UI design/Image 5.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage6Index = filteredImages.findIndex(img => img.src.includes('UI design/image 6.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const uiDesignImage7Index = filteredImages.findIndex(img => img.src.includes('UI design/image 7.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
                       
                       // Case Study 2 Methods image indices
-                      const methodsImage1Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 1.png') && img.src.includes('Case study 2'))
-                      const methodsImage2Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 2.png') && img.src.includes('Case study 2'))
-                      const methodsImage3Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 3.png') && img.src.includes('Case study 2'))
-                      const methodsImage4Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 4.webp') && img.src.includes('Case study 2'))
+                      const methodsImage1Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 1.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const methodsImage2Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 2.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const methodsImage3Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 3.png') && img.src.includes(`/Images/${caseStudyFolder}/`))
+                      const methodsImage4Index = filteredImages.findIndex(img => img.src.includes('Methods/Image 4.webp') && img.src.includes(`/Images/${caseStudyFolder}/`))
                       
                       return filteredImages.map((img, imgIndex) => {
                         // Skip UI components if it's right after Main colors (will be rendered together)
@@ -3042,6 +3072,7 @@ function RealProblemsSection({
     title: string
     description: string
     evidence?: string
+    image?: string
   }>
   projectId?: number
 }) {
@@ -3049,8 +3080,7 @@ function RealProblemsSection({
 
   if (!problems) return null
 
-  // Determine which case study folder to use
-  const caseStudyFolder = projectId === 2 ? 'Case study 2' : 'Case study 1'
+  const caseStudyFolder = caseStudyImagesFolder(projectId)
 
   // Map problems to steps format with images - dynamic based on projectId
   const imageMap: Record<string, string> = {
@@ -3064,12 +3094,14 @@ function RealProblemsSection({
 
   const steps = problems.map((problem) => {
     const titleLower = problem.title.toLowerCase()
-    const image = imageMap[titleLower.includes("unused capabilities") ? "unused capabilities" :
+    const mapped =
+      imageMap[titleLower.includes("unused capabilities") ? "unused capabilities" :
                           titleLower.includes("lack of a shared vision") || titleLower.includes("shared vision") ? "lack of a shared vision" :
                           titleLower.includes("functional misalignment") || titleLower.includes("misalignment") ? "functional misalignment" :
                           titleLower.includes("context gap") ? "context gap" : 
                           titleLower.includes("traceability") ? "no traceability" : 
                           "broken flows"]
+    const image = problem.image ?? mapped
     
     return {
       title: problem.title,
@@ -3265,8 +3297,7 @@ function RealProblemsSection({
   )
 }
 
-// Learnings Section with Thumbnails
-// Case study 1 and case study 2 are isolated: edit only the projectId === 2 block for case study 2 so case study 1 is unaffected.
+// Learnings: case study 1 uses one image set; case studies 2 and 3 share the same card layout with separate asset maps.
 function LearningsSection({
   description,
   keywords,
@@ -3279,6 +3310,7 @@ function LearningsSection({
     title: string
     description: string
     icon: any
+    image?: string
   }>
   projectId?: number
 }) {
@@ -3286,26 +3318,32 @@ function LearningsSection({
 
   if (!items) return null
 
-  // Determine which case study folder to use
-  const caseStudyFolder = projectId === 2 ? 'Case study 2' : 'Case study 1'
+  const pid = Number(projectId)
+  const caseStudyFolder = caseStudyImagesFolder(projectId)
 
-  // Map items to images - dynamic based on projectId
-  const imageMap: Record<string, string> = projectId === 2 ? {
-    // Case study 2: uses "What I learned" folder with different images
-    "managing ambiguity": `/Images/${caseStudyFolder}/What I learned/Out of the box.jpg`,
-    "building trust": `/Images/${caseStudyFolder}/What I learned/Ownership.jpg`,
-    "momentum": `/Images/${caseStudyFolder}/What I learned/Story telling.jpg`
-  } : {
-    // Case study 1: uses "What Did I learn" folder
-    "managing ambiguity": `/Images/${caseStudyFolder}/What Did I learn/ambiguity.jpg`,
-    "building trust": `/Images/${caseStudyFolder}/What Did I learn/building trust.jpg`,
-    "momentum": `/Images/${caseStudyFolder}/What Did I learn/momentum.jpg`
-  }
+  const imageMap: Record<string, string> = usesVismaStyleCaseStudyLayout(projectId)
+    ? (pid === 3
+        ? {
+            "managing ambiguity": "/Images/Banking.jpg",
+            "building trust": "/Images/Banking.jpg",
+            "momentum": "/Images/Banking.jpg",
+          }
+        : {
+            "managing ambiguity": `/Images/${caseStudyFolder}/What I learned/Out of the box.jpg`,
+            "building trust": `/Images/${caseStudyFolder}/What I learned/Ownership.jpg`,
+            "momentum": `/Images/${caseStudyFolder}/What I learned/Story telling.jpg`,
+          })
+    : {
+        "managing ambiguity": `/Images/${caseStudyFolder}/What Did I learn/ambiguity.jpg`,
+        "building trust": `/Images/${caseStudyFolder}/What Did I learn/building trust.jpg`,
+        "momentum": `/Images/${caseStudyFolder}/What Did I learn/momentum.jpg`,
+      }
 
   // Convert items to steps format
   const steps = items.map((item) => {
     const titleLower = item.title.toLowerCase()
-    const image = imageMap[titleLower] || undefined
+    const imageFromItem = "image" in item && item.image ? item.image : undefined
+    const image = imageFromItem ?? (imageMap[titleLower] || undefined)
     
     return {
       title: item.title,
@@ -3316,16 +3354,14 @@ function LearningsSection({
     }
   })
 
-  const pid = Number(projectId)
-
-  // Case study 2 only: separate branch so edits here never affect case study 1
-  if (pid === 2) {
+  if (usesVismaStyleCaseStudyLayout(pid)) {
     const learningsDisplayTitles: Record<string, string> = {
       'managing ambiguity': 'Out of the box',
       'building trust': 'Ownership',
       'momentum': 'Storytelling'
     }
-    const getDisplayTitle = (title: string) => learningsDisplayTitles[title.toLowerCase()] || title
+    const getDisplayTitle = (title: string) =>
+      pid === 3 ? title : (learningsDisplayTitles[title.toLowerCase()] || title)
     const subsectionKeywords = steps.map((s) => getDisplayTitle(s.title))
     return (
       <>
@@ -3404,7 +3440,7 @@ function LearningsSection({
             step={steps[selectedStep]}
             isOpen={selectedStep !== null}
             onClose={() => setSelectedStep(null)}
-            projectId={2}
+            projectId={pid}
           />
         )}
       </>
@@ -3617,9 +3653,9 @@ function DesignSolutionsSection({
     { title: "Design", description: "" }
   ]
 
-  // Case study 2: separate branch so edits here never affect case study 1
+  // Case studies 2 and 3: same card grid; case study 2 uses video posters, case study 3 uses static hero art until dedicated assets are added.
   const pid = Number(projectId)
-  if (pid === 2) {
+  if (usesVismaStyleCaseStudyLayout(pid)) {
     const stepsCaseStudy2 = [
       { title: "Concept design", description: "" },
       { title: "wireframe", description: "" },
@@ -3659,7 +3695,8 @@ function DesignSolutionsSection({
                 const isConceptDesign = step.title.toLowerCase().includes('concept design')
                 const isWireframe = step.title.toLowerCase().includes('wireframe')
                 const isUIDesign = step.title.toLowerCase().includes('ui design')
-                const hasVideo = isConceptDesign || isWireframe || isUIDesign
+                const hasVideo = pid === 2 && (isConceptDesign || isWireframe || isUIDesign)
+                const hasStaticPreview = pid === 3 && (isConceptDesign || isWireframe || isUIDesign)
                 return (
                   <div
                     key={index}
@@ -3713,7 +3750,20 @@ function DesignSolutionsSection({
                           )}
                         </>
                       )}
-                      {!hasVideo && (
+                      {hasStaticPreview && (
+                        <div className="absolute inset-0">
+                          <Image
+                            src="/Images/Banking.jpg"
+                            alt=""
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            style={{ objectPosition: isConceptDesign ? "20% 50%" : isWireframe ? "60% 40%" : "80% 55%" }}
+                            unoptimized
+                          />
+                        </div>
+                      )}
+                      {!hasVideo && !hasStaticPreview && (
                         <>
                           <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full ${glow} opacity-70 group-hover:opacity-90 transition-opacity duration-500 ${anim.glow}`} style={{ animationDelay: `${index * 0.3}s` }} />
                           <div className={`absolute top-8 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full ${glow} opacity-40 ${anim.wave}`} style={{ animationDelay: `${index * 0.3 + 0.5}s` }} />
@@ -3744,7 +3794,7 @@ function DesignSolutionsSection({
             step={stepsCaseStudy2[selectedStep]}
             isOpen={selectedStep !== null}
             onClose={() => setSelectedStep(null)}
-            projectId={2}
+            projectId={pid}
           />
         )}
       </>
@@ -4087,8 +4137,30 @@ function DesignSolutionModal({
     return [] as Array<{ src: string; alt: string; layout: 'top' | 'side-by-side' }>
   }
 
-  const allImages = projectId === 2
-    ? getImagesForStepCaseStudy2(step.title)
+  const getImagesForStepCaseStudy3 = (title: string) => {
+    const titleLower = title.toLowerCase()
+    if (titleLower.includes('concept design')) {
+      return [
+        { src: '/Images/Banking.jpg', alt: 'Early trust framing', layout: 'top' as const },
+        { src: '/Images/Banking.jpg', alt: 'Onboarding narrative', layout: 'top' as const },
+      ]
+    }
+    if (titleLower.includes('wireframe')) {
+      return [
+        { src: '/Images/Banking.jpg', alt: 'Core flow wireframes', layout: 'top' as const },
+      ]
+    }
+    if (titleLower.includes('ui design')) {
+      return [
+        { src: '/Images/Banking.jpg', alt: 'UI refinements', layout: 'top' as const },
+        { src: '/Images/Banking.jpg', alt: 'Microcopy and states', layout: 'top' as const },
+      ]
+    }
+    return [] as Array<{ src: string; alt: string; layout: 'top' | 'side-by-side' }>
+  }
+
+  const allImages = usesVismaStyleCaseStudyLayout(projectId)
+    ? (Number(projectId) === 3 ? getImagesForStepCaseStudy3(step.title) : getImagesForStepCaseStudy2(step.title))
     : getImagesForStepCaseStudy1(step.title)
 
   return (
@@ -4108,7 +4180,7 @@ function DesignSolutionModal({
         <div className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="flex items-center justify-between px-6 md:px-8 py-4">
             <h2 className="text-xl md:text-2xl font-bold tracking-tight truncate pr-4">
-              {Number(projectId) === 2 && step.title.toLowerCase() === 'wireframe' ? 'Wireframe' : step.title}
+              {usesVismaStyleCaseStudyLayout(projectId) && step.title.toLowerCase() === 'wireframe' ? 'Wireframe' : step.title}
             </h2>
             <button
               onClick={onClose}
@@ -4441,7 +4513,7 @@ function WhatIDidSection({
     .map((step, originalIndex) => ({ step, originalIndex }))
     .filter(({ step }) => {
       // Only filter out User testing for case study 2
-      if (projectId === 2 && step.title.toLowerCase().includes('user testing')) {
+      if (usesVismaStyleCaseStudyLayout(projectId) && step.title.toLowerCase().includes('user testing')) {
         return false
       }
       return true
@@ -4510,9 +4582,13 @@ function WhatIDidSection({
               
               // Case Study 1: UX Research, UI Design, User Testing, Methods
               // Case Study 2: UX Research, UI Design, Methods (no User Testing)
+              // Case Study 3: same steps as 2; static preview image until dedicated media is added
               const hasVideo = projectId === 1 
                 ? (isUXResearch || isUIDesign || isUserTesting || isMethods)
-                : (isUXResearch || isUIDesign || isMethods) // Case study 2: no User Testing videos
+                : projectId === 2
+                  ? (isUXResearch || isUIDesign || isMethods)
+                  : false
+              const hasBankingPreview = Number(projectId) === 3 && (isUXResearch || isUIDesign || isMethods)
               
               return (
                 <div
@@ -4523,7 +4599,7 @@ function WhatIDidSection({
                   {/* Apple TV-style card container */}
                   <div className="relative aspect-[4/5] w-full overflow-hidden">
                     {/* Video for cards with available videos - Apple TV style */}
-                    {hasVideo && (
+                    {(hasVideo || hasBankingPreview) && (
                       <>
                         {/* Case Study 1 Videos */}
                         {projectId === 1 && isUXResearch && (
@@ -4624,11 +4700,24 @@ function WhatIDidSection({
                             <source src="/Images/Case study 2/What I did/Methods/Methods.mov" type="video/mp4" />
                           </video>
                         )}
+                        {hasBankingPreview && (
+                          <Image
+                            src="/Images/Banking.jpg"
+                            alt=""
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            style={{
+                              objectPosition: isUXResearch ? "25% 45%" : isUIDesign ? "55% 50%" : "70% 40%",
+                            }}
+                            unoptimized
+                          />
+                        )}
                       </>
                     )}
                     
                     {/* Animated glows only for cards without videos - no blur effects */}
-                    {!hasVideo && (
+                    {!hasVideo && !hasBankingPreview && (
                       <>
                         {/* Animated soft glowing oval at the top - Strong movement */}
                         <div 
@@ -4841,9 +4930,12 @@ interface EsperantoCaseStudyProps {
     sections: {
       about?: {
         title: string
+        /** Italic-style subline shown at top of expanded about content. */
+        subtitle?: string
         description: string
       }
       learnings?: {
+        description?: string
         keywords?: string[]
         items?: Array<{
           title: string
@@ -4871,6 +4963,7 @@ interface EsperantoCaseStudyProps {
           title: string
           description: string
           evidence?: string
+          image?: string
         }>
       }
       whatIDid?: {
@@ -4884,6 +4977,11 @@ interface EsperantoCaseStudyProps {
           image?: string
           imageAlt?: string
           imageCaption?: string
+          additionalImages?: Array<{
+            src: string
+            alt: string
+            layout?: string
+          }>
         }>
       }
       designSolutions?: {
@@ -5042,15 +5140,26 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
             {/* Project Title with Logo */}
             <ScrollReveal delay={100}>
               <div className="flex items-center gap-6 mb-6">
-                {/* Scania Logo */}
                 <div className="flex-shrink-0">
-                  <Image
-                    src="/Images/Scania_Logo.svg"
-                    alt="Scania Logo"
-                    width={80}
-                    height={80}
-                    className="w-16 h-16 md:w-20 md:h-20"
-                  />
+                  {project.id === 3 ? (
+                    <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-background border border-border/40 flex items-center justify-center overflow-hidden p-2">
+                      <Image
+                        src="/visma_logo.jpeg"
+                        alt="Visma"
+                        width={80}
+                        height={80}
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                  ) : (
+                    <Image
+                      src="/Images/Scania_Logo.svg"
+                      alt="Scania Logo"
+                      width={80}
+                      height={80}
+                      className="w-16 h-16 md:w-20 md:h-20"
+                    />
+                  )}
                 </div>
                 {/* Title */}
                 <div className="flex-1">
@@ -5076,8 +5185,8 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
                           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                             About the project
                           </h3>
-                          <div className="flex items-center justify-between">
-                            <h2 className="text-xl md:text-2xl font-bold tracking-tight">
+                          <div className="flex items-center justify-between gap-3">
+                            <h2 className="text-xl md:text-2xl font-bold tracking-tight min-w-0 flex-1 pr-2">
                               {project.sections.about.title}
                             </h2>
                             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border/50 transition-all duration-300 group-data-[state=open]:rotate-180 shrink-0">
@@ -5088,6 +5197,11 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
                       </CollapsibleTrigger>
                       <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
                         <div className="pt-3 space-y-4">
+                          {project.sections.about.subtitle && (
+                            <p className="text-sm italic text-muted-foreground leading-relaxed border-l-2 border-primary/30 pl-4">
+                              {project.sections.about.subtitle}
+                            </p>
+                          )}
                           {project.sections.about.description.split('\n\n').map((paragraph, i) => (
                             <p key={i} className="text-sm text-muted-foreground leading-relaxed">
                               <HighlightedText text={paragraph} />
@@ -5182,7 +5296,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
           {/* Section 05: What did I learn */}
           {project.sections.learnings && (
             <LearningsSection
-              description="Getting out of my comfort zone"
+              description={project.sections.learnings.description ?? "Getting out of my comfort zone"}
               keywords={project.sections.learnings.keywords}
               items={project.sections.learnings.items}
               projectId={project.id}

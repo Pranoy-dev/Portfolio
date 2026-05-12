@@ -399,17 +399,17 @@ const caseStudies = [
   },
   {
     id: 3,
-    problem: "Entrepreneurs do not trust digital banks.",
-    role: "UX Designer",
-    impact: "3 products shipped",
-    tags: ["fintech", "onboarding", "trust UX", "core flows"],
+    problem: "Neo Bank for Small businesses — simplified banking and bookkeeping.",
+    role: "First designer",
+    impact: "R&D neo bank exploration",
+    tags: ["SpeedLedger", "Visma", "neo bank", "design sprint"],
     gradient: "from-amber-500/10 via-orange-500/5 to-red-500/10",
     borderColor: "border-amber-500/20",
     hoverGradient: "from-amber-500/15 via-orange-500/10 to-red-500/15",
     imageGradient: "from-amber-500/20 via-orange-500/15 to-red-500/20",
     image: "/Images/Banking.jpg",
-    title: "Digital Banking Trust",
-    description: "Building trust through improved onboarding and core user flows in fintech."
+    title: "Visma's Neo Bank concept",
+    description: "SpeedLedger / Visma R&D: simplified banking and automated bookkeeping for small businesses."
   }
 ]
 
@@ -466,9 +466,8 @@ export default function CaseStudyPage() {
     )
   }
 
-  // Check if this is case study 1 or 2 - use Esperanto style
   const esperantoCaseStudy = esperantoCaseStudies.find(study => study.id === caseStudyId)
-  if ((caseStudyId === 1 || caseStudyId === 2) && esperantoCaseStudy) {
+  if (esperantoCaseStudy) {
     return <EsperantoCaseStudy project={esperantoCaseStudy} />
   }
 
