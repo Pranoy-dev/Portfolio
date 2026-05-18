@@ -52,6 +52,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { VISMA_CS3_WHAT_I_DID_MODAL_EXTRA_KEYWORDS, VISMA_CS3_UI_DESIGN_MODAL_EXTRA_KEYWORDS, VISMA_CS3_METHODS_MODAL_EXTRA_KEYWORDS } from "@/data/esperanto-case-studies"
 
 /** Same section template as case study 2 (Visma-style); each project uses its own data and asset folder. */
 function usesVismaStyleCaseStudyLayout(projectId?: number): boolean {
@@ -76,8 +77,17 @@ function ScrollReveal({ children, delay = 0, className = "" }: { children: React
 }
 
 // Highlight Keywords Component - Subtle badge styling for important terms
-export function HighlightedText({ text, isDark = false }: { text: string; isDark?: boolean }) {
-  const keywords = [
+export function HighlightedText({
+  text,
+  isDark = false,
+  extraKeywords = [],
+}: {
+  text: string
+  isDark?: boolean
+  /** Merged with built-in highlights (e.g. case-study-specific terms). */
+  extraKeywords?: string[]
+}) {
+  const builtInKeywords = [
     "R&D project",
     "Scania R&D",
     "priorities constantly compete",
@@ -555,6 +565,8 @@ export function HighlightedText({ text, isDark = false }: { text: string; isDark
     "audience"
   ]
 
+  const keywords = [...builtInKeywords, ...extraKeywords]
+
   // Remove duplicate keywords if any exist
   const uniqueKeywords = Array.from(new Set(keywords))
 
@@ -960,6 +972,30 @@ function ProcessStep({
   )
 }
 
+/** Shorter high-signal terms for Visma neo-bank case study "The real problems" modals. */
+function vismaCaseStudy3RealProblemExtraKeywords(stepTitle: string): string[] {
+  if (!/^Problem\s*\d+\s*:/i.test(stepTitle)) return []
+  const tl = stepTitle.toLowerCase()
+  if (tl.includes('assumptions')) {
+    return ['anchored', 'fast', 'evidence', 'friction', 'paper', 'prototypes', 'management']
+  }
+  if (tl.includes('internal bias')) {
+    return ['leaked', 'zero', 'edge', 'true for users', 'build', 'patterns', 'opinions']
+  }
+  if (tl.includes('learning')) {
+    return [
+      'theory',
+      'costly',
+      'User value',
+      'short-term business wins',
+      'safety',
+      'credibility',
+      'alignment',
+    ]
+  }
+  return []
+}
+
 // Modal Component for What I Did Steps - Scrollable Document Style
 function StepModal({ 
   step, 
@@ -977,6 +1013,8 @@ function StepModal({
       src: string
       alt: string
       layout?: 'left' | 'top'
+      /** Shown below this image in the modal when there is no step description (e.g. Visma CS3). */
+      caption?: string
     }>
   } | null
   isOpen: boolean
@@ -1028,12 +1066,15 @@ function StepModal({
     'building trust': 'Ownership',
     'momentum': 'Storytelling'
   }
-  const stepDisplayTitle =
+  const stepDisplayTitleRaw =
     usesVismaStyleCaseStudyLayout(projectId) && isLearnings
       ? Number(projectId) === 3
         ? step.title
         : (learningsDisplayTitles[step.title.toLowerCase()] || step.title)
       : step.title
+  const stepDisplayTitle = /^Problem \d+:/i.test(stepDisplayTitleRaw)
+    ? stepDisplayTitleRaw.replace(/^Problem \d+:\s*/i, '')
+    : stepDisplayTitleRaw
   
   // UX Research images - different paths for case study 1 vs 2
   const uxResearchImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter: number }> = (isUXResearch && hasDescription) ? (
@@ -1083,7 +1124,13 @@ function StepModal({
   // For Case Study 2 UX research, always use additionalImages if available
   // For Case Study 2 UI design, use additionalImages if available
   // For other steps, use their respective image arrays or additionalImages
-  const allImages: Array<{ src: string; alt: string; layout: 'left' | 'top'; insertAfter?: number }> = isUXResearch 
+  const allImages: Array<{
+    src: string
+    alt: string
+    layout: 'left' | 'top'
+    insertAfter?: number
+    caption?: string
+  }> = isUXResearch 
     ? (usesVismaStyleCaseStudyLayout(projectId) && step.additionalImages && step.additionalImages.length > 0
         ? (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined }))
         : (hasDescription ? uxResearchImages : (step.additionalImages || []).map(img => ({ ...img, layout: img.layout || 'top', insertAfter: undefined })))
@@ -1134,7 +1181,7 @@ function StepModal({
         </div>
 
         {/* Scrollable Content Area - Document Style */}
-        <div className="flex-1 overflow-y-auto overscroll-contain">
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
           <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-1.5 md:py-2.5">
             {/* Hero Image Section - Only show if not UX research, UI design, User testing, or Methods */}
             {step.image && !isUXResearch && !isUIDesign && !isUserTesting && !isMethods && (
@@ -1232,6 +1279,49 @@ function StepModal({
                         // Skip UI components if it's right after Main colors (will be rendered together)
                         if (isUIDesignPair && imgIndex === uiComponentsIndex && uiComponentsIndex === mainColorsIndex + 1) {
                           return null
+                        }
+
+                        // Visma case study 3 — "What I did" modals: image + optional caption from data (before CS1/CS2 branches)
+                        if (
+                          Number(projectId) === 3 &&
+                          usesVismaStyleCaseStudyLayout(projectId) &&
+                          (isUXResearch || isUIDesign || isMethods)
+                        ) {
+                          const vismaCaption =
+                            typeof (img as { caption?: string }).caption === 'string'
+                              ? (img as { caption?: string }).caption!.trim()
+                              : ''
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div
+                                className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10"
+                                style={{ height: '350px' }}
+                              >
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              {vismaCaption ? (
+                                <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5 max-w-none not-prose">
+                                  <HighlightedText
+                                    text={vismaCaption}
+                                    extraKeywords={
+                                      isUIDesign
+                                        ? (VISMA_CS3_UI_DESIGN_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                        : isMethods
+                                          ? (VISMA_CS3_METHODS_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                          : (VISMA_CS3_WHAT_I_DID_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                    }
+                                  />
+                                </p>
+                              ) : null}
+                            </div>
+                          )
                         }
                         
                         // Render Case Study 2 UX Research Image 1 with text below
@@ -2008,7 +2098,14 @@ function StepModal({
                               if (paraIndex < descriptionLines.length) {
                                 return (
                                   <p key={i} className="mb-4">
-                                    <HighlightedText text={descriptionLines[paraIndex]} />
+                                    <HighlightedText
+                                      text={descriptionLines[paraIndex]}
+                                      extraKeywords={
+                                        Number(projectId) === 3
+                                          ? vismaCaseStudy3RealProblemExtraKeywords(step.title)
+                                          : []
+                                      }
+                                    />
                                   </p>
                                 )
                               }
@@ -2025,7 +2122,14 @@ function StepModal({
                     <div key={index}>
                       {/* Paragraph text */}
                       <p className="mb-4">
-                        <HighlightedText text={paragraph} />
+                        <HighlightedText
+                          text={paragraph}
+                          extraKeywords={
+                            Number(projectId) === 3
+                              ? vismaCaseStudy3RealProblemExtraKeywords(step.title)
+                              : []
+                          }
+                        />
                       </p>
                       
                       {/* Insert image after paragraph (for top layout) */}
@@ -2100,6 +2204,49 @@ function StepModal({
                         // Skip UI components if it's right after Main colors (will be rendered together)
                         if (isUIDesignPair && imgIndex === uiComponentsIndex && uiComponentsIndex === mainColorsIndex + 1) {
                           return null
+                        }
+
+                        // Visma case study 3 — "What I did" modals: image + optional caption from data (before CS1/CS2 branches)
+                        if (
+                          Number(projectId) === 3 &&
+                          usesVismaStyleCaseStudyLayout(projectId) &&
+                          (isUXResearch || isUIDesign || isMethods)
+                        ) {
+                          const vismaCaption =
+                            typeof (img as { caption?: string }).caption === 'string'
+                              ? (img as { caption?: string }).caption!.trim()
+                              : ''
+                          return (
+                            <div key={imgIndex} className="space-y-3">
+                              <div
+                                className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10"
+                                style={{ height: '350px' }}
+                              >
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  className="object-contain p-2"
+                                  sizes="(max-width: 768px) 100vw, 80vw"
+                                  unoptimized
+                                />
+                              </div>
+                              {vismaCaption ? (
+                                <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5 max-w-none not-prose">
+                                  <HighlightedText
+                                    text={vismaCaption}
+                                    extraKeywords={
+                                      isUIDesign
+                                        ? (VISMA_CS3_UI_DESIGN_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                        : isMethods
+                                          ? (VISMA_CS3_METHODS_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                          : (VISMA_CS3_WHAT_I_DID_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                    }
+                                  />
+                                </p>
+                              ) : null}
+                            </div>
+                          )
                         }
                         
                         // Render Case Study 2 UX Research Image 1 with text below
@@ -2816,9 +2963,26 @@ function StepModal({
                         }
                         
                         // Render other images normally
+                        const galleryCaption =
+                          'caption' in img &&
+                          typeof (img as { caption?: string }).caption === 'string'
+                            ? (img as { caption?: string }).caption!.trim()
+                            : ''
                         return (
-                          <div key={imgIndex} className={img.layout === 'left' ? 'grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 items-start' : ''}>
-                            <div className={`relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10 ${img.layout === 'left' ? '' : 'mb-4'}`} style={{ height: img.layout === 'left' ? '300px' : '350px' }}>
+                          <div
+                            key={imgIndex}
+                            className={
+                              img.layout === 'left'
+                                ? 'grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-6 items-start'
+                                : galleryCaption
+                                  ? 'space-y-3'
+                                  : ''
+                            }
+                          >
+                            <div
+                              className={`relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10 ${img.layout === 'left' ? '' : galleryCaption ? '' : 'mb-4'}`}
+                              style={{ height: img.layout === 'left' ? '300px' : '350px' }}
+                            >
                               <Image
                                 src={img.src}
                                 alt={img.alt}
@@ -2828,6 +2992,22 @@ function StepModal({
                                 unoptimized
                               />
                             </div>
+                            {galleryCaption ? (
+                              <p className="text-base md:text-lg leading-relaxed text-foreground mb-2 pb-5 not-prose max-w-none">
+                                <HighlightedText
+                                  text={galleryCaption}
+                                  extraKeywords={
+                                    Number(projectId) === 3 && usesVismaStyleCaseStudyLayout(projectId)
+                                      ? isUIDesign
+                                        ? (VISMA_CS3_UI_DESIGN_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                        : isMethods
+                                          ? (VISMA_CS3_METHODS_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                          : (VISMA_CS3_WHAT_I_DID_MODAL_EXTRA_KEYWORDS[imgIndex] ?? [])
+                                      : []
+                                  }
+                                />
+                              </p>
+                            ) : null}
                           </div>
                         )
                       })
@@ -4582,7 +4762,7 @@ function WhatIDidSection({
               
               // Case Study 1: UX Research, UI Design, User Testing, Methods
               // Case Study 2: UX Research, UI Design, Methods (no User Testing)
-              // Case Study 3: same steps as 2; static preview image until dedicated media is added
+              // Case Study 3: UX / UI / Methods use `public/Images/Case study 3/{UX,UI,Methods}` (see data `image` + `additionalImages`)
               const hasVideo = projectId === 1 
                 ? (isUXResearch || isUIDesign || isUserTesting || isMethods)
                 : projectId === 2
@@ -4702,8 +4882,12 @@ function WhatIDidSection({
                         )}
                         {hasBankingPreview && (
                           <Image
-                            src="/Images/Banking.jpg"
-                            alt=""
+                            src={
+                              step.image && String(step.image).trim().length > 0
+                                ? step.image
+                                : "/Images/Banking.jpg"
+                            }
+                            alt={step.imageAlt || step.title}
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -4981,6 +5165,7 @@ interface EsperantoCaseStudyProps {
             src: string
             alt: string
             layout?: string
+            caption?: string
           }>
         }>
       }

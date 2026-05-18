@@ -46,6 +46,52 @@ function validateWhatIDidSteps(steps: Array<{ number: string; title: string; des
   }
 }
 
+/** One paragraph per image in Visma neo-bank case study “What I did” modals. */
+const VISMA_CS3_WHAT_I_DID_MODAL_CAPTIONS = [
+  "First and foremost, like all other projects, the goal was to learn about the users. For that, we started messaging people on LinkedIn, attending events and meetups, and finding future users through Facebook groups. Within weeks of starting the project, I was on a mission to meet as many people as possible and understand their businesses, routines, workflows, and pain points.",
+  "It was my responsibility to understand where the product could help and identify the low-hanging, high-impact ideas we should aim for in the beginning. These insights were later presented to the team so we could brainstorm the details and plan future execution together.",
+  "We ran short design sprints that lasted only seven days at a time. Once we had a list of features to create, I sat down with the senior developer and started building the first iterations. We usually worked in the same room from morning until evening, discussing ideas, writing on the whiteboard, and pushing hard to create the smallest MVP possible for testing. This became a great learning experience for me, not only in design but also in learning React and developing alongside him.",
+  "Every MVP was tested with the user group we collected through UX interviews, and feedback was continuously gathered. Sometimes, to challenge ourselves, we aimed for harder features that could create maximum value for users. We called this process Crazy 8's, where the team voted on which ideas to prioritise first. Although we built many different products, I will not be able to present everything here, as many projects were protected under non-disclosure agreements.",
+] as const
+
+/** Badge terms for each caption above (short phrases and keywords that appear in that paragraph). */
+export const VISMA_CS3_WHAT_I_DID_MODAL_EXTRA_KEYWORDS: string[][] = [
+  ["Facebook groups", "LinkedIn", "meetups", "users", "mission", "pain points", "workflows"],
+  ["responsibility", "insights", "brainstorm", "low-hanging", "high-impact", "execution"],
+  ["seven days", "sprints", "MVP", "React", "whiteboard", "iterations", "learning experience"],
+  ["UX interviews", "feedback", "maximum value", "MVP", "prioritise", "non-disclosure agreements", "challenge"],
+]
+
+/** “What I did” → UI design modal only (Visma case study 3). */
+const VISMA_CS3_UI_DESIGN_MODAL_CAPTIONS = [
+  "UI design had very limited space within this project due to the short sprint cycles, where we had to produce many different iterations in a short amount of time. I studied banking apps and online resources to create mockups that suited our needs.",
+  "Our north star in design was trust. It was important for users to feel confident that the platform handled their money and businesses carefully. Because of that, we focused heavily on micro-interactions and messaging that reinforced clarity and reliability.",
+  "Another important UI principle was simplicity. We collected only the absolute minimum information during onboarding and gradually gathered the rest through KYC processes when specific events triggered background checks.",
+  "Many different apps were built and tested. Some focused on advisory services, some on invoicing, and others on bookkeeping. The more we tested our hypotheses, the more we understood the users and their perceived needs. We also realised that people were hesitant to take advice from AI, especially back in 2019, long before tools like ChatGPT or Claude became mainstream. Another insight was that users preferred using a web app over a mobile experience for business-related transactions. This was often connected to traditional belief systems within certain age groups regarding perceived trust and value, similar to the preference for human customer support over AI. I found this especially fascinating.",
+] as const
+
+export const VISMA_CS3_UI_DESIGN_MODAL_EXTRA_KEYWORDS: string[][] = [
+  ["sprint cycles", "iterations", "mockups", "banking apps", "limited space"],
+  ["north star", "trust", "micro-interactions", "reliability", "clarity"],
+  ["simplicity", "onboarding", "KYC", "minimum information"],
+  ["hypotheses", "ChatGPT", "Claude", "bookkeeping", "invoicing", "advisory services", "web app", "mobile experience", "customer support", "fascinating", "perceived trust"],
+]
+
+/** “What I did” → Methods modal only (Visma case study 3). */
+const VISMA_CS3_METHODS_MODAL_CAPTIONS = [
+  "This was the first place where I came across the book Sprint by Jake Knapp, which focused on solving difficult early-stage startup problems through design sprints. The method was developed by Google Ventures for their venture projects. While it shared similarities with other design processes such as understand, define, sketch, decide, prototype, and validate, the main focus was on momentum and decision-making. This approach matched our timeline perfectly.",
+  "Over many months, we found, developed, and tested numerous ideas. Some failed, some succeeded, and some showed great potential. But the biggest positive outcome was the learning process itself. By continuously building and delivering products back-to-back, we learned a great deal about both the users and our own capabilities. This eventually helped us discover a few truly valuable ideas.",
+  "When it came to research, we tried to map out as much as possible. Many ideas fail because of weak initial hypotheses, and sometimes speaking to only a few users is not enough. You need surveys, focus groups, and direct exposure to the environments where users spend their time. Over time, many of our best insights came simply from being around the users, allowing us to move from assumptions to more validated understanding.",
+  "Another key aspect of the experience was defining the user properly and thinking broadly about the end-to-end user experience while connecting it to sustainable business models. We believed the best approach was to create experiences compelling enough that users would naturally recommend them to friends and family. To achieve that, we had to build for real user needs, not just market assumptions.",
+] as const
+
+export const VISMA_CS3_METHODS_MODAL_EXTRA_KEYWORDS: string[][] = [
+  ["Sprint", "Jake Knapp", "Google Ventures", "design sprints", "momentum", "decision-making"],
+  ["learning process", "back-to-back", "valuable ideas", "capabilities"],
+  ["surveys", "focus groups", "hypotheses", "assumptions", "validated understanding"],
+  ["end-to-end", "business models", "real user needs", "friends and family"],
+]
+
 export const esperantoCaseStudies = [
   {
     id: 1,
@@ -167,7 +213,7 @@ export const esperantoCaseStudies = [
       designSolutions: {
         title: "Design solutions",
         description: "Creating a unique and memorable experience that enables confident decision-making. The interface prioritizes context visibility and reduces friction in the approval process.",
-        keywords: ["Decision Cards", "Role-Based Dashboards", "Workflow Design", "Mobile Interface"],
+        keywords: ["Information architecture", "Wireframe", "Design"],
         features: [
           {
             title: "Contextual Decision Cards",
@@ -481,7 +527,7 @@ export const esperantoCaseStudies = [
       designSolutions: {
         title: "Design solutions",
         description: "Creating a unique and memorable experience that enables confident decision-making. The interface prioritizes context visibility and reduces friction in the approval process.",
-        keywords: ["Decision Cards", "Role-Based Dashboards", "Workflow Design", "Mobile Interface"],
+        keywords: ["Information architecture", "Wireframe", "Design"],
         features: [
           {
             title: "Contextual Decision Cards",
@@ -641,22 +687,25 @@ export const esperantoCaseStudies = [
         keywords: ["Assumptions", "Bias", "Organizational learning"],
         problems: [
           {
-            title: "Problem 1: Strong early assumptions",
-            description: "We often anchored on the first plausible story about what founders needed. That helped us start, but it also made it harder to hear contradictory evidence later.\n\nWhen research disagreed with the initial narrative, progress depended on whether the team could update the model together.",
+            title: "Problem 1: Assumptions",
+            description:
+              "We often anchored on the first plausible story about what founders needed. That helped us move fast in the beginning, but it also made it harder to fully hear contradictory evidence later. It also became challenging when early prototypes, built on assumptions, had already been presented by management internally. This created friction within the larger organization between following real user evidence or protecting ideas that looked good on paper.",
             evidence: "Early hypotheses were sticky even when new data appeared",
-            image: "/Images/Banking.jpg"
+            image: "/Images/Case study 3/Assumptions.jpg"
           },
           {
-            title: "Problem 2: Internal bias toward the familiar",
-            description: "Comfortable patterns from existing products leaked into concepts, even when we were trying to think from zero.\n\nWe had to repeatedly ask whether a flow was \"true for users\" or \"true because it matched what we already knew how to build.\"",
+            title: "Problem 2: Internal Bias",
+            description:
+              "Comfortable patterns from existing products also leaked into new concepts, even when we were trying to think from zero. People had strong opinions on how things should be shaped, even when those patterns did not necessarily create an edge for this new product. We repeatedly had to ask whether a solution was \"true for users\" or simply \"true because it matched what we already knew how to build.\"",
             evidence: "Familiar UI patterns reappeared before problems were fully reframed",
-            image: "/Images/Banking.jpg"
+            image: "/Images/Case study 3/InternalBias.jpg"
           },
           {
-            title: "Problem 3: Accepting being wrong",
-            description: "Organizations celebrate learning in theory, but admitting a wrong bet can still feel costly in practice.\n\nThis project surfaced how much design work is actually social: creating enough safety to change direction without losing credibility.",
+            title: "Problem 3: Learning",
+            description:
+              "The project also reinforced that organizations celebrate learning in theory, but admitting a wrong bet can still feel costly in practice. User value, while often described as a core product principle, can sometimes be pushed aside for short-term business wins. This experience showed how much product and design work is actually about communication, alignment, and diplomacy. Creating enough safety within a team to change direction without losing credibility became an important part of the process.",
             evidence: "Pivot moments were emotionally harder than technically hard",
-            image: "/Images/Banking.jpg"
+            image: "/Images/Case study 3/Learning.jpg"
           }
         ]
       },
@@ -669,19 +718,29 @@ export const esperantoCaseStudies = [
             number: "1",
             title: "UX research",
             description: "",
-            image: "",
+            image: "/Images/Case study 3/UX/UX 1.1.png",
             imageAlt: "UX research",
             imageCaption: "",
-            additionalImages: [{ src: "/Images/Banking.jpg", alt: "Founder interviews and research synthesis", layout: "top" as const }] as { src: string; alt: string; layout: "top" }[],
+            additionalImages: [
+              { src: "/Images/Case study 3/UX/UX 1.1.png", alt: "UX research", layout: "top" as const, caption: VISMA_CS3_WHAT_I_DID_MODAL_CAPTIONS[0] },
+              { src: "/Images/Case study 3/UX/UX 2.png", alt: "UX research", layout: "top" as const, caption: VISMA_CS3_WHAT_I_DID_MODAL_CAPTIONS[1] },
+              { src: "/Images/Case study 3/UX/UX 3.png", alt: "UX research", layout: "top" as const, caption: VISMA_CS3_WHAT_I_DID_MODAL_CAPTIONS[2] },
+              { src: "/Images/Case study 3/UX/UX 4.png", alt: "UX research", layout: "top" as const, caption: VISMA_CS3_WHAT_I_DID_MODAL_CAPTIONS[3] },
+            ] as { src: string; alt: string; layout: "top"; caption?: string }[],
           },
           {
             number: "2",
             title: "UI design",
             description: "",
-            image: "/Images/Banking.jpg",
+            image: "/Images/Case study 3/UI/UI 1.png",
             imageAlt: "UI design",
             imageCaption: "Prototypes and flows for core banking and bookkeeping moments",
-            additionalImages: [{ src: "/Images/Banking.jpg", alt: "UI explorations and screens", layout: "top" as const }] as { src: string; alt: string; layout: "top" }[],
+            additionalImages: [
+              { src: "/Images/Case study 3/UI/UI 1.png", alt: "UI design", layout: "top" as const, caption: VISMA_CS3_UI_DESIGN_MODAL_CAPTIONS[0] },
+              { src: "/Images/Case study 3/UI/UI 1.1.png", alt: "UI design", layout: "top" as const, caption: VISMA_CS3_UI_DESIGN_MODAL_CAPTIONS[1] },
+              { src: "/Images/Case study 3/UI/UI 2.png", alt: "UI design", layout: "top" as const, caption: VISMA_CS3_UI_DESIGN_MODAL_CAPTIONS[2] },
+              { src: "/Images/Case study 3/UI/UI 3.png", alt: "UI design", layout: "top" as const, caption: VISMA_CS3_UI_DESIGN_MODAL_CAPTIONS[3] },
+            ] as { src: string; alt: string; layout: "top"; caption?: string }[],
           },
           {
             number: "3",
@@ -695,10 +754,15 @@ export const esperantoCaseStudies = [
             number: "4",
             title: "Methods",
             description: "",
-            image: "/Images/Banking.jpg",
+            image: "/Images/Case study 3/Methods/Method 1.png",
             imageAlt: "Methods",
             imageCaption: "Design sprints and iterative delivery",
-            additionalImages: [{ src: "/Images/Banking.jpg", alt: "Sprint artifacts and learnings", layout: "top" as const }] as { src: string; alt: string; layout: "top" }[],
+            additionalImages: [
+              { src: "/Images/Case study 3/Methods/Method 1.png", alt: "Methods", layout: "top" as const, caption: VISMA_CS3_METHODS_MODAL_CAPTIONS[0] },
+              { src: "/Images/Case study 3/Methods/method 1.1.png", alt: "Methods", layout: "top" as const, caption: VISMA_CS3_METHODS_MODAL_CAPTIONS[1] },
+              { src: "/Images/Case study 3/Methods/Method 1.2.png", alt: "Methods", layout: "top" as const, caption: VISMA_CS3_METHODS_MODAL_CAPTIONS[2] },
+              { src: "/Images/Case study 3/Methods/method 2.png", alt: "Methods", layout: "top" as const, caption: VISMA_CS3_METHODS_MODAL_CAPTIONS[3] },
+            ] as { src: string; alt: string; layout: "top"; caption?: string }[],
           }
         ]
       },
