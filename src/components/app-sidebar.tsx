@@ -78,16 +78,16 @@ const data = {
       badge: 3,
       items: [
         {
-          title: "Design System",
-          url: "#design-system",
+          title: "AI advisor",
+          url: "#ai-advisor",
         },
         {
-          title: "IA",
-          url: "#ia",
+          title: "Card controls",
+          url: "#card-controls",
         },
         {
-          title: "Research Ops",
-          url: "#research-ops",
+          title: "Built-in Invoicing",
+          url: "#built-in-invoicing",
         },
       ],
     },

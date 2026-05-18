@@ -92,6 +92,68 @@ export const VISMA_CS3_METHODS_MODAL_EXTRA_KEYWORDS: string[][] = [
   ["end-to-end", "business models", "real user needs", "friends and family"],
 ]
 
+/**
+ * Design solutions modals (Visma CS3): terms that mark deliberate UX choices — not filler words.
+ * Order does not matter; longest match wins in the UI.
+ */
+export const VISMA_CS3_DESIGN_SOLUTION_MODAL_EXTRA_KEYWORDS: string[][] = [
+  // AI advisor — language, modality, action, trust framing
+  [
+    "plain-language actions",
+    "chat interface",
+    "Financial Health Score",
+    "Savings Plan",
+    "one tap",
+    "Your Advisor",
+    "never \"AI\"",
+    "sprint research",
+    "drives more trust",
+  ],
+  // Card controls — mental model, hierarchy, granularity, persona
+  [
+    "configurable object",
+    "Freeze toggle",
+    "highest-stakes",
+    "category switches",
+    "Virtual Card",
+    "one tap",
+  ],
+  // Built-in invoicing — only the core UX moves (not compliance/implementation filler)
+  [
+    "status pills",
+    "at a glance",
+    "4-step create flow",
+    "activity timeline",
+    "audit trail",
+    "awkward follow-up",
+  ],
+]
+
+/** What did I learn modals (Visma CS3): design-focused highlights per section. */
+export const VISMA_CS3_LEARNINGS_MODAL_EXTRA_KEYWORDS: string[][] = [
+  [
+    "feel human",
+    "act on",
+    "reduce anxiety",
+    "emotional choice",
+    "Simplifying",
+  ],
+  [
+    "losing trust",
+    "in control",
+    "progressive disclosure",
+    "predictability",
+    "feel lost",
+  ],
+  [
+    "visual language",
+    "Kova",
+    "components and patterns",
+    "earn its place",
+    "differentiate",
+  ],
+]
+
 export const esperantoCaseStudies = [
   {
     id: 1,
@@ -247,7 +309,7 @@ export const esperantoCaseStudies = [
       },
       learnings: {
         description: "Getting out of my comfort zone",
-        keywords: ["Enterprise Systems", "Compliance", "Systems Thinking", "Component Design"],
+        keywords: ["Managing ambiguity", "Building trust", "Momentum"],
         items: [
           {
             title: "Managing ambiguity",
@@ -561,7 +623,7 @@ export const esperantoCaseStudies = [
       },
       learnings: {
         description: "Getting out of my comfort zone",
-        keywords: ["Enterprise Systems", "Compliance", "Systems Thinking", "Component Design"],
+        keywords: ["Managing ambiguity", "Building trust", "Momentum"],
         items: [
           {
             title: "Managing ambiguity",
@@ -769,30 +831,49 @@ export const esperantoCaseStudies = [
       designSolutions: {
         title: "Design solutions",
         description: "The product focused on simplicity, clarity, and building trust with users. We designed systems that provided guidance and financial clarity during important moments.",
-        keywords: ["Simplicity", "Clarity", "Trust", "Guidance"],
-        features: []
+        keywords: ["AI advisor", "Card controls", "Built-in Invoicing"],
+        features: [
+          {
+            title: "AI advisor",
+            description:
+              'The Advisor turns raw bank data into plain-language actions for founders who don\'t have a CFO. It uses a chat interface so financial guidance feels like a conversation, not a report. A Financial Health Score condenses complex metrics into a single scannable number. The Savings Plan screen goes beyond insight — users can apply every recommended fix in one tap. Copy throughout says "Your Advisor," never "AI," because sprint research showed that framing drives more trust.',
+          },
+          {
+            title: "Card controls",
+            description:
+              'Card Controls makes the business card feel like a live, configurable object rather than a static piece of plastic. A master Freeze toggle sits at the top as the single highest-stakes action, then granular category switches let users lock specific behaviours without killing the whole card. Spending Limits uses a progress bar to make "61.5% of monthly limit used" visceral in a way that a number alone cannot. Virtual Card was added for the freelancer and e-commerce persona — pay a vendor or trial a SaaS tool without exposing the primary account number. Every control takes one tap and shows its state immediately, removing the need to call a bank.',
+          },
+          {
+            title: "Built-in Invoicing",
+            description:
+              'Invoicing closes the gap between delivering work and getting paid, all within the same app where the money lands. The home screen uses colour-coded status pills so founders know their entire receivables position at a glance. A 4-step create flow breaks a traditionally intimidating task into fast, sequential decisions, with VAT calculated automatically. The detail screen\'s activity timeline — Sent → Opened → Due → Paid — replaces the anxiety of "did they see it?" with a factual audit trail. Automated reminders and multi-channel sending (email, SMS, link) mean Kova handles the awkward follow-up so the user never has to.',
+          },
+        ],
       },
       learnings: {
         description: "What this moonshot changed for me",
-        keywords: ["Focus", "Core problems", "Restraint"],
+        keywords: ["Humanising complexity", "Designing for confidence", "Systems thinking"],
         items: [
           {
-            title: "Focus in high-risk environments",
-            description: "The project taught me how important focus is in high-risk startup environments. When timelines and credibility are fragile, a sharp problem statement is a strategy.\n\nSpreading attention across too many hypotheses diluted both the product story and the research signal. Narrowing the bet made the work easier to explain and easier to test.",
+            title: "Humanising complexity",
+            description:
+              "Financial data is cold and the design had to make it feel human. Every number was translated into a sentence the user could act on. Tone, colour and copy all worked together to reduce anxiety. Clarity is an emotional choice, not just a visual one. Simplifying something complex is harder than making it complicated.",
             icon: Lightbulb,
-            image: "/Images/Banking.jpg",
+            image: "/Images/What did I learned/Humanising Complexity.jpg",
           },
           {
-            title: "Core problems first",
-            description: "Solving core user problems well is often more valuable than trying to solve too many problems at once.\n\nUsers rewarded clarity in the basics: understanding balances, knowing what happens next, and feeling guided through intimidating tasks. The \"extra\" features mattered less than we initially assumed.",
+            title: "Designing for confidence",
+            description:
+              "Users in fintech are one bad screen away from losing trust. Every layout decision asked: does this make the user feel in control? Hierarchy, spacing and progressive disclosure all served that single goal. Confidence comes from predictability and nothing should surprise the user. Good fintech design is invisible and only fails when users feel lost.",
             icon: Users,
-            image: "/Images/Banking.jpg",
+            image: "/Images/What did I learned/Confidence.jpg",
           },
           {
-            title: "Restraint as craft",
-            description: "Restraint became a design skill: choosing what not to build, what not to explain yet, and what to keep calm on screen.\n\nIn a neo bank concept, confidence often comes from fewer words, fewer choices, and fewer surprises — not from more surface area.",
+            title: "Systems thinking",
+            description:
+              "Advisor, Cards and Invoicing could have felt like three separate apps. One visual language across all three is what made Kova feel whole. I learned to design components and patterns, not just individual screens. Every colour, card and interaction had to earn its place in the system. The real skill was knowing when to repeat and when to differentiate.",
             icon: Zap,
-            image: "/Images/Banking.jpg",
+            image: "/Images/What did I learned/Systems thinking.jpg",
           }
         ]
       },

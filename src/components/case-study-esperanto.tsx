@@ -52,7 +52,49 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { VISMA_CS3_WHAT_I_DID_MODAL_EXTRA_KEYWORDS, VISMA_CS3_UI_DESIGN_MODAL_EXTRA_KEYWORDS, VISMA_CS3_METHODS_MODAL_EXTRA_KEYWORDS } from "@/data/esperanto-case-studies"
+import {
+  VISMA_CS3_WHAT_I_DID_MODAL_EXTRA_KEYWORDS,
+  VISMA_CS3_UI_DESIGN_MODAL_EXTRA_KEYWORDS,
+  VISMA_CS3_METHODS_MODAL_EXTRA_KEYWORDS,
+  VISMA_CS3_DESIGN_SOLUTION_MODAL_EXTRA_KEYWORDS,
+  VISMA_CS3_LEARNINGS_MODAL_EXTRA_KEYWORDS,
+} from "@/data/esperanto-case-studies"
+
+/** Case study 3 — `public/Images/Case study 3/Design Solutions/`. Full assets for modal; `*_thumbnail` JPGs for grid cards. */
+const VISMA_CS3_DESIGN_SOLUTION_SRC = {
+  aiAdvice: encodeURI("/Images/Case study 3/Design Solutions/AI advice.png"),
+  cardControls: encodeURI("/Images/Case study 3/Design Solutions/Card controls.png"),
+  invoice: encodeURI("/Images/Case study 3/Design Solutions/Invoice.png"),
+} as const
+
+const VISMA_CS3_DESIGN_SOLUTION_THUMB_SRC = {
+  aiAdvice: encodeURI("/Images/Case study 3/Design Solutions/AI_advice_thumbnail.jpg"),
+  cardControls: encodeURI("/Images/Case study 3/Design Solutions/Card control_thumbnail.jpg"),
+  invoice: encodeURI("/Images/Case study 3/Design Solutions/Invoice_thumbnail.jpg"),
+} as const
+
+function vismaCs3DesignSolutionThumbnailSrc(titleLower: string): string {
+  if (titleLower.includes("ai advisor") || titleLower.includes("ai advice")) return VISMA_CS3_DESIGN_SOLUTION_THUMB_SRC.aiAdvice
+  if (titleLower.includes("card control")) return VISMA_CS3_DESIGN_SOLUTION_THUMB_SRC.cardControls
+  if (titleLower.includes("invoic")) return VISMA_CS3_DESIGN_SOLUTION_THUMB_SRC.invoice
+  return VISMA_CS3_DESIGN_SOLUTION_THUMB_SRC.aiAdvice
+}
+
+function vismaCs3DesignSolutionModalExtraKeywords(stepTitle: string): string[] {
+  const t = stepTitle.toLowerCase()
+  if (t.includes("ai advisor") || t.includes("ai advice")) return [...VISMA_CS3_DESIGN_SOLUTION_MODAL_EXTRA_KEYWORDS[0]]
+  if (t.includes("card control")) return [...VISMA_CS3_DESIGN_SOLUTION_MODAL_EXTRA_KEYWORDS[1]]
+  if (t.includes("invoic")) return [...VISMA_CS3_DESIGN_SOLUTION_MODAL_EXTRA_KEYWORDS[2]]
+  return []
+}
+
+function vismaCs3LearningsModalExtraKeywords(stepTitle: string): string[] {
+  const t = stepTitle.toLowerCase()
+  if (t.includes("humanising complexity")) return [...VISMA_CS3_LEARNINGS_MODAL_EXTRA_KEYWORDS[0]]
+  if (t.includes("designing for confidence")) return [...VISMA_CS3_LEARNINGS_MODAL_EXTRA_KEYWORDS[1]]
+  if (t.includes("systems thinking")) return [...VISMA_CS3_LEARNINGS_MODAL_EXTRA_KEYWORDS[2]]
+  return []
+}
 
 /** Same section template as case study 2 (Visma-style); each project uses its own data and asset folder. */
 function usesVismaStyleCaseStudyLayout(projectId?: number): boolean {
@@ -77,15 +119,28 @@ function ScrollReveal({ children, delay = 0, className = "" }: { children: React
 }
 
 // Highlight Keywords Component - Subtle badge styling for important terms
+/** Curated design-solution highlights: allow short phrases, block essay-length terms. */
+const HIGHLIGHT_DESIGN_KEYWORD_MAX_LENGTH = 36
+const HIGHLIGHT_DESIGN_KEYWORD_MAX_WORDS = 4
+
 export function HighlightedText({
   text,
   isDark = false,
   extraKeywords = [],
+  highlightPercentages = true,
+  extraKeywordsOnly = false,
+  preferShortKeywords = false,
 }: {
   text: string
   isDark?: boolean
   /** Merged with built-in highlights (e.g. case-study-specific terms). */
   extraKeywords?: string[]
+  /** When false, values like 61.5% stay plain text (no black metric badges). */
+  highlightPercentages?: boolean
+  /** Use only `extraKeywords`, not the global built-in list. */
+  extraKeywordsOnly?: boolean
+  /** Curated design terms only: cap phrase length; longest match wins (design-solution modals). */
+  preferShortKeywords?: boolean
 }) {
   const builtInKeywords = [
     "R&D project",
@@ -565,25 +620,38 @@ export function HighlightedText({
     "audience"
   ]
 
-  const keywords = [...builtInKeywords, ...extraKeywords]
+  const scopedExtra = preferShortKeywords
+    ? extraKeywords.filter((k) => {
+        const term = k.trim()
+        return (
+          term.length > 0 &&
+          term.length <= HIGHLIGHT_DESIGN_KEYWORD_MAX_LENGTH &&
+          term.split(/\s+/).length <= HIGHLIGHT_DESIGN_KEYWORD_MAX_WORDS
+        )
+      })
+    : extraKeywords
+
+  const keywords = extraKeywordsOnly ? scopedExtra : [...builtInKeywords, ...scopedExtra]
 
   // Remove duplicate keywords if any exist
   const uniqueKeywords = Array.from(new Set(keywords))
 
-  // Find percentage patterns first (e.g., "60%", "20%", "50%", "60%+")
+  // Find percentage patterns first (e.g., "60%", "61.5%", "60%+") — not a trailing digit inside decimals (avoid "5%" from "61.5%")
   const percentageMatches: Array<{ start: number; end: number; text: string; isPercentage: boolean }> = []
-  const percentageRegex = /\d+%\+?/g
-  let match
-  while ((match = percentageRegex.exec(text)) !== null) {
-    percentageMatches.push({
-      start: match.index,
-      end: match.index + match[0].length,
-      text: match[0],
-      isPercentage: true
-    })
+  if (highlightPercentages) {
+    const percentageRegex = /(?<![.\d])\d+(?:\.\d+)?%\+?/g
+    let match
+    while ((match = percentageRegex.exec(text)) !== null) {
+      percentageMatches.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        text: match[0],
+        isPercentage: true,
+      })
+    }
   }
   
-  // Sort keywords by length (longest first) to prioritize longer matches
+  // Longest match first so e.g. "Financial Health Score" wins over "Score".
   const sortedKeywords = [...uniqueKeywords].sort((a, b) => b.length - a.length)
   
   // Find all matches with their positions
@@ -654,11 +722,11 @@ export function HighlightedText({
             return (
               <span
                 key={index}
-                className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-all duration-200 bg-black text-white border-black/50 hover:bg-black/90 hover:scale-105 hover:shadow-lg hover:shadow-black/30 relative group/badge"
+                className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-all duration-200 bg-black text-white border-black/50 hover:bg-black/90 hover:scale-105 hover:shadow-lg hover:shadow-black/30 relative group"
               >
                 <span className="relative z-10">{part.text}</span>
                 {/* Glow effect on hover */}
-                <span className="absolute inset-0 rounded-md bg-black/30 opacity-0 group-hover/badge:opacity-100 blur-md transition-opacity duration-200 -z-10" />
+                <span className="absolute inset-0 rounded-md bg-black/30 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-200 -z-10" />
               </span>
             )
           }
@@ -666,7 +734,7 @@ export function HighlightedText({
           return (
             <span
               key={index}
-              className={`inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-all duration-200 relative group/badge hover:scale-105 hover:shadow-lg ${
+              className={`inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md font-medium text-xs leading-tight border transition-all duration-200 relative group hover:scale-105 hover:shadow-lg ${
                 isDark
                   ? 'bg-white/15 text-white border-white/30 hover:bg-white/20 hover:shadow-white/20'
                   : 'bg-primary/10 text-primary border-primary/20 hover:bg-primary/15 hover:shadow-primary/20'
@@ -674,7 +742,7 @@ export function HighlightedText({
             >
               <span className="relative z-10">{part.text}</span>
               {/* Glow effect on hover */}
-              <span className={`absolute inset-0 rounded-md opacity-0 group-hover/badge:opacity-100 blur-md transition-opacity duration-200 -z-10 ${
+              <span className={`absolute inset-0 rounded-md opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-200 -z-10 ${
                 isDark ? 'bg-white/20' : 'bg-primary/20'
               }`} />
             </span>
@@ -1060,7 +1128,12 @@ function StepModal({
   const isUIDesign = step.title.toLowerCase().includes('ui design')
   const isUserTesting = step.title.toLowerCase().includes('user testing')
   const isMethods = step.title.toLowerCase().includes('methods')
-  const isLearnings = ['managing ambiguity', 'building trust', 'momentum'].includes(step.title.toLowerCase())
+  const isLearnings =
+    Number(projectId) === 3
+      ? ['humanising complexity', 'designing for confidence', 'systems thinking'].includes(
+          step.title.toLowerCase()
+        )
+      : ['managing ambiguity', 'building trust', 'momentum'].includes(step.title.toLowerCase())
   const learningsDisplayTitles: Record<string, string> = {
     'managing ambiguity': 'Out of the box',
     'building trust': 'Ownership',
@@ -1213,7 +1286,18 @@ function StepModal({
                       : step.description || '')
                     ).split('\n\n').map((para, i) => (
                       <p key={i} className="text-base md:text-lg leading-relaxed text-foreground">
-                        <HighlightedText text={para} isDark={false} />
+                        <HighlightedText
+                          text={para}
+                          isDark={false}
+                          extraKeywords={
+                            Number(projectId) === 3 && isLearnings
+                              ? vismaCs3LearningsModalExtraKeywords(step.title)
+                              : []
+                          }
+                          extraKeywordsOnly={Number(projectId) === 3 && isLearnings}
+                          preferShortKeywords={Number(projectId) === 3 && isLearnings}
+                          highlightPercentages={false}
+                        />
                       </p>
                     ))}
                   </div>
@@ -3504,9 +3588,9 @@ function LearningsSection({
   const imageMap: Record<string, string> = usesVismaStyleCaseStudyLayout(projectId)
     ? (pid === 3
         ? {
-            "managing ambiguity": "/Images/Banking.jpg",
-            "building trust": "/Images/Banking.jpg",
-            "momentum": "/Images/Banking.jpg",
+            "humanising complexity": "/Images/What did I learned/Humanising Complexity.jpg",
+            "designing for confidence": "/Images/What did I learned/Confidence.jpg",
+            "systems thinking": "/Images/What did I learned/Systems thinking.jpg",
           }
         : {
             "managing ambiguity": `/Images/${caseStudyFolder}/What I learned/Out of the box.jpg`,
@@ -3818,10 +3902,12 @@ function LearningsSection({
 function DesignSolutionsSection({
   description,
   keywords,
+  features,
   projectId = 1
 }: {
   description?: string
   keywords?: string[]
+  features?: Array<{ title: string; description: string; image?: string; imageAlt?: string; imageCaption?: string }>
   projectId?: number
 }) {
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
@@ -3833,14 +3919,21 @@ function DesignSolutionsSection({
     { title: "Design", description: "" }
   ]
 
-  // Case studies 2 and 3: same card grid; case study 2 uses video posters, case study 3 uses static hero art until dedicated assets are added.
+  // Case studies 2 and 3: same card grid; case study 2 uses video posters, case study 3 uses images from `Case study 3/Design Solutions/`.
   const pid = Number(projectId)
   if (usesVismaStyleCaseStudyLayout(pid)) {
-    const stepsCaseStudy2 = [
-      { title: "Concept design", description: "" },
-      { title: "wireframe", description: "" },
-      { title: "UI design", description: "" }
-    ]
+    const stepsVismaDesignSolutions =
+      pid === 3
+        ? [
+            { title: "AI advisor", description: features?.[0]?.description ?? "" },
+            { title: "Card controls", description: features?.[1]?.description ?? "" },
+            { title: "Built-in Invoicing", description: features?.[2]?.description ?? "" },
+          ]
+        : [
+            { title: "Concept design", description: "" },
+            { title: "wireframe", description: "" },
+            { title: "UI design", description: "" },
+          ]
     return (
       <>
         <CollapsibleSection
@@ -3853,7 +3946,7 @@ function DesignSolutionsSection({
         >
           <div className="space-y-6">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {stepsCaseStudy2.map((step, index) => {
+              {stepsVismaDesignSolutions.map((step, index) => {
                 const gradients = [
                   'from-blue-900/80 via-blue-950/90 to-black',
                   'from-purple-900/80 via-purple-950/90 to-black',
@@ -3872,16 +3965,20 @@ function DesignSolutionsSection({
                   { glow: 'animate-[glow-pulse-3_3.2s_ease-in-out_infinite]', wave: 'animate-[wave-3_5.2s_ease-in-out_infinite]', gradient: 'bg-[length:200%_200%] animate-[gradient-shift-3_6.5s_ease_infinite]' },
                 ]
                 const anim = animations[index % animations.length]
-                const isConceptDesign = step.title.toLowerCase().includes('concept design')
-                const isWireframe = step.title.toLowerCase().includes('wireframe')
-                const isUIDesign = step.title.toLowerCase().includes('ui design')
+                const t = step.title.toLowerCase()
+                const isConceptDesign = t.includes('concept design')
+                const isWireframe = t.includes('wireframe')
+                const isUIDesign = t.includes('ui design')
+                const isAiAdvisor = t.includes('ai advisor')
+                const isCardControls = t.includes('card controls')
+                const isBuiltInInvoicing = t.includes('invoicing')
                 const hasVideo = pid === 2 && (isConceptDesign || isWireframe || isUIDesign)
-                const hasStaticPreview = pid === 3 && (isConceptDesign || isWireframe || isUIDesign)
+                const hasStaticPreview = pid === 3 && (isAiAdvisor || isCardControls || isBuiltInInvoicing)
                 return (
                   <div
                     key={index}
                     onClick={() => setSelectedStep(index)}
-                    className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                    className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
                   >
                     <div className="relative aspect-[4/5] w-full overflow-hidden">
                       {hasVideo && (
@@ -3931,14 +4028,20 @@ function DesignSolutionsSection({
                         </>
                       )}
                       {hasStaticPreview && (
-                        <div className="absolute inset-0">
+                        <div className="absolute inset-0 overflow-hidden bg-zinc-950/40">
                           <Image
-                            src="/Images/Banking.jpg"
-                            alt=""
+                            src={vismaCs3DesignSolutionThumbnailSrc(t)}
+                            alt={step.title}
                             fill
-                            className="object-cover"
+                            className="object-cover scale-110 origin-center"
                             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            style={{ objectPosition: isConceptDesign ? "20% 50%" : isWireframe ? "60% 40%" : "80% 55%" }}
+                            style={{
+                              objectPosition: isAiAdvisor
+                                ? "50% 12%"
+                                : isCardControls
+                                  ? "50% 45%"
+                                  : "50% 28%",
+                            }}
                             unoptimized
                           />
                         </div>
@@ -3969,9 +4072,9 @@ function DesignSolutionsSection({
             </div>
           </div>
         </CollapsibleSection>
-        {selectedStep !== null && stepsCaseStudy2 && (
+        {selectedStep !== null && stepsVismaDesignSolutions && (
           <DesignSolutionModal
-            step={stepsCaseStudy2[selectedStep]}
+            step={stepsVismaDesignSolutions[selectedStep]}
             isOpen={selectedStep !== null}
             onClose={() => setSelectedStep(null)}
             projectId={pid}
@@ -4222,7 +4325,7 @@ function DesignSolutionModal({
   step, 
   isOpen, 
   onClose,
-  projectId = 1
+  projectId = 1,
 }: { 
   step: { title: string; description: string }
   isOpen: boolean
@@ -4319,22 +4422,14 @@ function DesignSolutionModal({
 
   const getImagesForStepCaseStudy3 = (title: string) => {
     const titleLower = title.toLowerCase()
-    if (titleLower.includes('concept design')) {
-      return [
-        { src: '/Images/Banking.jpg', alt: 'Early trust framing', layout: 'top' as const },
-        { src: '/Images/Banking.jpg', alt: 'Onboarding narrative', layout: 'top' as const },
-      ]
+    if (titleLower.includes('ai advisor') || titleLower.includes('ai advice')) {
+      return [{ src: VISMA_CS3_DESIGN_SOLUTION_SRC.aiAdvice, alt: 'AI advice', layout: 'top' as const }]
     }
-    if (titleLower.includes('wireframe')) {
-      return [
-        { src: '/Images/Banking.jpg', alt: 'Core flow wireframes', layout: 'top' as const },
-      ]
+    if (titleLower.includes('card control')) {
+      return [{ src: VISMA_CS3_DESIGN_SOLUTION_SRC.cardControls, alt: 'Card controls', layout: 'top' as const }]
     }
-    if (titleLower.includes('ui design')) {
-      return [
-        { src: '/Images/Banking.jpg', alt: 'UI refinements', layout: 'top' as const },
-        { src: '/Images/Banking.jpg', alt: 'Microcopy and states', layout: 'top' as const },
-      ]
+    if (titleLower.includes('invoic')) {
+      return [{ src: VISMA_CS3_DESIGN_SOLUTION_SRC.invoice, alt: 'Built-in invoicing', layout: 'top' as const }]
     }
     return [] as Array<{ src: string; alt: string; layout: 'top' | 'side-by-side' }>
   }
@@ -4371,15 +4466,19 @@ function DesignSolutionModal({
           </div>
         </div>
 
-        {/* Scrollable Content Area - Document Style */}
-        <div className="flex-1 overflow-y-auto overscroll-contain">
-          <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-10 py-1.5 md:py-2.5">
+        {/* Scrollable Content Area — min-h-0 so flex layout allows scrolling; without it, overflow can clip. */}
+        <div className="flex min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          <div
+            className={`max-w-4xl mx-auto w-full py-1.5 md:py-2.5 ${
+              Number(projectId) === 3 ? "px-0" : "px-6 md:px-8 lg:px-10"
+            }`}
+          >
             {/* Document Content with Academic Paper Layout */}
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <div className="space-y-6 text-base md:text-lg leading-relaxed text-foreground">
                 {/* Display all images */}
                 {allImages.length > 0 && (
-                  <div className="space-y-6">
+                  <div className={`space-y-6 ${Number(projectId) === 3 ? "not-prose max-w-none" : ""}`}>
                     {allImages.map((img, imgIndex) => {
                       const isInformationArchitecture = step.title.toLowerCase().includes('information architecture')
                       const isWireframe = step.title.toLowerCase().includes('wireframe')
@@ -4456,14 +4555,21 @@ function DesignSolutionModal({
                               )}
                             </div>
                           ) : (
-                            // Regular full-width layout
-                            <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
+                            // Regular full-width layout (case study 3: edge-to-edge in modal — scroll body has no horizontal padding)
+                            <div
+                              className={
+                                Number(projectId) === 3
+                                  ? "relative w-full overflow-hidden border border-border/10 bg-muted/10 rounded-none md:rounded-lg"
+                                  : "relative w-full overflow-hidden border border-border/10 bg-muted/10 rounded-lg"
+                              }
+                              style={{ height: Number(projectId) === 3 ? 'min(58vh, 560px)' : '350px' }}
+                            >
                               <Image
                                 src={img.src}
                                 alt={img.alt}
                                 fill
-                                className="object-contain p-2"
-                                sizes="(max-width: 768px) 100vw, 80vw"
+                                className={Number(projectId) === 3 ? 'object-contain p-0 object-top' : 'object-contain p-2'}
+                                sizes={Number(projectId) === 3 ? '(max-width: 896px) 100vw, 896px' : '(max-width: 768px) 100vw, 80vw'}
                                 unoptimized
                               />
                             </div>
@@ -4653,6 +4759,19 @@ function DesignSolutionModal({
                 )}
               </div>
             </div>
+            {Number(projectId) === 3 && step.description?.trim() ? (
+              <div className="border-t border-border/30 px-6 pb-8 pt-6 md:px-8 lg:px-10">
+                <p className="text-base md:text-lg leading-relaxed text-foreground max-w-none not-prose">
+                  <HighlightedText
+                    text={step.description.trim()}
+                    extraKeywords={vismaCs3DesignSolutionModalExtraKeywords(step.title)}
+                    highlightPercentages={false}
+                    extraKeywordsOnly
+                    preferShortKeywords
+                  />
+                </p>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
@@ -5474,6 +5593,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
             <DesignSolutionsSection
               description={project.sections.designSolutions.description}
               keywords={project.sections.designSolutions.keywords}
+              features={project.sections.designSolutions.features}
               projectId={project.id}
             />
           )}
