@@ -1,8 +1,8 @@
 "use client"
 
 import { useParams, useRouter } from "next/navigation"
-import { AppSidebar } from "@/components/app-sidebar"
 import { EsperantoCaseStudy } from "@/components/case-study-esperanto"
+import { PortfolioLayout } from "@/components/portfolio-layout"
 import { esperantoCaseStudies } from "@/data/esperanto-case-studies"
 import {
   Breadcrumb,
@@ -12,13 +12,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-  useSidebar,
-} from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -413,23 +406,10 @@ const caseStudies = [
   }
 ]
 
-// Dynamic Header Component
-function DynamicHeader({ caseStudyTitle }: { caseStudyTitle: string }) {
-  const { state } = useSidebar()
-  const isCollapsed = state === "collapsed"
-
+function CaseStudyPageHeader({ caseStudyTitle }: { caseStudyTitle: string }) {
   return (
-    <header 
-      className={cn(
-        "fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-[left] duration-200 ease-linear",
-        isCollapsed 
-          ? "md:left-[var(--sidebar-width-icon)]" 
-          : "md:left-[var(--sidebar-width)]"
-      )}
-    >
-      <div className="flex items-center gap-2 px-4 w-full">
-        <SidebarTrigger />
-        <Separator orientation="vertical" className="mr-2 h-4" />
+    <header className="fixed top-0 left-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="flex items-center gap-2 px-4 w-full max-w-7xl mx-auto">
         <Breadcrumb className="flex-1">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -454,15 +434,12 @@ export default function CaseStudyPage() {
 
   if (!caseStudy) {
     return (
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset>
-          <DynamicHeader caseStudyTitle="Case Study Not Found" />
-          <div className="flex flex-1 flex-col gap-12 p-6 md:p-12 max-w-5xl mx-auto mt-20 w-full min-w-0">
-            <p>Case study not found</p>
-          </div>
-        </SidebarInset>
-      </SidebarProvider>
+      <PortfolioLayout>
+        <CaseStudyPageHeader caseStudyTitle="Case Study Not Found" />
+        <div className="flex flex-1 flex-col gap-12 p-6 md:p-12 max-w-5xl mx-auto mt-8 w-full min-w-0">
+          <p>Case study not found</p>
+        </div>
+      </PortfolioLayout>
     )
   }
 
@@ -475,12 +452,10 @@ export default function CaseStudyPage() {
   const isDetailedCaseStudy = caseStudy.id === 1 && caseStudy.heroSummary
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset className="overflow-x-hidden">
-        <DynamicHeader caseStudyTitle={caseStudy.title} />
+    <PortfolioLayout>
+        <CaseStudyPageHeader caseStudyTitle={caseStudy.title} />
         
-        <div className="flex flex-1 flex-col gap-20 p-6 md:p-12 lg:p-16 max-w-7xl mx-auto mt-4 md:mt-6 w-full min-w-0 pb-32">
+        <div className="flex flex-1 flex-col gap-20 p-6 md:p-12 lg:p-16 max-w-7xl mx-auto w-full min-w-0 pb-32">
           {isDetailedCaseStudy ? (
             // Redesigned detailed case study view with Accordions
             <div className="space-y-4">
@@ -801,7 +776,6 @@ export default function CaseStudyPage() {
             </div>
           )}
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+    </PortfolioLayout>
   )
 }

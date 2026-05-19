@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { useRouter, usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
-import { AppSidebar } from "@/components/app-sidebar"
+import { PortfolioLayout } from "@/components/portfolio-layout"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,13 +13,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-  useSidebar,
-} from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -5334,51 +5327,34 @@ function PageTransitionWrapper({ children }: { children: React.ReactNode }) {
   )
 }
 
-// Header component that responds to sidebar state
-function HeaderWithSidebarState({ projectTitle }: { projectTitle: string }) {
-  const { state } = useSidebar()
-  const isCollapsed = state === "collapsed"
+function CaseStudyHeader({ projectTitle }: { projectTitle: string }) {
   const router = useRouter()
   const [isNavigating, setIsNavigating] = useState(false)
 
   const handleOverviewClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     setIsNavigating(true)
-    
-    // Add fade-out animation to the main content
-    const mainContent = document.querySelector('main') as HTMLElement
-    const sidebarInset = document.querySelector('[class*="sidebar-inset"]') as HTMLElement
-    const targetElement = sidebarInset || mainContent
-    
+
+    const targetElement = document.querySelector("main") as HTMLElement
     if (targetElement) {
-      targetElement.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out'
-      targetElement.style.opacity = '0'
-      targetElement.style.transform = 'translateY(8px)'
+      targetElement.style.transition = "opacity 0.3s ease-out, transform 0.3s ease-out"
+      targetElement.style.opacity = "0"
+      targetElement.style.transform = "translateY(8px)"
     }
-    
-    // Navigate after fade-out animation
+
     setTimeout(() => {
-      router.push('/')
+      router.push("/")
     }, 300)
   }
 
   return (
-    <header 
-      className={cn(
-        "fixed top-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-[left] duration-200 ease-linear",
-        isCollapsed 
-          ? "md:left-[var(--sidebar-width-icon)]" 
-          : "md:left-[var(--sidebar-width)]"
-      )}
-    >
-      <div className="flex items-center gap-2 px-4 w-full">
-        <SidebarTrigger />
-        <Separator orientation="vertical" className="mr-2 h-4" />
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 -mx-6 md:-mx-8 lg:-mx-10 px-6 md:px-8 lg:px-10 mb-4">
+      <div className="flex items-center gap-2 w-full max-w-7xl mx-auto">
         <Breadcrumb className="flex-1">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink 
-                href="/" 
+              <BreadcrumbLink
+                href="/"
                 onClick={handleOverviewClick}
                 className={cn(
                   "hover:text-foreground transition-colors",
@@ -5399,48 +5375,18 @@ function HeaderWithSidebarState({ projectTitle }: { projectTitle: string }) {
   )
 }
 
-// Component to handle sidebar collapse on case study pages
-function SidebarCollapseHandler() {
-  const { setOpen, isMobile } = useSidebar()
-  const pathname = usePathname()
-  const hasCollapsedRef = useRef(false)
-
-  useEffect(() => {
-    // Minimize sidebar to icon-only mode when component mounts (only on desktop)
-    // Only collapse once per page load, don't interfere with manual toggling
-    if (!isMobile && !hasCollapsedRef.current) {
-      const timer = setTimeout(() => {
-        setOpen(false) // Collapses to icon-only mode on desktop, hides on mobile
-        hasCollapsedRef.current = true
-      }, 100)
-      return () => clearTimeout(timer)
-    }
-  }, [setOpen, isMobile, pathname])
-
-  // Reset the ref when pathname changes so it can collapse on new pages
-  useEffect(() => {
-    hasCollapsedRef.current = false
-  }, [pathname])
-
-  return null
-}
-
 export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
   const router = useRouter()
   const sectionsRef = useRef<HTMLDivElement>(null)
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarCollapseHandler />
-      <PageTransitionWrapper>
-        <SidebarInset className="overflow-x-hidden">
+    <PortfolioLayout>
+    <PageTransitionWrapper>
           <ScrollIndicator sectionsRef={sectionsRef} />
-          <HeaderWithSidebarState projectTitle={project.title} />
-
         <div className="flex flex-1 flex-col gap-12 pl-6 md:pl-8 lg:pl-10 pr-12 md:pr-16 lg:pr-20 pt-6 md:pt-8 lg:pt-10 pb-24 max-w-7xl mx-auto w-full min-w-0">
+          <CaseStudyHeader projectTitle={project.title} />
           {/* Hero Section - Compact */}
-          <section className="space-y-6 mt-16 md:mt-20">
+          <section className="space-y-6">
             {/* Project Title with Logo */}
             <ScrollReveal delay={100}>
               <div className="flex items-center gap-6 mb-6">
@@ -5629,8 +5575,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
             </ScrollReveal>
           </section>
         </div>
-      </SidebarInset>
       </PageTransitionWrapper>
-    </SidebarProvider>
+    </PortfolioLayout>
   )
 }
