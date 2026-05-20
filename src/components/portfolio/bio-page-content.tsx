@@ -3,11 +3,16 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Anton } from "next/font/google"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, ChevronDown, MapPin } from "lucide-react"
 import { useEffect, useState } from "react"
 import { PortfolioLayout } from "@/components/portfolio-layout"
+import { Badge } from "@/components/ui/badge"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import { cn } from "@/lib/utils"
-import { heroName } from "@/data/portfolio-home"
 
 import {
   bioEducation,
@@ -19,6 +24,7 @@ import {
   bioProfile,
   bioSkillPillars,
   bioTools,
+  type BioCareerProject,
 } from "@/data/bio"
 
 const display = Anton({
@@ -36,8 +42,9 @@ const fog     = "#86868b"
 
 const companyColors: Record<string, string> = {
   "Knightec Group":     violet,
+  "Medela":             "#be185d",
   "Scania":             forest,
-  "Adventure Box":      "#b45309",
+  Kogama:               "#b45309",
   "Speedledger (Visma)": "#0066cc",
 }
 
@@ -50,48 +57,90 @@ const card =
 const tileClass =
   "relative flex h-full min-h-0 flex-col overflow-hidden rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-[transform,box-shadow] duration-300 ease-out hover:shadow-[0_10px_32px_rgba(0,0,0,0.12)]"
 
-/** Bio-only poster gradients — same 168° poster style, distinct from home tiles */
-const companiesGradient =
-  "linear-gradient(168deg, #a89bf5 0%, #6b5ce7 32%, #5241c9 65%, #362a8f 100%)"
-
 const educationGradient =
   "linear-gradient(168deg, #5ec6e8 0%, #2892b8 38%, #1a6a85 72%, #0f4458 100%)"
 
-function BioPosterTile({
-  title,
-  caption,
-  gradientCss,
-}: {
-  title: string
-  caption: string
-  gradientCss: string
-}) {
+function getCareerTimelineLabel(
+  period: string,
+  index: number,
+  timelineDate?: string,
+): string {
+  if (timelineDate) return timelineDate
+  if (index === 0 && /ongoing/i.test(period)) return "Today"
+
+  const parts = period.split(/\s*[–-]\s*/)
+  const end = parts[parts.length - 1]?.trim()
+  if (!end || /ongoing/i.test(end)) return "Today"
+  return end
+}
+
+const careerTimelineGrid =
+  "grid grid-cols-[4.25rem_0.75rem_minmax(0,1fr)] items-start gap-x-3 md:grid-cols-[5.5rem_0.75rem_minmax(0,1fr)] md:gap-x-4"
+const careerTimelineLine = "left-[5.375rem] md:left-[6.875rem]"
+const careerExpandedPanel =
+  "rounded-2xl border border-zinc-200/60 bg-white p-5 text-zinc-900 md:p-6 dark:border-zinc-200/60 dark:bg-white dark:text-zinc-900"
+
+const companyLogos = [
+  { name: "Knightec", src: "/Images/bio/Knightec logo.png" },
+  { name: "Scania", src: "/Images/Scania_Logo.svg" },
+  { name: "Medela", src: "/Images/bio/Medela-squared-removebg-preview.png" },
+  { name: "KoGaMa", src: "/Images/bio/KoGaMa_-_Logo.png" },
+  { name: "Visma", src: "/Images/bio/Visma_logo_bio.png" },
+  { name: "Zeekr", src: "/Images/bio/27e270dd6bc23f1a364299387c3c8e66.avif" },
+] as const
+
+const largerCompanyLogos = new Set(["Medela", "Visma", "Zeekr"])
+function careerBadgeClass(isDark: boolean) {
+  return cn(
+    "shrink-0 px-2 py-0.5 text-xs font-medium transition-colors",
+    isDark
+      ? "border-white/30 bg-white/15 text-white/90 hover:bg-white/20"
+      : "border-zinc-400/60 bg-black/8 text-zinc-800 hover:bg-black/12",
+  )
+}
+
+function CompaniesCard() {
   return (
     <article
-      className={cn(tileClass, "hover:translate-y-[-2px]")}
-      style={{ background: gradientCss }}
+      className={cn(
+        tileClass,
+        "bg-white ring-1 ring-black/[0.04] hover:translate-y-[-1px] dark:bg-[#1d1d1f] dark:ring-white/[0.08]",
+      )}
     >
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_35%,rgba(255,255,255,0.22)_0%,transparent_65%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent"
-        aria-hidden
-      />
-      <div className="relative z-10 flex h-full min-h-0 flex-1 flex-col justify-end px-5 pb-6 pt-8 md:px-6 md:pb-7 md:pt-10">
-        <h2
-          className={cn(
-            display.className,
-            "text-[clamp(1.5rem,3.2vw,2.125rem)] uppercase leading-[0.95] tracking-[0.02em] text-white",
-          )}
-        >
-          {title}
-        </h2>
-        <hr className="mt-3 border-0 border-t border-white/45" />
-        <p className="mt-3 text-[15px] font-medium leading-snug text-white/95 md:text-base">
-          {caption}
-        </p>
+      <div className="relative z-10 flex h-full min-h-0 flex-col px-5 pb-4 pt-5 md:px-6 md:pb-5 md:pt-6">
+        <div className="shrink-0 border-b border-black/[0.06] pb-3 md:pb-4 dark:border-white/[0.08]">
+          <h2
+            className={cn(
+              display.className,
+              "text-[clamp(1.25rem,2.4vw,1.75rem)] uppercase leading-[0.95] tracking-[0.02em] text-[#1d1d1f] dark:text-[#f5f5f7]",
+            )}
+          >
+            Companies
+          </h2>
+        </div>
+
+        <div className="mt-3 grid min-h-0 flex-1 grid-cols-3 grid-rows-2 gap-2.5 md:mt-4 md:gap-3">
+          {companyLogos.map((logo) => (
+            <div
+              key={logo.name}
+              className="group relative flex h-full min-h-[3.25rem] items-center justify-center p-2 transition-transform duration-200 hover:scale-[1.05] sm:min-h-[3.75rem] md:p-3 lg:min-h-[4.25rem]"
+              title={logo.name}
+            >
+              <Image
+                src={logo.src}
+                alt={`${logo.name} logo`}
+                width={largerCompanyLogos.has(logo.name) ? 112 : 96}
+                height={largerCompanyLogos.has(logo.name) ? 112 : 96}
+                className={cn(
+                  "relative z-10 w-full object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-transform duration-200 group-hover:scale-105",
+                  largerCompanyLogos.has(logo.name)
+                    ? "h-12 max-w-[6rem] sm:h-14 md:h-16 md:max-w-[7.5rem] lg:h-[4.5rem] lg:max-w-[8rem]"
+                    : "h-11 max-w-[5.5rem] sm:h-12 md:h-14 md:max-w-[6.5rem] lg:h-16 lg:max-w-[7rem]",
+                )}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </article>
   )
@@ -165,30 +214,20 @@ function LeadCard() {
         "bg-white ring-1 ring-black/[0.04] hover:translate-y-[-1px] dark:bg-[#1d1d1f] dark:ring-white/[0.08]",
       )}
     >
-      <header className="flex shrink-0 items-start gap-3 px-5 pt-5 md:px-6 md:pt-6">
-        <span
-          className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-[#1d1d1f]/90 bg-white text-[11px] font-black text-[#1d1d1f] dark:border-[#f5f5f7]/90 dark:text-[#f5f5f7]"
-          aria-hidden
-        >
-          P
-        </span>
-        <div className="min-w-0 pt-0.5 leading-none">
-          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#1d1d1f] dark:text-[#f5f5f7]">
-            {heroName}
-          </p>
-          <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#86868b]">
-            {bioProfile.role}
+      <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 px-5 pt-5 md:px-6 md:pt-6">
+        <div className="flex items-center gap-3">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#1d1d1f]/[0.07] ring-1 ring-black/[0.08] dark:bg-white/[0.12] dark:ring-white/[0.12]">
+            <MapPin
+              className="size-4 text-[#1d1d1f] dark:text-[#f5f5f7]"
+              strokeWidth={2.25}
+              aria-hidden
+            />
+          </span>
+          <p className="text-[13px] font-semibold uppercase tracking-[0.06em] text-[#1d1d1f] dark:text-[#f5f5f7]">
+            {bioProfile.location}
           </p>
         </div>
-      </header>
 
-      <div className="flex min-h-0 flex-1 flex-col justify-center px-5 py-4 md:px-6 md:py-5">
-        <p className="text-[clamp(1rem,1.8vw,1.25rem)] font-semibold leading-[1.35] tracking-[-0.02em] text-[#1d1d1f] dark:text-[#f5f5f7]">
-          {bioProfile.lead}
-        </p>
-      </div>
-
-      <footer className="shrink-0 border-t border-black/[0.06] px-5 py-3.5 md:px-6 dark:border-white/[0.08]">
         <div className="flex flex-wrap gap-2">
           <a
             href={`mailto:${bioLinks.email}`}
@@ -213,31 +252,72 @@ function LeadCard() {
             Résumé ↓
           </a>
         </div>
-        <p className="mt-2.5 text-[10px] font-semibold uppercase leading-snug tracking-[0.08em] text-[#86868b]">
-          {bioProfile.location}
-        </p>
+      </header>
+
+      <div className="flex min-h-0 flex-1 flex-col justify-center gap-2 px-5 py-4 md:px-6 md:py-5">
+        {bioProfile.lead.map((line) => (
+          <p
+            key={line}
+            className="text-[clamp(1rem,1.8vw,1.25rem)] font-semibold leading-[1.35] tracking-[-0.02em] text-[#1d1d1f] dark:text-[#f5f5f7]"
+          >
+            {line}
+          </p>
+        ))}
+      </div>
+
+      <footer className="shrink-0 border-t border-black/[0.06] px-5 py-3.5 md:px-6 dark:border-white/[0.08]">
+        <div className="flex min-w-0 flex-wrap gap-2">
+          {bioSkillPillars.map((skill) => (
+            <span
+              key={skill.title}
+              className="rounded-full border border-black/10 px-3 py-1 text-[11px] font-medium text-[#1d1d1f] dark:border-white/15 dark:text-[#f5f5f7]"
+            >
+              {skill.title}
+            </span>
+          ))}
+        </div>
       </footer>
     </article>
   )
 }
 
-function CompaniesCard() {
-  return (
-    <BioPosterTile
-      title="Companies"
-      caption="Knightec · Scania · Adventure Box · Visma"
-      gradientCss={companiesGradient}
-    />
-  )
-}
-
 function EducationHeroCard() {
   return (
-    <BioPosterTile
-      title="Education"
-      caption="MSc Information Engineering · BSc Electronics & Instrumentation"
-      gradientCss={educationGradient}
-    />
+    <article
+      className={cn(tileClass, "hover:translate-y-[-2px]")}
+      style={{ background: educationGradient }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_35%,rgba(255,255,255,0.22)_0%,transparent_65%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent"
+        aria-hidden
+      />
+
+      <div className="relative z-10 flex h-full min-h-0 flex-col px-5 pb-4 pt-5 md:px-6 md:pb-5 md:pt-6">
+        <div className="shrink-0 border-b border-white/25 pb-3 md:pb-4">
+          <h2
+            className={cn(
+              display.className,
+              "text-[clamp(1.25rem,2.4vw,1.75rem)] uppercase leading-[0.95] tracking-[0.02em] text-white",
+            )}
+          >
+            Education
+          </h2>
+        </div>
+
+        <div className="mt-3 flex min-h-0 flex-1 flex-col justify-center gap-1 md:mt-4">
+          <p className="text-[14px] font-medium leading-snug text-white/95 md:text-[15px]">
+            MSc Information Engineering
+          </p>
+          <p className="text-[14px] font-medium leading-snug text-white/95 md:text-[15px]">
+            B.Tech Electronics
+          </p>
+        </div>
+      </div>
+    </article>
   )
 }
 
@@ -245,44 +325,275 @@ function EducationHeroCard() {
    LOWER SECTION COMPONENTS
 ════════════════════════════════════════ */
 
+function CareerProjectThumbnail({
+  project,
+  isDark,
+}: {
+  project: BioCareerProject
+  isDark: boolean
+}) {
+  const [imageFailed, setImageFailed] = useState(false)
+  const showImage = project.image && !imageFailed
+
+  const cardBody = (
+    <>
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+        {showImage ? (
+          <Image
+            src={project.image!}
+            alt={project.imageAlt ?? project.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            sizes="(max-width: 768px) 50vw, 25vw"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                project.gradient ??
+                "linear-gradient(145deg, #334155 0%, #0f172a 100%)",
+            }}
+          />
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+      </div>
+
+      <div className="flex min-h-0 flex-1 flex-col p-3 md:p-3.5">
+        <p
+          className={cn(
+            "text-sm font-semibold leading-snug md:text-[15px]",
+            isDark ? "text-white" : "text-zinc-900",
+          )}
+        >
+          {project.title}
+        </p>
+        <p
+          className={cn(
+            "mt-1.5 line-clamp-3 text-xs leading-relaxed md:text-[13px]",
+            isDark ? "text-white/70" : "text-zinc-600",
+          )}
+        >
+          {project.description}
+        </p>
+        {project.href ? (
+          <span
+            className={cn(
+              "mt-auto flex items-center gap-1 pt-3 text-xs font-medium transition-colors",
+              isDark
+                ? "text-white/60 group-hover:text-white"
+                : "text-zinc-500 group-hover:text-zinc-900",
+            )}
+          >
+            View project
+            <ArrowUpRight className="size-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </span>
+        ) : null}
+      </div>
+    </>
+  )
+
+  const cardClass = cn(
+    "group flex h-full flex-col overflow-hidden rounded-xl border transition-all duration-300 hover:scale-[1.02] hover:shadow-lg",
+    isDark
+      ? "border-zinc-800/60 bg-zinc-900/80 hover:border-zinc-700"
+      : "border-zinc-200/80 bg-white hover:border-zinc-300",
+    project.href && "cursor-pointer",
+  )
+
+  if (project.href) {
+    return (
+      <Link href={project.href} className={cardClass}>
+        {cardBody}
+      </Link>
+    )
+  }
+
+  return <article className={cardClass}>{cardBody}</article>
+}
+
+function CareerExperienceItem({
+  job,
+  index,
+}: {
+  job: (typeof bioExperience)[number]
+  index: number
+}) {
+  const isDark = index % 2 === 0
+  const number = String(index + 1).padStart(2, "0")
+  const preview = [job.location, job.period].filter(Boolean).join(" · ")
+  const timelineLabel = getCareerTimelineLabel(job.period, index, job.timelineDate)
+
+  const headerCard = (
+    <div
+      className={cn(
+        "group relative w-full min-w-0 max-w-full overflow-hidden rounded-2xl border p-4 transition-all duration-300 md:p-6",
+        isDark
+          ? "border-zinc-800/50 bg-zinc-900 text-white shadow-lg shadow-black/20 hover:border-zinc-700 hover:shadow-xl hover:shadow-black/30"
+          : "border-zinc-200/50 bg-zinc-50 text-zinc-900 shadow-lg shadow-black/5 hover:border-zinc-300 hover:shadow-xl hover:shadow-black/10",
+      )}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage: `linear-gradient(to right, ${isDark ? "rgba(255, 255, 255, 0.03)" : "rgba(0, 0, 0, 0.03)"} 1px, transparent 1px),
+                            linear-gradient(to bottom, ${isDark ? "rgba(255, 255, 255, 0.03)" : "rgba(0, 0, 0, 0.03)"} 1px, transparent 1px)`,
+          backgroundSize: "20px 20px",
+        }}
+        aria-hidden
+      />
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+          isDark ? "from-white/[0.03]" : "from-black/[0.02]",
+        )}
+        aria-hidden
+      />
+
+      <div className="relative z-10 min-w-0 space-y-3">
+        <div className="flex min-w-0 items-start justify-between gap-4">
+          <div className="min-w-0 flex-1 space-y-2">
+            <div className="flex min-w-0 items-baseline gap-3">
+              <span
+                className={cn(
+                  "shrink-0 font-mono text-base tabular-nums font-bold tracking-wider md:text-lg",
+                  isDark ? "text-white" : "text-zinc-900",
+                )}
+              >
+                {number}
+              </span>
+              <h2
+                className={cn(
+                  "min-w-0 text-lg font-bold leading-tight tracking-tight md:text-xl",
+                  isDark ? "text-white" : "text-zinc-900",
+                )}
+              >
+                {job.role}
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-2.5 pl-8">
+              <Badge variant="outline" className={careerBadgeClass(isDark)}>
+                {job.company}
+              </Badge>
+              {job.companyDescriptor ? (
+                <Badge variant="outline" className={careerBadgeClass(isDark)}>
+                  {job.companyDescriptor}
+                </Badge>
+              ) : null}
+            </div>
+
+            <div className="flex flex-col gap-3 pl-8 pt-1">
+              <div className={cn("h-px w-full", isDark ? "bg-white/10" : "bg-black/10")} />
+              <p
+                className={cn(
+                  "text-sm leading-relaxed",
+                  isDark ? "text-white/90" : "text-zinc-800",
+                )}
+              >
+                {preview}
+              </p>
+            </div>
+          </div>
+
+          <div
+            className={cn(
+              "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 group-data-[state=open]/collapsible:rotate-180",
+              isDark
+                ? "border-white/20 bg-white/10 group-hover:bg-white/20"
+                : "border-black/10 bg-black/5 group-hover:bg-black/10",
+            )}
+          >
+            <ChevronDown
+              className={cn("h-4 w-4", isDark ? "text-white" : "text-zinc-900")}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <div className={careerTimelineGrid}>
+      <p
+        className={cn(
+          "pt-6 text-right text-[10px] font-semibold uppercase leading-none tracking-[0.06em] tabular-nums md:text-[11px]",
+          isDark ? "text-[#86868b]" : "text-[#86868b]",
+        )}
+      >
+        {timelineLabel}
+      </p>
+
+      <div className="relative z-10 flex justify-center pt-6">
+        <div
+          className={cn(
+            "h-3 w-3 shrink-0 rounded-full border-2",
+            isDark ? "border-zinc-900 bg-white" : "border-zinc-50 bg-black",
+          )}
+          aria-hidden
+        />
+      </div>
+
+      <div className="min-w-0">
+        <Collapsible defaultOpen={index === 0} className="group/collapsible">
+          <CollapsibleTrigger className="w-full text-left">{headerCard}</CollapsibleTrigger>
+
+          <CollapsibleContent className="mt-8 overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+            <div className="space-y-4">
+              <div className={careerExpandedPanel}>
+                <ul className="space-y-3">
+                  {(job.responsibilities ?? job.highlights).map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-3 text-sm leading-relaxed text-zinc-700 md:text-[15px]"
+                    >
+                      <span
+                        className="mt-2 size-1.5 shrink-0 rounded-full"
+                        style={{ background: companyColors[job.company] ?? fog }}
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {job.projects && job.projects.length > 0 ? (
+                <section className={careerExpandedPanel}>
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.08em] text-zinc-500">
+                    {job.company} Assignments
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+                    {job.projects.map((project) => (
+                      <CareerProjectThumbnail
+                        key={project.title}
+                        project={project}
+                        isDark={false}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+    </div>
+  )
+}
+
 function ExperienceSection() {
   return (
-    <div className="rounded-2xl bg-white p-6 dark:bg-[#1d1d1f] md:p-8">
-      <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: fog }}>
-        Career
-      </p>
-      <ul className="divide-y divide-black/[0.05] dark:divide-white/[0.07]">
-        {bioExperience.map((job) => (
-          <li key={`${job.company}-${job.period}`} className="flex gap-4 py-5 first:pt-0 last:pb-0">
-            <div
-              className="mt-1 w-[3px] shrink-0 rounded-full"
-              style={{ background: companyColors[job.company] ?? fog }}
-            />
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-                <p className="font-sans text-[16px] font-semibold text-[#1d1d1f] dark:text-white">
-                  {job.role}
-                </p>
-                <p className="text-[13px]" style={{ color: fog }}>{job.period}</p>
-              </div>
-              <p className="mt-0.5 text-[14px]" style={{ color: fog }}>
-                {job.company} · {job.location}
-              </p>
-              <ul className="mt-2.5 space-y-1">
-                {job.highlights.map((h) => (
-                  <li key={h} className="flex gap-2 text-[14px] leading-relaxed" style={{ color: fog }}>
-                    <span
-                      className="mt-[6px] size-1 shrink-0 rounded-full"
-                      style={{ background: companyColors[job.company] ?? fog }}
-                    />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className="relative space-y-8">
+      <div
+        className={cn(
+          "pointer-events-none absolute top-0 bottom-0 z-0 w-px bg-black/10 dark:bg-white/15",
+          careerTimelineLine,
+        )}
+      />
+      {bioExperience.map((job, index) => (
+        <CareerExperienceItem key={`${job.company}-${job.period}`} job={job} index={index} />
+      ))}
     </div>
   )
 }
@@ -490,7 +801,7 @@ export function BioPageContent() {
         </div>
 
         {/* ── Experience ── */}
-        <div className="mt-3">
+        <div className="mt-10 sm:mt-12">
           <ExperienceSection />
         </div>
 

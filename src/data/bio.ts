@@ -4,7 +4,10 @@ export const bioProfile = {
   name: "Pranoy Mathew",
   role: "Senior UX/UI Designer",
   location: "Stockholm, Sweden",
-  lead: "I design clarity into complex products—across automotive, fintech, and systems at scale.",
+  lead: [
+    "8 years designing across Automotive, Fintech, Biotech, and Gaming.",
+    "An engineer by training who moves fast and delivers value in many forms: quick decisions, polished UI, rapid wireframes, frontend code, and clear guidance.",
+  ],
   portraitSrc: "/Images/bio/profile image.jpeg",
   portraitAlt: "Portrait of Pranoy Mathew",
 } as const
@@ -19,12 +22,26 @@ export const bioAbout = [
   "I bring a design-and-build mindset: React experience, Cursor for agentic prototyping, and a habit of validating ideas early. Whether it's in-cabin experiences at Scania or trust-driven fintech flows, I focus on what people need to decide, not everything else on the screen.",
 ] as const
 
+export type BioCareerProject = {
+  title: string
+  description: string
+  href?: string
+  image?: string
+  imageAlt?: string
+  gradient?: string
+}
+
 export type BioExperience = {
   company: string
   role: string
   period: string
   location: string
   highlights: string[]
+  timelineDate?: string
+  companyDescriptor?: string
+  logoSrc?: string
+  responsibilities?: string[]
+  projects?: BioCareerProject[]
 }
 
 export const bioExperience: BioExperience[] = [
@@ -33,9 +50,46 @@ export const bioExperience: BioExperience[] = [
     role: "Senior UX designer",
     period: "Nov 2021 – Ongoing",
     location: "Stockholm",
-    highlights: [
-      "Consulting assignments with Scania on strategic design efforts.",
-      "Mentoring junior designers and facilitating UX workshops.",
+    companyDescriptor: "Technology consultancy",
+    logoSrc: "/Images/bio/Knightec logo.png",
+    highlights: ["Assignments with Scania", "Mentoring", "UX workshops"],
+    responsibilities: [
+      "Technology consultant, embedded full time where my skillset matters most.",
+      "Three clients: Scania, International Trucks, and Medela.",
+      "Beyond delivery, I mentor junior designers in UX research, team building, and AI-powered development.",
+    ],
+  },
+  {
+    company: "Medela",
+    role: "Senior UX designer",
+    period: "Jan 2026 – Ongoing",
+    timelineDate: "JAN 2026",
+    location: "Stockholm",
+    companyDescriptor: "Biotech",
+    logoSrc: "/Images/bio/Medela-squared-removebg-preview.png",
+    highlights: ["Biotech UX", "Connected devices", "Mobile app", "User research"],
+    responsibilities: [
+      "Embedded via Knightec to lead UX for Medela's connected breastfeeding and pump ecosystem.",
+      "Designed mobile and device companion flows for parents and clinical support teams.",
+      "Built research-backed prototypes to validate onboarding, pairing, and daily usage routines.",
+      "Partnered with hardware and software teams to align UI with regulatory and accessibility requirements.",
+    ],
+    projects: [
+      {
+        title: "Medela Family App",
+        description:
+          "Companion app helping parents track feeding, pumping, and device settings with calm, reassuring UX.",
+        image: "/Images/bio/Medela-squared-removebg-preview.png",
+        imageAlt: "Medela Family App",
+        gradient: "linear-gradient(145deg, #fce7f3 0%, #be185d 100%)",
+      },
+      {
+        title: "Smart Pump Connectivity",
+        description:
+          "End-to-end pairing and status flows connecting breast pumps with the app for real-time usage insights.",
+        imageAlt: "Medela Smart Pump Connectivity",
+        gradient: "linear-gradient(145deg, #fdf2f8 0%, #9d174d 100%)",
+      },
     ],
   },
   {
@@ -43,20 +97,69 @@ export const bioExperience: BioExperience[] = [
     role: "Senior UX designer",
     period: "Nov 2021 – Dec 2025",
     location: "Stockholm",
+    companyDescriptor: "Automotive",
+    logoSrc: "/Images/bio/scania_logo_bio.png",
     highlights: [
-      "DDW, Conversion systems, and internal platforms for global truck operations.",
-      "UX for TRATON partners (International trucks); research via user tests, Hotjar, and workshops.",
-      "UI across multiple design systems; journey maps, wireframes, and prototyping.",
+      "Strategic design",
+      "DDW & Conversion",
+      "TRATON / International",
+      "UX research",
+      "UI design systems",
+    ],
+    responsibilities: [
+      "Lead designer on Scania Conversions, the OTA update infrastructure powering their entire truck fleet.",
+      "Led R&D design projects for the latest Scania truck.",
+      "Drove UX technology transfer from Scania to International Trucks within the Traton Group.",
+      "Researched and designed the Scania Workshop Suite end to end.",
+    ],
+    projects: [
+      {
+        title: "Scania Conversion Systems",
+        description:
+          "The Scania Conversion system, a backbone of its trucks, manages thousands of daily software updates, ensuring efficiency and reliability.",
+        href: "/case-study-esperanto/1",
+        image: "/Images/Conversion.jpg",
+        imageAlt: "Scania Conversion Systems",
+        gradient: "linear-gradient(145deg, #1e3a5f 0%, #0f172a 100%)",
+      },
+      {
+        title: "Scania DDW",
+        description:
+          "A top-secret R&D project spearheaded by Scania in collaboration with the company's most advanced future technology teams.",
+        href: "/case-study-esperanto/2",
+        image: "/Images/DDW.jpg",
+        imageAlt: "Scania Digital Driver Workspace",
+        gradient: "linear-gradient(145deg, #14532d 0%, #052e16 100%)",
+      },
+      {
+        title: "International Design Systems",
+        description:
+          "Helping International, an American transportation brand, modernize their user experience, technology, and design system.",
+        href: "/interest",
+        imageAlt: "International Design Systems",
+        gradient: "linear-gradient(145deg, #1e40af 0%, #172554 100%)",
+      },
+      {
+        title: "Scania SWS",
+        description:
+          "Scania's Workshop system provides real-time, paperless service information integrated with the Dealer Management System.",
+        imageAlt: "Scania Workshop System",
+        gradient: "linear-gradient(145deg, #78350f 0%, #451a03 100%)",
+      },
     ],
   },
   {
-    company: "Adventure Box",
+    company: "Kogama",
     role: "UX designer",
     period: "Sep 2019 – Nov 2021",
     location: "Stockholm",
-    highlights: [
-      "Led UX: research, personas, journey maps, wireframes, and high-fidelity UI in Adobe XD.",
-      "User tests, surveys, and international interviews; advocated for UX within engineering.",
+    companyDescriptor: "Gaming",
+    highlights: ["Led UX", "Research", "Wireframes & UI", "Adobe XD"],
+    responsibilities: [
+      "Led UX efforts across research, user journey maps, personas, wireframes, and prototypes.",
+      "Conducted UX research via user tests, surveys, and international interviews.",
+      "Designed high-fidelity UI using Adobe XD.",
+      "Integrated UX design seamlessly into the development process and advocated within the engineering team.",
     ],
   },
   {
@@ -64,9 +167,14 @@ export const bioExperience: BioExperience[] = [
     role: "UX Engineer",
     period: "Jan 2019 – Aug 2019",
     location: "Gothenburg",
-    highlights: [
-      "Designed and built interfaces in React; lean startup methodology.",
-      "NPS, surveys, focus groups; UML, wireframes, and prototypes for UX tasks.",
+    companyDescriptor: "Fintech",
+    logoSrc: "/Images/bio/Visma_logo_bio.png",
+    highlights: ["React", "Lean startup", "UX research", "Wireframes"],
+    responsibilities: [
+      "Designed and built interfaces using the React framework.",
+      "Followed lean startup methodology.",
+      "Conducted UX research via NPS, surveys, and focus groups.",
+      "Created user journey maps, personas, UML diagrams, wireframes, and prototypes for UX design tasks.",
     ],
   },
 ]
