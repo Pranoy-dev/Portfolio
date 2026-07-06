@@ -3,7 +3,19 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Anton } from "next/font/google"
-import { ArrowUpRight, ChevronDown, MapPin } from "lucide-react"
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  ChevronDown,
+  Copy,
+  GraduationCap,
+  MapPin,
+  Wrench,
+  X,
+  type LucideIcon,
+} from "lucide-react"
+import { createPortal } from "react-dom"
 import { useEffect, useState } from "react"
 import { PortfolioLayout } from "@/components/portfolio-layout"
 import { Badge } from "@/components/ui/badge"
@@ -17,14 +29,12 @@ import { cn } from "@/lib/utils"
 import {
   bioEducation,
   bioExperience,
-  bioFeaturedWork,
-  bioLanguages,
   bioLinks,
-  bioProcess,
   bioProfile,
   bioSkillPillars,
   bioTools,
   type BioCareerProject,
+  type BioSkillPillar,
 } from "@/data/bio"
 
 const display = Anton({
@@ -37,7 +47,6 @@ const display = Anton({
 const violet = "#6b5ce7"
 const forest = "#2d6a4f"
 const slate   = "#2a3638"
-const ink     = "#1d1d1f"
 const fog     = "#86868b"
 
 const companyColors: Record<string, string> = {
@@ -48,8 +57,6 @@ const companyColors: Record<string, string> = {
   "Speedledger (Visma)": "#0066cc",
 }
 
-const skillAccents = [violet, forest, "#b45309", slate, "#0066cc", "#c2410c"]
-
 /* ─── card bases (match home thumbnails) ─── */
 const card =
   "rounded-2xl overflow-hidden transition-transform duration-200 ease-out hover:scale-[1.015]"
@@ -59,6 +66,57 @@ const tileClass =
 
 const educationGradient =
   "linear-gradient(168deg, #5ec6e8 0%, #2892b8 38%, #1a6a85 72%, #0f4458 100%)"
+
+function BioPageSection({
+  id,
+  eyebrow,
+  title,
+  description,
+  children,
+  className,
+  contentClassName,
+}: {
+  id: string
+  eyebrow: string
+  title: string
+  description?: string
+  children: React.ReactNode
+  className?: string
+  contentClassName?: string
+}) {
+  return (
+    <section
+      id={id}
+      className={cn(
+        "scroll-mt-6 border-t border-black/[0.08] pt-10 sm:pt-12 dark:border-white/[0.08]",
+        className,
+      )}
+    >
+      <header className="mb-8 sm:mb-10">
+        <p
+          className="text-[11px] font-semibold uppercase tracking-[0.14em]"
+          style={{ color: fog }}
+        >
+          {eyebrow}
+        </p>
+        <h2
+          className={cn(
+            display.className,
+            "mt-2 text-[clamp(1.75rem,3.5vw,2.5rem)] uppercase leading-[0.95] tracking-[0.02em] text-[#1d1d1f] dark:text-[#f5f5f7]",
+          )}
+        >
+          {title}
+        </h2>
+        {description ? (
+          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed" style={{ color: fog }}>
+            {description}
+          </p>
+        ) : null}
+      </header>
+      <div className={contentClassName}>{children}</div>
+    </section>
+  )
+}
 
 function getCareerTimelineLabel(
   period: string,
@@ -153,6 +211,18 @@ function CompaniesCard() {
 /* Portrait — left tall card with name overlay */
 function PortraitCard() {
   const [err, setErr] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(bioLinks.email)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2000)
+    } catch {
+      setCopied(false)
+    }
+  }
+
   return (
     <div
       className={cn(tileClass, "relative flex h-full min-h-[360px] flex-col justify-end lg:min-h-0")}
@@ -194,12 +264,23 @@ function PortraitCard() {
           Mathew
         </p>
         <p className="mt-2 text-[13px] font-medium text-white/80">{bioProfile.role}</p>
-        <a
-          href={`mailto:${bioLinks.email}`}
-          className="mt-1.5 block text-[12px] font-medium text-white/60 underline-offset-2 transition-colors hover:text-white hover:underline"
-        >
-          {bioLinks.email}
-        </a>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <a
+            href={`mailto:${bioLinks.email}`}
+            className="text-[13px] font-medium text-white underline-offset-2 transition-colors hover:underline"
+          >
+            {bioLinks.email}
+          </a>
+          <button
+            type="button"
+            onClick={copyEmail}
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/35 bg-white/20 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+            aria-label="Copy email address"
+          >
+            {copied ? <Check className="size-3.5" aria-hidden /> : <Copy className="size-3.5" aria-hidden />}
+            {copied ? "Copied" : "Copy"}
+          </button>
+        </div>
       </div>
     </div>
   )
@@ -230,26 +311,12 @@ function LeadCard() {
 
         <div className="flex flex-wrap gap-2">
           <a
-            href={`mailto:${bioLinks.email}`}
-            className="rounded-full border border-black/10 px-3 py-1 text-[11px] font-medium text-[#1d1d1f] transition-colors hover:bg-[#1d1d1f] hover:text-white dark:border-white/15 dark:text-white dark:hover:bg-white dark:hover:text-[#1d1d1f]"
-          >
-            Email
-          </a>
-          <a
             href={bioLinks.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-black/10 px-3 py-1 text-[11px] font-medium text-[#1d1d1f] transition-colors hover:bg-[#1d1d1f] hover:text-white dark:border-white/15 dark:text-white dark:hover:bg-white dark:hover:text-[#1d1d1f]"
           >
             LinkedIn
-          </a>
-          <a
-            href={bioLinks.resumePdf}
-            download
-            className="rounded-full px-3 py-1 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: violet }}
-          >
-            Résumé ↓
           </a>
         </div>
       </header>
@@ -598,157 +665,206 @@ function ExperienceSection() {
   )
 }
 
-function SkillsGrid() {
-  return (
-    <div>
-      <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: fog }}>
-        Capabilities
-      </p>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {bioSkillPillars.map((skill, i) => (
-          <div
-            key={skill.title}
-            className={cn(card, "bg-white p-5 dark:bg-[#1d1d1f]")}
-            style={{ borderTop: `4px solid ${skillAccents[i % skillAccents.length]}` }}
+function SkillDetailModal({
+  skill,
+  isOpen,
+  onClose,
+}: {
+  skill: BioSkillPillar | null
+  isOpen: boolean
+  onClose: () => void
+}) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [isOpen])
+
+  if (!mounted || !isOpen || !skill) return null
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6" onClick={onClose}>
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-xl" />
+      <div
+        className="relative z-10 flex max-h-[min(90vh,32rem)] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-zinc-200/60 bg-white shadow-2xl shadow-black/20"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between gap-4 border-b border-zinc-200/60 px-6 py-5">
+          <h2 className="font-sans text-xl font-bold tracking-tight text-[#1d1d1f] md:text-2xl">
+            {skill.title}
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex size-10 shrink-0 items-center justify-center rounded-full border border-zinc-200/80 bg-white text-zinc-700 transition-colors hover:bg-zinc-50"
+            aria-label="Close"
           >
-            <p className="font-sans text-[15px] font-semibold text-[#1d1d1f] dark:text-white">
-              {skill.title}
-            </p>
-            <p className="mt-2 text-[13px] leading-relaxed" style={{ color: fog }}>
-              {skill.description}
-            </p>
+            <X className="size-5" />
+          </button>
+        </div>
+        <div className="overflow-y-auto">
+          <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-100">
+            <Image
+              src={skill.image}
+              alt={skill.imageAlt ?? skill.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 32rem"
+            />
           </div>
-        ))}
+          <div className="px-6 py-5">
+            <p className="text-[15px] leading-relaxed text-zinc-600 md:text-base">{skill.description}</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
-function FeaturedWorkGrid() {
+function SkillCard({
+  skill,
+  onOpen,
+}: {
+  skill: BioSkillPillar
+  onOpen: () => void
+}) {
   return (
-    <div>
-      <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: fog }}>
-        Featured work
-      </p>
-      <div className="grid gap-3 sm:grid-cols-2">
-        {bioFeaturedWork.map((project) => (
-          <Link
-            key={project.title}
-            href={project.href}
-            className={cn(card, "group flex flex-col justify-between p-5 text-white")}
-            style={{ background: ink }}
-          >
-            <div>
-              <p className="font-sans text-[16px] font-semibold text-white">{project.title}</p>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-white/60">{project.description}</p>
-            </div>
-            <div className="mt-4 flex items-center gap-1 text-[13px] font-medium text-white/60 transition-colors group-hover:text-white">
-              View project
-              <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </div>
-          </Link>
+    <article className="overflow-hidden rounded-[18px] bg-white shadow-[0_4px_18px_rgba(0,0,0,0.07)] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)]">
+      <button
+        type="button"
+        onClick={onOpen}
+        className="group relative block w-full overflow-hidden text-left"
+      >
+        <div className="relative aspect-[16/10] w-full">
+          <Image
+            src={skill.image}
+            alt={skill.imageAlt ?? skill.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            sizes="(max-width: 768px) 100vw, 280px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-black/5" />
+          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3.5">
+            <h3 className="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-bold leading-tight tracking-tight text-white">
+              {skill.title}
+            </h3>
+            <ArrowRight className="size-4 shrink-0 text-white transition-transform duration-300 group-hover:translate-x-0.5" />
+          </div>
+        </div>
+      </button>
+    </article>
+  )
+}
+
+function SkillsGrid() {
+  const [selectedSkill, setSelectedSkill] = useState<BioSkillPillar | null>(null)
+
+  return (
+    <>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+        {bioSkillPillars.map((skill) => (
+          <SkillCard
+            key={skill.title}
+            skill={skill}
+            onOpen={() => setSelectedSkill(skill)}
+          />
         ))}
       </div>
-    </div>
+      <SkillDetailModal
+        skill={selectedSkill}
+        isOpen={selectedSkill !== null}
+        onClose={() => setSelectedSkill(null)}
+      />
+    </>
   )
 }
 
 function ToolsEduRow() {
   return (
-    <div className="grid gap-3 md:grid-cols-3">
-      <div className={cn(card, "bg-white p-5 dark:bg-[#1d1d1f]")}>
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: fog }}>
-          Tools
-        </p>
-        <ul className="space-y-2">
-          {bioTools.map((t) => (
-            <li key={t.name} className="flex items-baseline justify-between gap-2 text-[13px]">
-              <span className="font-medium text-[#1d1d1f] dark:text-white">{t.name}</span>
-              <span style={{ color: fog }}>{t.note}</span>
-            </li>
+    <div className="grid gap-4 md:grid-cols-2">
+      <ListPanelCard title="Tools" headerIcon={Wrench}>
+        <ul className="divide-y divide-zinc-100 dark:divide-white/10">
+          {bioTools.map((tool) => (
+            <ListPanelRow
+              key={tool.name}
+              title={tool.name}
+              subtitle={tool.note}
+            />
           ))}
         </ul>
-      </div>
-      <div className={cn(card, "bg-white p-5 dark:bg-[#1d1d1f]")}>
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: fog }}>
-          Languages
-        </p>
-        <ul className="space-y-2">
-          {bioLanguages.map((l) => (
-            <li key={l.language} className="flex items-baseline justify-between gap-2 text-[13px]">
-              <span className="font-medium text-[#1d1d1f] dark:text-white">{l.language}</span>
-              <span style={{ color: fog }}>{l.level}</span>
-            </li>
+      </ListPanelCard>
+
+      <ListPanelCard title="Education" headerIcon={GraduationCap}>
+        <ul className="divide-y divide-zinc-100 dark:divide-white/10">
+          {bioEducation.map((entry) => (
+            <ListPanelRow
+              key={entry.school}
+              title={entry.degree}
+              subtitle={entry.school}
+              badge={entry.period}
+            />
           ))}
         </ul>
-      </div>
-      <div className={cn(card, "bg-white p-5 dark:bg-[#1d1d1f]")}>
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: fog }}>
-          Education
-        </p>
-        <ul className="space-y-3">
-          {bioEducation.map((e) => (
-            <li key={e.school}>
-              <p className="text-[13px] font-medium text-[#1d1d1f] dark:text-white">{e.school}</p>
-              <p className="text-[12px]" style={{ color: fog }}>{e.degree}</p>
-              <p className="text-[12px]" style={{ color: fog }}>{e.period}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
+      </ListPanelCard>
     </div>
   )
 }
 
-function ProcessCard() {
+function ListPanelCard({
+  title,
+  headerIcon: HeaderIcon,
+  children,
+}: {
+  title: string
+  headerIcon: LucideIcon
+  children: React.ReactNode
+}) {
   return (
-    <div className={cn(card, "p-6 md:p-8 text-white")} style={{ background: forest }}>
-      <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">
-        How I work
-      </p>
-      <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {bioProcess.map((step, i) => (
-          <li key={step} className="flex gap-3">
-            <span className="mt-0.5 font-mono text-[12px] text-white/35">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <span className="text-[15px] leading-snug text-white/90">{step}</span>
-          </li>
-        ))}
-      </ol>
+    <div className="rounded-[24px] border border-zinc-200/80 bg-white p-5 shadow-[0_2px_16px_rgba(0,0,0,0.04)] dark:border-white/10 dark:bg-[#1d1d1f]">
+      <div className="mb-1 flex items-center gap-2 border-b border-zinc-100 pb-4 dark:border-white/10">
+        <HeaderIcon className="size-4 text-zinc-700 dark:text-zinc-300" />
+        <h3 className="text-[15px] font-semibold text-[#1d1d1f] dark:text-white">{title}</h3>
+      </div>
+      {children}
     </div>
   )
 }
 
-function ConnectCard() {
+function ListPanelRow({
+  title,
+  subtitle,
+  badge,
+}: {
+  title: string
+  subtitle: string
+  badge?: string
+}) {
   return (
-    <div
-      className={cn(card, "flex flex-col items-start justify-between gap-6 p-6 text-white md:flex-row md:items-center md:p-8")}
-      style={{ background: violet }}
-    >
-      <div>
-        <p className="font-sans text-[clamp(1.25rem,2.5vw,1.75rem)] font-semibold">
-          Let&rsquo;s work together.
+    <li className="flex items-center gap-3 py-3.5">
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[14px] font-semibold leading-snug text-[#1d1d1f] dark:text-white">
+          {title}
         </p>
-        <p className="mt-1 text-[15px] text-white/65">{bioLinks.email} · {bioLinks.phone}</p>
+        <p className="truncate text-[12px] leading-snug text-zinc-500 dark:text-zinc-400">
+          {subtitle}
+        </p>
       </div>
-      <div className="flex shrink-0 flex-wrap gap-3">
-        <a
-          href={`mailto:${bioLinks.email}`}
-          className="rounded-full bg-white px-5 py-2 text-[14px] font-semibold transition-opacity hover:opacity-90"
-          style={{ color: violet }}
-        >
-          Email me
-        </a>
-        <a
-          href={bioLinks.resumePdf}
-          download
-          className="rounded-full border border-white/35 px-5 py-2 text-[14px] font-medium text-white transition-colors hover:bg-white/10"
-        >
-          Download resume
-        </a>
-      </div>
-    </div>
+      {badge ? (
+        <span className="shrink-0 rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-[11px] font-medium text-zinc-600 dark:border-white/10 dark:bg-white/5 dark:text-zinc-300">
+          {badge}
+        </span>
+      ) : null}
+    </li>
   )
 }
 
@@ -800,31 +916,27 @@ export function BioPageContent() {
           </div>
         </div>
 
-        {/* ── Experience ── */}
-        <div className="mt-10 sm:mt-12">
+        <BioPageSection
+          id="experience"
+          eyebrow="Career"
+          title="Experience"
+          description="Roles across automotive, biotech, gaming, and fintech."
+        >
           <ExperienceSection />
-        </div>
+        </BioPageSection>
 
-        {/* ── Skills + Featured work ── */}
-        <div className="mt-10 space-y-10">
+        <BioPageSection id="capabilities" eyebrow="What I do" title="Capabilities">
           <SkillsGrid />
-          <FeaturedWorkGrid />
-        </div>
+        </BioPageSection>
 
-        {/* ── Tools / Languages / Education detail ── */}
-        <div className="mt-3">
+        <BioPageSection
+          id="background"
+          eyebrow="Background"
+          title="Tools & education"
+          className="pb-4"
+        >
           <ToolsEduRow />
-        </div>
-
-        {/* ── Process ── */}
-        <div className="mt-3">
-          <ProcessCard />
-        </div>
-
-        {/* ── Connect ── */}
-        <div className="mt-3 pb-4">
-          <ConnectCard />
-        </div>
+        </BioPageSection>
       </main>
     </PortfolioLayout>
   )

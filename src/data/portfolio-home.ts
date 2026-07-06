@@ -23,17 +23,44 @@ export type HomeThumbnailCard = {
   href: string
   title: string
   caption: string
+  details?: string
+  hoverWord: string
+  /** Marquee text behind the graphic (Jonathan-style). */
+  marquee?: string
+  /** Short keywords for marquee strip (joined with ·). Overrides marquee when set. */
+  marqueeKeywords?: readonly string[]
+  /** Show marquee strip without hover (default: hover only). */
+  marqueeAlwaysVisible?: boolean
+  /** Show large hover word overlay (default: true). */
+  showHoverWord?: boolean
+  /** Short CTA on the card (visual only — whole card is the link). */
+  ctaLabel: string
   /** Full CSS background (gradient) for poster tiles. */
   gradientCss: string
 }
 
-/** 3×2 thumbnail grid (Jonathan Patterson–style home). */
+/** Home navigation tiles — Bio & case studies. */
 export const homeThumbnailCards: HomeThumbnailCard[] = [
   {
     id: "bio",
     href: "/bio",
     title: "Bio",
-    caption: "Shattering the status quo.",
+    caption: "Senior designer who can code.",
+    details: "8 years in automotive, biotech and fintech, Stockholm.",
+    hoverWord: "BUILD!",
+    marqueeKeywords: [
+      "Design",
+      "Code",
+      "Research",
+      "Stockholm",
+      "Fintech",
+      "Automotive",
+      "Biotech",
+      "Systems",
+    ],
+    marqueeAlwaysVisible: true,
+    showHoverWord: false,
+    ctaLabel: "View bio",
     gradientCss:
       "linear-gradient(168deg, #6fcf7a 0%, #43aa5e 38%, #2d6a4f 72%, #1b4332 100%)",
   },
@@ -41,7 +68,22 @@ export const homeThumbnailCards: HomeThumbnailCard[] = [
     id: "interest",
     href: "/interest",
     title: "Case studies",
-    caption: "Design that works for you, and them.",
+    caption: "Complex systems made clear.",
+    details: "Fleet OTA, connected health, neo-banking products.",
+    hoverWord: "DESIGN!",
+    marqueeKeywords: [
+      "Systems",
+      "Fleet OTA",
+      "Health",
+      "Fintech",
+      "Governance",
+      "Trust",
+      "Prototypes",
+      "Ship",
+    ],
+    marqueeAlwaysVisible: true,
+    showHoverWord: false,
+    ctaLabel: "View work",
     gradientCss:
       "linear-gradient(168deg, #5c6b6e 0%, #3d4f52 35%, #2a3638 68%, #1a2224 100%)",
   },

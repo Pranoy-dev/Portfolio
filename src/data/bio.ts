@@ -61,7 +61,7 @@ export const bioExperience: BioExperience[] = [
   },
   {
     company: "Medela",
-    role: "Senior UX designer",
+    role: "Senior Product designer",
     period: "Jan 2026 – Ongoing",
     timelineDate: "JAN 2026",
     location: "Stockholm",
@@ -69,7 +69,7 @@ export const bioExperience: BioExperience[] = [
     logoSrc: "/Images/bio/Medela-squared-removebg-preview.png",
     highlights: ["Biotech UX", "Connected devices", "Mobile app", "User research"],
     responsibilities: [
-      "Embedded via Knightec to lead UX for Medela's connected breastfeeding and pump ecosystem.",
+      "Lead UX for Medela's connected breastfeeding and pump ecosystem.",
       "Designed mobile and device companion flows for parents and clinical support teams.",
       "Built research-backed prototypes to validate onboarding, pairing, and daily usage routines.",
       "Partnered with hardware and software teams to align UI with regulatory and accessibility requirements.",
@@ -110,7 +110,6 @@ export const bioExperience: BioExperience[] = [
       "Lead designer on Scania Conversions, the OTA update infrastructure powering their entire truck fleet.",
       "Led R&D design projects for the latest Scania truck.",
       "Drove UX technology transfer from Scania to International Trucks within the Traton Group.",
-      "Researched and designed the Scania Workshop Suite end to end.",
     ],
     projects: [
       {
@@ -212,6 +211,8 @@ export const bioFeaturedWork: BioFeaturedWork[] = [
 export type BioSkillPillar = {
   title: string
   description: string
+  image: string
+  imageAlt?: string
 }
 
 export const bioSkillPillars: BioSkillPillar[] = [
@@ -219,31 +220,43 @@ export const bioSkillPillars: BioSkillPillar[] = [
     title: "UX design",
     description:
       "Wireframing, information architecture, and clear communication across complex flows.",
+    image: "/Images/bio/Capabilities/UX design.jpg",
+    imageAlt: "UX design workspace",
   },
   {
     title: "UI design",
     description:
       "Design libraries, visual systems, and modern tooling with a detail-oriented eye.",
+    image: "/Images/bio/Capabilities/UI.jpg",
+    imageAlt: "UI design screens",
   },
   {
     title: "UX research",
     description:
       "Frameworks and methods across teams—user tests, surveys, Hotjar, and workshops.",
+    image: "/Images/bio/Capabilities/UX research.jpg",
+    imageAlt: "UX research session",
   },
   {
     title: "Development",
     description:
       "React.js experience and a developer mindset for realistic, shippable interfaces.",
+    image: "/Images/bio/Capabilities/Development.jpg",
+    imageAlt: "Development environment",
   },
   {
     title: "AI research",
     description:
       "Using AI tools for faster market, product, and user research to inform decisions.",
+    image: "/Images/bio/Capabilities/AI research.jpg",
+    imageAlt: "AI research tools",
   },
   {
     title: "AI prototyping",
     description:
       "Rapid interactive prototypes with Cursor to test ideas and validate user value.",
+    image: "/Images/bio/Capabilities/AI prototyping.jpg",
+    imageAlt: "AI prototyping workflow",
   },
 ]
 
@@ -293,6 +306,6 @@ export const bioLinks = {
   email: "pranoymathew1990@gmail.com",
   phone: "(+46) 721587184",
   website: "https://www.pranoymathew.com",
-  linkedin: "https://www.linkedin.com/in/pranoy-mathew",
+  linkedin: "https://www.linkedin.com/in/pranoy-baby/",
   resumePdf: "/Pranoy_Resume_2026.pdf",
 } as const
