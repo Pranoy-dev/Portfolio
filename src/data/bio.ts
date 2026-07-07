@@ -74,23 +74,6 @@ export const bioExperience: BioExperience[] = [
       "Built research-backed prototypes to validate onboarding, pairing, and daily usage routines.",
       "Partnered with hardware and software teams to align UI with regulatory and accessibility requirements.",
     ],
-    projects: [
-      {
-        title: "Medela Family App",
-        description:
-          "Companion app helping parents track feeding, pumping, and device settings with calm, reassuring UX.",
-        image: "/Images/bio/Medela-squared-removebg-preview.png",
-        imageAlt: "Medela Family App",
-        gradient: "linear-gradient(145deg, #fce7f3 0%, #be185d 100%)",
-      },
-      {
-        title: "Smart Pump Connectivity",
-        description:
-          "End-to-end pairing and status flows connecting breast pumps with the app for real-time usage insights.",
-        imageAlt: "Medela Smart Pump Connectivity",
-        gradient: "linear-gradient(145deg, #fdf2f8 0%, #9d174d 100%)",
-      },
-    ],
   },
   {
     company: "Scania",
@@ -129,21 +112,6 @@ export const bioExperience: BioExperience[] = [
         image: "/Images/DDW.jpg",
         imageAlt: "Scania Digital Driver Workspace",
         gradient: "linear-gradient(145deg, #14532d 0%, #052e16 100%)",
-      },
-      {
-        title: "International Design Systems",
-        description:
-          "Helping International, an American transportation brand, modernize their user experience, technology, and design system.",
-        href: "/interest",
-        imageAlt: "International Design Systems",
-        gradient: "linear-gradient(145deg, #1e40af 0%, #172554 100%)",
-      },
-      {
-        title: "Scania SWS",
-        description:
-          "Scania's Workshop system provides real-time, paperless service information integrated with the Dealer Management System.",
-        imageAlt: "Scania Workshop System",
-        gradient: "linear-gradient(145deg, #78350f 0%, #451a03 100%)",
       },
     ],
   },
