@@ -28,8 +28,8 @@ const navItems: Array<{
   icon: typeof Home
 }> = [
   { id: "home", title: "Home", icon: Home },
-  { id: "interest", title: "Case studies", icon: Sparkles },
   { id: "bio", title: "Bio", icon: User },
+  { id: "interest", title: "Case studies", icon: Sparkles },
   { id: "worldview", title: "World view", icon: Globe },
 ]
 

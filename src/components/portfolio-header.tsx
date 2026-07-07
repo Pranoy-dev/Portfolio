@@ -18,8 +18,8 @@ import { cn } from "@/lib/utils"
 
 const navItems: Array<{ id: NavId; title: string }> = [
   { id: "home", title: "Home" },
-  { id: "interest", title: "Case studies" },
   { id: "bio", title: "Bio" },
+  { id: "interest", title: "Case studies" },
   { id: "worldview", title: "World view" },
 ]
 
