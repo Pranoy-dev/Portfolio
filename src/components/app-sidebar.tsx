@@ -2,8 +2,9 @@
 
 import * as React from "react"
 import { motion, useReducedMotion } from "framer-motion"
-import { Home, Sparkles, User } from "lucide-react"
+import { Globe, Home, Sparkles, User } from "lucide-react"
 
+import { PortfolioLogo } from "@/components/portfolio-logo"
 import {
   Sidebar,
   SidebarContent,
@@ -29,6 +30,7 @@ const navItems: Array<{
   { id: "home", title: "Home", icon: Home },
   { id: "interest", title: "Case studies", icon: Sparkles },
   { id: "bio", title: "Bio", icon: User },
+  { id: "worldview", title: "World view", icon: Globe },
 ]
 
 const selectionSpring = {
@@ -166,7 +168,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar()
   const showLabels = isMobile || state === "expanded"
   const isHomeActive = activeNav === "home"
-  const reduceMotion = useReducedMotion()
 
   return (
     <Sidebar
@@ -175,60 +176,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       className="border-sidebar-border bg-sidebar"
       {...props}
     >
-      <SidebarHeader className="px-1.5 pt-3 pb-1.5 group-data-[collapsible=icon]:px-0">
+      <SidebarHeader className="px-1.5 pt-3 pb-1.5 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
         <SidebarMenu className="group-data-[collapsible=icon]:items-center">
-          <SidebarMenuItem className="group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+          <SidebarMenuItem className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
             <SidebarMenuButton
               size="lg"
               type="button"
-              tooltip={{ children: "Pranoy — Home", sideOffset: 12 }}
+              tooltip={{ children: "Pranoy Mathew — Home", sideOffset: 12 }}
               onClick={() => navigate("home")}
               isActive={false}
               className={cn(
-                "h-9 cursor-pointer rounded-xl bg-transparent! p-0 hover:bg-transparent!",
+                "h-auto min-h-9 cursor-pointer rounded-xl bg-transparent! p-0 hover:bg-transparent!",
                 "data-[active=true]:bg-transparent!",
-                "group-data-[collapsible=icon]:!size-9 group-data-[collapsible=icon]:!p-0",
-                showLabels ? "justify-start gap-3 px-2" : "justify-center"
+                "group-data-[collapsible=icon]:!size-auto group-data-[collapsible=icon]:!p-0",
+                showLabels ? "w-full justify-start gap-3 px-2 py-1" : "justify-center",
               )}
             >
-              <motion.span
-                className={cn(
-                  "relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full bg-[#e60023] text-sm font-bold text-white shadow-md",
-                  "ring-2 ring-offset-2 ring-offset-sidebar",
-                  isHomeActive ? "ring-[#e60023]/40" : "ring-[#e60023]/15"
-                )}
-                animate={
-                  isHomeActive && !reduceMotion
-                    ? {
-                        scale: [1, 1.06, 1],
-                        boxShadow: [
-                          "0 4px 12px rgba(230, 0, 35, 0.25)",
-                          "0 6px 20px rgba(230, 0, 35, 0.4)",
-                          "0 4px 12px rgba(230, 0, 35, 0.25)",
-                        ],
-                      }
-                    : { scale: 1, boxShadow: "0 4px 12px rgba(230, 0, 35, 0.2)" }
-                }
-                transition={
-                  isHomeActive && !reduceMotion
-                    ? { duration: 0.55, ease: "easeOut" }
-                    : { duration: 0.2 }
-                }
-              >
-                P
-              </motion.span>
-              {showLabels ? (
-                <span
-                  className={cn(
-                    "relative z-10 truncate text-base font-semibold transition-colors duration-200",
-                    isHomeActive
-                      ? "text-sidebar-accent-foreground"
-                      : "text-sidebar-foreground"
-                  )}
-                >
-                  Pranoy
-                </span>
-              ) : null}
+              <PortfolioLogo
+                variant={showLabels ? "stacked" : "mark"}
+                active={isHomeActive}
+              />
+              <span className="sr-only">Pranoy Mathew — Home</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

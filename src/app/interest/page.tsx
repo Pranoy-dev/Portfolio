@@ -4,14 +4,15 @@ import { PageShell } from "@/components/portfolio/page-shell"
 export default function InterestPage() {
   return (
     <PageShell>
-      <header className="space-y-2 border-b border-border/50 pb-6">
+      <header className="space-y-3 border-b border-border/50 pb-8">
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
-          Case studies
+          Projects
         </p>
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Case studies</h1>
-        <p className="text-muted-foreground max-w-2xl">
-          Selected work across automotive, in-cabin experience, and fintech — problems where
-          clarity and trust had to be designed in, not added later.
+        <h1 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+          Case studies
+        </h1>
+        <p className="max-w-2xl text-base text-muted-foreground md:text-lg">
+          Selected work across automotive, in-cabin experience, and fintech.
         </p>
       </header>
       <CaseStudiesGrid />

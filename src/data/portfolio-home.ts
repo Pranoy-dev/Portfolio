@@ -35,6 +35,8 @@ export type HomeThumbnailCard = {
   showHoverWord?: boolean
   /** Short CTA on the card (visual only — whole card is the link). */
   ctaLabel: string
+  /** Optional full-bleed background image (overrides gradient when set). */
+  backgroundImage?: string
   /** Full CSS background (gradient) for poster tiles. */
   gradientCss: string
 }
@@ -61,6 +63,7 @@ export const homeThumbnailCards: HomeThumbnailCard[] = [
     marqueeAlwaysVisible: true,
     showHoverWord: false,
     ctaLabel: "View bio",
+    backgroundImage: "/Images/bio/bio-chalkboard.png",
     gradientCss:
       "linear-gradient(168deg, #6fcf7a 0%, #43aa5e 38%, #2d6a4f 72%, #1b4332 100%)",
   },
@@ -69,7 +72,7 @@ export const homeThumbnailCards: HomeThumbnailCard[] = [
     href: "/interest",
     title: "Case studies",
     caption: "Complex systems made clear.",
-    details: "Fleet OTA, connected health, neo-banking products.",
+    details: "Automotive, in-cabin, and fintech.",
     hoverWord: "DESIGN!",
     marqueeKeywords: [
       "Systems",
@@ -84,8 +87,33 @@ export const homeThumbnailCards: HomeThumbnailCard[] = [
     marqueeAlwaysVisible: true,
     showHoverWord: false,
     ctaLabel: "View work",
+    backgroundImage: "/Images/bio/case studies.jpg",
     gradientCss:
       "linear-gradient(168deg, #5c6b6e 0%, #3d4f52 35%, #2a3638 68%, #1a2224 100%)",
+  },
+  {
+    id: "worldview",
+    href: "/worldview",
+    title: "My world view",
+    caption: "How I see work, life, and achievement.",
+    details: "Nine questions on success, teams, design, AI, and the future.",
+    hoverWord: "THINK!",
+    marqueeKeywords: [
+      "Work",
+      "Life",
+      "Achievement",
+      "Tradeoffs",
+      "Clarity",
+      "Craft",
+      "Growth",
+      "Purpose",
+    ],
+    marqueeAlwaysVisible: true,
+    showHoverWord: false,
+    ctaLabel: "Read more",
+    backgroundImage: "/Images/bio/world view.jpg",
+    gradientCss:
+      "linear-gradient(168deg, #9b8afb 0%, #7c6cf0 35%, #5b4cc4 68%, #3a2f7a 100%)",
   },
 ]
 

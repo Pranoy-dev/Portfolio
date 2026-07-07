@@ -2,12 +2,13 @@
 
 import { usePathname } from "next/navigation"
 
-export type NavId = "home" | "interest" | "bio"
+export type NavId = "home" | "interest" | "bio" | "worldview"
 
 export const navRoutes: Record<NavId, string> = {
   home: "/",
   interest: "/interest",
   bio: "/bio",
+  worldview: "/worldview",
 }
 
 export function useNavHash() {
@@ -18,7 +19,9 @@ export function useNavHash() {
       ? "interest"
       : pathname === "/bio"
         ? "bio"
-        : "home"
+        : pathname === "/worldview"
+          ? "worldview"
+          : "home"
 
   return { pathname, activeNav, navRoutes }
 }

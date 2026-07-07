@@ -13,6 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { cn } from "@/lib/utils"
+import { pageContent, pageSectionShell } from "@/lib/layout-tokens"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -408,16 +409,16 @@ const caseStudies = [
 
 function CaseStudyPageHeader({ caseStudyTitle }: { caseStudyTitle: string }) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex items-center gap-2 px-4 w-full max-w-7xl mx-auto">
-        <Breadcrumb className="flex-1">
+    <header className="fixed top-14 left-0 right-0 z-40 flex h-14 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:top-0">
+      <div className={cn(pageContent, "flex min-w-0 items-center gap-2")}>
+        <Breadcrumb className="min-w-0 flex-1">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/">Overview</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{caseStudyTitle}</BreadcrumbPage>
+            <BreadcrumbItem className="min-w-0">
+              <BreadcrumbPage className="truncate">{caseStudyTitle}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -436,7 +437,7 @@ export default function CaseStudyPage() {
     return (
       <PortfolioLayout>
         <CaseStudyPageHeader caseStudyTitle="Case Study Not Found" />
-        <div className="flex flex-1 flex-col gap-12 p-6 md:p-12 max-w-5xl mx-auto mt-8 w-full min-w-0">
+        <div className={cn(pageSectionShell, "pt-24")}>
           <p>Case study not found</p>
         </div>
       </PortfolioLayout>
@@ -455,7 +456,7 @@ export default function CaseStudyPage() {
     <PortfolioLayout>
         <CaseStudyPageHeader caseStudyTitle={caseStudy.title} />
         
-        <div className="flex flex-1 flex-col gap-20 p-6 md:p-12 lg:p-16 max-w-7xl mx-auto w-full min-w-0 pb-32">
+        <div className={cn(pageSectionShell, "pt-24")}>
           {isDetailedCaseStudy ? (
             // Redesigned detailed case study view with Accordions
             <div className="space-y-4">

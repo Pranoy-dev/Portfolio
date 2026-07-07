@@ -18,6 +18,7 @@ import {
 import { createPortal } from "react-dom"
 import { useEffect, useState } from "react"
 import { PortfolioLayout } from "@/components/portfolio-layout"
+import { pageSectionShell } from "@/lib/layout-tokens"
 import { Badge } from "@/components/ui/badge"
 import {
   Collapsible,
@@ -133,8 +134,8 @@ function getCareerTimelineLabel(
 }
 
 const careerTimelineGrid =
-  "grid grid-cols-[4.25rem_0.75rem_minmax(0,1fr)] items-start gap-x-3 md:grid-cols-[5.5rem_0.75rem_minmax(0,1fr)] md:gap-x-4"
-const careerTimelineLine = "left-[5.375rem] md:left-[6.875rem]"
+  "grid grid-cols-[3.25rem_0.5rem_minmax(0,1fr)] items-start gap-x-2 sm:grid-cols-[4.25rem_0.75rem_minmax(0,1fr)] sm:gap-x-3 md:grid-cols-[5.5rem_0.75rem_minmax(0,1fr)] md:gap-x-4"
+const careerTimelineLine = "left-[4.125rem] sm:left-[5.375rem] md:left-[6.875rem]"
 const careerExpandedPanel =
   "rounded-2xl border border-zinc-200/60 bg-white p-5 text-zinc-900 md:p-6 dark:border-zinc-200/60 dark:bg-white dark:text-zinc-900"
 
@@ -177,11 +178,11 @@ function CompaniesCard() {
           </h2>
         </div>
 
-        <div className="mt-3 grid min-h-0 flex-1 grid-cols-3 grid-rows-2 gap-2.5 md:mt-4 md:gap-3">
+        <div className="mt-3 grid min-h-0 flex-1 grid-cols-3 grid-rows-2 gap-1.5 sm:gap-2.5 md:mt-4 md:gap-3">
           {companyLogos.map((logo) => (
             <div
               key={logo.name}
-              className="group relative flex h-full min-h-[3.25rem] items-center justify-center p-2 transition-transform duration-200 hover:scale-[1.05] sm:min-h-[3.75rem] md:p-3 lg:min-h-[4.25rem]"
+              className="group relative flex h-full min-h-[2.75rem] items-center justify-center p-1.5 transition-transform duration-200 hover:scale-[1.05] sm:min-h-[3.75rem] sm:p-2 md:p-3 lg:min-h-[4.25rem]"
               title={logo.name}
             >
               <Image
@@ -225,7 +226,7 @@ function PortraitCard() {
 
   return (
     <div
-      className={cn(tileClass, "relative flex h-full min-h-[360px] flex-col justify-end lg:min-h-0")}
+      className={cn(tileClass, "relative flex h-full min-h-[280px] flex-col justify-end sm:min-h-[360px] lg:min-h-0")}
       style={{ background: violet }}
     >
       {!err ? (
@@ -540,7 +541,7 @@ function CareerExperienceItem({
               </h2>
             </div>
 
-            <div className="flex items-center gap-2.5 pl-8">
+            <div className="flex flex-wrap items-center gap-2 pl-0 sm:pl-8">
               <Badge variant="outline" className={careerBadgeClass(isDark)}>
                 {job.company}
               </Badge>
@@ -551,7 +552,7 @@ function CareerExperienceItem({
               ) : null}
             </div>
 
-            <div className="flex flex-col gap-3 pl-8 pt-1">
+            <div className="flex flex-col gap-3 pl-0 pt-1 sm:pl-8">
               <div className={cn("h-px w-full", isDark ? "bg-white/10" : "bg-black/10")} />
               <p
                 className={cn(
@@ -630,7 +631,7 @@ function CareerExperienceItem({
                   <p className="mb-3 text-xs font-semibold uppercase tracking-[0.08em] text-zinc-500">
                     {job.company} Assignments
                   </p>
-                  <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-4">
                     {job.projects.map((project) => (
                       <CareerProjectThumbnail
                         key={project.title}
@@ -695,7 +696,7 @@ function SkillDetailModal({
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6" onClick={onClose}>
       <div className="fixed inset-0 bg-black/60 backdrop-blur-xl" />
       <div
-        className="relative z-10 flex max-h-[min(90vh,32rem)] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-zinc-200/60 bg-white shadow-2xl shadow-black/20"
+        className="relative z-10 flex max-h-[min(90vh,32rem)] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-zinc-200/60 bg-white shadow-2xl shadow-black/20 sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4 border-b border-zinc-200/60 px-6 py-5">
@@ -883,7 +884,7 @@ export function BioPageContent() {
     <PortfolioLayout className={cn(display.variable, "min-h-svh bg-[#f5f5f7] dark:bg-black")}>
       <main
         className={cn(
-          "mx-auto w-full max-w-[1280px] px-3 pb-10 pt-6 sm:px-4 sm:pb-12 sm:pt-8 md:px-5 lg:px-6",
+          pageSectionShell,
           "transition-[opacity,transform] duration-700 ease-out",
           visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
         )}
@@ -898,7 +899,7 @@ export function BioPageContent() {
         >
 
           {/* Portrait — spans both rows */}
-          <div className="min-h-[360px] lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:min-h-0 lg:h-full">
+          <div className="min-h-[280px] sm:min-h-[360px] lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:min-h-0 lg:h-full">
             <PortraitCard />
           </div>
 

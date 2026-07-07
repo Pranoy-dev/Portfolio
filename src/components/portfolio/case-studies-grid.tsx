@@ -21,10 +21,10 @@ export function CaseStudiesGrid() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-background via-muted/30 to-background border border-border/40 p-8 md:p-10 backdrop-blur-xl shadow-sm">
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-background via-muted/30 to-background border border-border/40 p-5 sm:rounded-3xl sm:p-8 md:p-10 backdrop-blur-xl shadow-sm">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl sm:rounded-3xl" />
       <div className="relative z-10">
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
           {caseStudies.map((study) => (
             <div
               key={study.id}
@@ -39,7 +39,7 @@ export function CaseStudiesGrid() {
               }}
               className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${study.gradient} border ${study.borderColor} hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-1 flex flex-col cursor-pointer`}
             >
-              <div className={`relative h-48 bg-gradient-to-br ${study.imageGradient} overflow-hidden`}>
+              <div className={`relative h-40 sm:h-48 bg-gradient-to-br ${study.imageGradient} overflow-hidden`}>
                 <Image
                   src={study.image}
                   alt={study.problem}
@@ -50,7 +50,7 @@ export function CaseStudiesGrid() {
                 <div className="absolute inset-0 bg-gradient-to-br from-black/5 via-transparent to-black/10" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               </div>
-              <div className="p-6 space-y-5 relative z-10 flex-1 flex flex-col">
+              <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 relative z-10 flex-1 flex flex-col">
                 <div>
                   <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">Problem</p>
                   <p className="text-base font-semibold leading-snug text-foreground">{study.problem}</p>

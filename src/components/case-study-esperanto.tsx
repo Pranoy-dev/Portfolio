@@ -45,6 +45,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { pageContent, pageSectionShell, pageXPadding, pageXPaddingNeg } from "@/lib/layout-tokens"
 import {
   VISMA_CS3_WHAT_I_DID_MODAL_EXTRA_KEYWORDS,
   VISMA_CS3_UI_DESIGN_MODAL_EXTRA_KEYWORDS,
@@ -905,13 +906,13 @@ function CollapsibleSection({
             </div>
             {subtitle && (
               <div className={`overflow-hidden transition-all duration-300 ${disabled ? '' : 'group-data-[state=closed]/collapsible:max-h-0 group-data-[state=closed]/collapsible:opacity-0 group-data-[state=open]/collapsible:max-h-[200px] group-data-[state=open]/collapsible:opacity-100'}`}>
-                <p className={`text-sm leading-relaxed max-w-full pl-8 min-w-0 ${isDark ? 'text-white/90' : 'text-zinc-800'}`}>
+                <p className={`min-w-0 max-w-full pl-0 text-sm leading-relaxed sm:pl-8 ${isDark ? "text-white/90" : "text-zinc-800"}`}>
                   <HighlightedText text={subtitle} isDark={isDark} />
                 </p>
               </div>
             )}
             {keywords && keywords.length > 0 && (
-              <div className="flex flex-col gap-3 pt-4 pl-8">
+              <div className="flex flex-col gap-3 pt-4 pl-0 sm:pl-8">
                 <div className={`h-px w-full ${isDark ? 'bg-white/10' : 'bg-black/10'}`} />
                 <div className="flex flex-wrap items-center gap-1.5">
                   <span className={`text-xs font-semibold ${isDark ? 'text-white/70' : 'text-zinc-600'}`}>Subsections:</span>
@@ -3142,7 +3143,7 @@ function ChallengeSection({
         theme="dark"
       >
         <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {steps.map((step, index) => {
               // Different gradient colors for variety
               const gradients = [
@@ -3380,7 +3381,7 @@ function RealProblemsSection({
         theme="light"
       >
         <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {steps.map((step, index) => {
               // Different gradient colors for variety
               const gradients = [
@@ -3631,7 +3632,7 @@ function LearningsSection({
           theme="dark"
         >
           <div className="space-y-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
               {steps.map((step, index) => {
                 const displayTitle = getDisplayTitle(step.title)
                 const gradients = [
@@ -3716,7 +3717,7 @@ function LearningsSection({
         theme="dark"
       >
         <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {steps.map((step, index) => {
               // Different gradient colors for variety
               const gradients = [
@@ -3938,7 +3939,7 @@ function DesignSolutionsSection({
           theme="light"
         >
           <div className="space-y-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
               {stepsVismaDesignSolutions.map((step, index) => {
                 const gradients = [
                   'from-blue-900/80 via-blue-950/90 to-black',
@@ -4089,7 +4090,7 @@ function DesignSolutionsSection({
         theme="light"
       >
         <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {steps.map((step, index) => {
               // Different gradient colors for variety
               const gradients = [
@@ -4523,7 +4524,7 @@ function DesignSolutionModal({
                         <div key={imgIndex} className="space-y-4">
                           {(shouldRenderSideBySide || shouldRenderConceptDesignSideBySide) ? (
                             // Side-by-side layout for wireframe3 and wireframe2 - aligned at top
-                            <div className="grid grid-cols-2 gap-2 items-start">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 items-start">
                               <div className="relative w-full rounded-lg overflow-hidden border border-border/10 bg-muted/10" style={{ height: '350px' }}>
                                 <Image
                                   src={img.src}
@@ -4822,7 +4823,7 @@ function WhatIDidSection({
         theme="dark"
       >
         <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {filteredSteps.map(({ step, originalIndex }, index) => {
               // Different gradient colors for variety
               const gradients = [
@@ -5136,7 +5137,7 @@ function WhatIDidSection({
 // Color Palette Component
 function ColorPalette({ colors }: { colors: Array<{ name: string, value: string }> }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       {colors.map((color, i) => (
         <div key={i} className="space-y-2">
           <div 
@@ -5348,9 +5349,9 @@ function CaseStudyHeader({ projectTitle }: { projectTitle: string }) {
   }
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 -mx-6 md:-mx-8 lg:-mx-10 px-6 md:px-8 lg:px-10 mb-4">
-      <div className="flex items-center gap-2 w-full max-w-7xl mx-auto">
-        <Breadcrumb className="flex-1">
+    <header className={cn("sticky top-14 z-40 mb-4 flex h-14 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:top-0", pageXPaddingNeg, pageXPadding)}>
+      <div className={cn("flex w-full min-w-0 items-center gap-2", pageContent)}>
+        <Breadcrumb className="min-w-0 flex-1">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink
@@ -5365,8 +5366,8 @@ function CaseStudyHeader({ projectTitle }: { projectTitle: string }) {
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{projectTitle}</BreadcrumbPage>
+            <BreadcrumbItem className="min-w-0">
+              <BreadcrumbPage className="truncate">{projectTitle}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -5375,21 +5376,43 @@ function CaseStudyHeader({ projectTitle }: { projectTitle: string }) {
   )
 }
 
+const nextCaseStudyById: Record<number, { id: number; shortTitle: string }> = {
+  1: { id: 2, shortTitle: "Ambient Lighting" },
+  2: { id: 3, shortTitle: "Visma Neo Bank" },
+  3: { id: 1, shortTitle: "Scania Conversion" },
+}
+
 export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
   const router = useRouter()
   const sectionsRef = useRef<HTMLDivElement>(null)
+  const nextCaseStudy = nextCaseStudyById[project.id]
+
+  const navigateToNextCaseStudy = () => {
+    if (!nextCaseStudy) return
+
+    const targetElement = document.querySelector("main") as HTMLElement | null
+    if (targetElement) {
+      targetElement.style.transition = "opacity 0.3s ease-out, transform 0.3s ease-out"
+      targetElement.style.opacity = "0"
+      targetElement.style.transform = "translateY(8px)"
+    }
+
+    window.setTimeout(() => {
+      router.push(`/case-study/${nextCaseStudy.id}`)
+    }, 300)
+  }
 
   return (
     <PortfolioLayout>
     <PageTransitionWrapper>
           <ScrollIndicator sectionsRef={sectionsRef} />
-        <div className="flex flex-1 flex-col gap-12 pl-6 md:pl-8 lg:pl-10 pr-12 md:pr-16 lg:pr-20 pt-6 md:pt-8 lg:pt-10 pb-24 max-w-7xl mx-auto w-full min-w-0">
+        <div className={pageSectionShell}>
           <CaseStudyHeader projectTitle={project.title} />
           {/* Hero Section - Compact */}
           <section className="space-y-6">
             {/* Project Title with Logo */}
             <ScrollReveal delay={100}>
-              <div className="flex items-center gap-6 mb-6">
+              <div className="mb-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
                 <div className="flex-shrink-0">
                   {project.id === 3 ? (
                     <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-background border border-border/40 flex items-center justify-center overflow-hidden p-2">
@@ -5500,7 +5523,7 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
             </ScrollReveal>
           </section>
 
-          <div ref={sectionsRef} className="space-y-8 relative pl-8 md:pl-12">
+          <div ref={sectionsRef} className="relative space-y-8 pl-4 md:pl-12">
             {/* Continuous timeline line - subtle, connects all sections from 01 to 06 */}
             <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-border/60 z-0" />
             
@@ -5567,10 +5590,12 @@ export function EsperantoCaseStudy({ project }: EsperantoCaseStudyProps) {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-                <Button size="lg" onClick={() => router.push("/")} className="gap-2">
-                  View next case study
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
+                {nextCaseStudy ? (
+                  <Button size="lg" onClick={navigateToNextCaseStudy} className="gap-2">
+                    Next: {nextCaseStudy.shortTitle}
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                ) : null}
               </div>
             </ScrollReveal>
           </section>

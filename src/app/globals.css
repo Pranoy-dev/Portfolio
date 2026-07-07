@@ -494,3 +494,39 @@ html {
   }
 }
 
+/* Marquee: hover-only on fine pointers; slow scroll on touch devices */
+.marquee-track {
+  display: inline-flex;
+  width: max-content;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .marquee-track {
+    will-change: auto;
+  }
+
+  .group:hover .marquee-track,
+  .group:focus-within .marquee-track {
+    animation: marquee 48s linear infinite;
+    will-change: transform;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .marquee-track {
+    animation: marquee 72s linear infinite;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+    will-change: auto;
+  }
+}
+
+.safe-area-top {
+  top: max(1rem, env(safe-area-inset-top));
+}
+
