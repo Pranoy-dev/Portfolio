@@ -8,7 +8,7 @@ export const bioProfile = {
     "8 years designing across Automotive, Fintech, Biotech, and Gaming.",
     "An engineer by training who moves fast and delivers value in many forms: quick decisions, polished UI, rapid wireframes, frontend code, and clear guidance.",
   ],
-  portraitSrc: "/Images/bio/profile image.jpeg",
+  portraitSrc: "/Images/bio/bio-chalkboard.png",
   portraitAlt: "Portrait of Pranoy Mathew",
 } as const
 
