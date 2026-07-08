@@ -1,5 +1,11 @@
 import { CaseStudiesGrid } from "@/components/portfolio/case-studies-grid"
 import { PageShell } from "@/components/portfolio/page-shell"
+import { pageMetadata } from "@/lib/site-metadata"
+
+export const metadata = pageMetadata(
+  "Case studies",
+  "Selected work across automotive, in-cabin experience, and fintech.",
+)
 
 export default function InterestPage() {
   return (
